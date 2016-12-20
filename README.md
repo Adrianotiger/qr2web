@@ -1,39 +1,19 @@
-## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/Adrianotiger/qr2web/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Scan codes with the smartphones and forward the parsed code to a webpage.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Why this project?
+You find always more QR codes on the web and it is also easy to generate QR codes for own projects. Good smartphones (with Android or Windows Mobile) are able to scan a QR code directly from a webpage. Older smartphones and low quality smartphones need an app because they are not able to access the camera from the webpage. So you need an app for each OS (=> store accounts, developer accounts, and $$$).
 
-### Markdown
+This app is a simple QR scanner that will start over a simple link on the web. The app will then forward the code to your webpage. 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+So you need to write a webpage and give this free app to your users. **You don't need to write any app for this functionality anymore**, only the webpage.
 
-```markdown
-Syntax highlighted code block
+### On which smartphone does it works?
+The project was made with Xamarin and ZXing library. So it works with Android (>4.1), Windows Mobile (10), Windows (10) and iOS (>7).
+Because I don't have any developer account on Android and iOS, I can give only the Windows Store link and Android APK. Maybe in future someone will compile and upload this app on the store for Android and iOS.
 
-# Header 1
-## Header 2
-### Header 3
+### How to use the app
+See the wiki section to get help with this app.
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-### License
-This project is licensed under the GNU Version 2 license.
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Adrianotiger/qr2web/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
-
-```
-
+### How write a webpage
+Check the Example folder and the wiki section.
