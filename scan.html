@@ -1,0 +1,47 @@
+---
+layout: default
+title: QR2Web Inventory - Scan
+---
+<script>
+	function onscan(qrCode)
+	{
+		document.getElementById('scannedResult').value = qrCode;
+		document.getElementById('barcodelookup').href='https://www.barcodelookup.com/' + qrCode;
+		document.getElementById('weblink').href=qrCode;
+
+		var qrCodeString = "" + qrCode;
+		if(qrCodeString.indexOf("http")===0)
+		{
+		  document.getElementById('weblink').parentNode.style.display = 'block';
+		  document.getElementById('barcodelookup').parentNode.style.display = 'none';
+		}
+		else
+		{
+		  document.getElementById('weblink').parentNode.style.display = 'none';
+		  document.getElementById('barcodelookup').parentNode.style.display = 'block';
+		}
+	}
+</script>
+<div class="blurb">
+	<h1>QR to WEB Inventory</h1>
+  <h2>SCAN</h2>
+    This is an example page, to show how you can scan a code with this app.
+    <h3>1. Scan code</h3>
+    Start the scan using the App button, or pressing on this link:
+    <a href='qr2web://'>qr2web://</a>
+    <h3>2. Scan result</h3>
+    The result will be show on this field:<br>
+    <input type='text' id='scannedResult' name='scanResult' value='scan...' />
+    <h3>3. Action</h3>
+    Once the result is know, you can do something with this code:<br>
+    <div style='display:none;'><a href='https://www.barcodelookup.com/' id='barcodelookup' target='_blank' >SEARCH ON www.BarcodeLookup.com</a></div>
+    <div style='display:none;'><a href='' id='weblink' target='_blank' >OPEN LINK</a></div>
+    <br>
+  <h2>AND NOW?</h2>
+    <h3>Create your webpage using this app</h3>
+    This app is a shortcut between home page and the QR scanner. It allows to open javascript-functions passing the QR code value.<br>
+    Why an app? Simply, it doesn't ask always the access to your camera if you want scan a code. And you can get also GPS coorinates (future) directly to your webpage.<br>
+    Another cool function is that you can scan when you are offline and insert the code once you have internet access.<br>
+    More info on GitHub.
+	
+</div>
