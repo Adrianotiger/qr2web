@@ -30,13 +30,27 @@ div.blurb
   margin-left:-45vw;
   margin-top:-40vh;
 }
-table
+@media all and (orientation:landscape)
 {
-  width:98%;
-  height:100%;
-  margin:0 auto;
-  text-align:center;
-  font-size:4vw;
+  table
+  {
+    width:98%;
+    height:100%;
+    margin:0 auto;
+    text-align:center;
+    font-size:4vh;
+  }
+}
+@media all and (orientation:portrait)
+{
+  table
+  {
+    width:98%;
+    height:100%;
+    margin:0 auto;
+    text-align:center;
+    font-size:4vw;
+  }
 }
 td.nav
 {
