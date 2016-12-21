@@ -15,7 +15,7 @@ footer
   width:100vw;
   bottom:0px;
 }  
-div
+div.blurb
 {
   background: radial-gradient(ellipse at center, rgba(0,0,50,0.9) 0%,rgba(0,0,50,0.1) 100%); 
   border-style:ridge;
