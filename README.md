@@ -17,6 +17,10 @@ App source code is in the [App folder](https://github.com/Adrianotiger/qr2web/tr
 
 Webpage Demos and codes are in the [Example folder](https://github.com/Adrianotiger/qr2web/tree/master/Examples)
 
+Dedicated webpage is in the [Home Page](https://adrianotiger.github.io/qr2web/) of this project
+
+There is also a  [Blog](https://adrianotiger.github.io/qr2web/blog) for future updates
+
 ### Credits
 It was possible to create this app thanks to Microsoft, Xamarin and ZXing libraries.
 
