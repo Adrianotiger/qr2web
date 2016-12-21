@@ -1,3 +1,4 @@
 name: QR2Web Inventory
 markdown: kramdown
 theme: jekyll-theme-modernist
+permalink: /blog/:year/:month/:day/:title
