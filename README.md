@@ -13,17 +13,22 @@ The project was made with Xamarin and ZXing library. So it works with Android (>
 Because I don't have any developer account on Android and iOS, I can give only the Windows Store link and Android APK. Maybe in future someone will compile and upload this app on the store for Android and iOS.
 
 ### GitHub Structure
-App source code is in the [App folder](https://github.com/Adrianotiger/qr2web/App) 
-Webpage Demos and codes are in the [Example folder](https://github.com/Adrianotiger/qr2web/Examples)
+App source code is in the [App folder](https://github.com/Adrianotiger/qr2web/tree/master/App) 
+
+Webpage Demos and codes are in the [Example folder](https://github.com/Adrianotiger/qr2web/tree/master/Examples)
 
 ### Credits
 It was possible to create this app thanks to Microsoft, Xamarin and ZXing libraries.
+
 App was developed with [Visual Studio 2015](https://www.visualstudio.com/)
+
 using the [Xamarin NuGet extension](https://www.xamarin.com/)
+
 and the [ZXing BarcodeScanner library](https://github.com/Redth/ZXing.Net.Mobile)
 
 ### License
 You can use this code and change it, you can also create your own app.
+
 You are not allowed to publish your app on the store adding a banner or asking money for the compiled app.
 
 ### How to use the app
