@@ -41,8 +41,9 @@ table
 td.nav
 {
   height:15vh;
-  line-height:14vh;
+  line-height:1vh;
   font-size:3vw;
+  vertical-align:center;
 }
 a
 {
