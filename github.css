@@ -38,6 +38,12 @@ table
   text-align:center;
   font-size:5vw;
 }
+table.nav
+{
+  height:15vh;
+  line-height:14vh;
+  font-size:3vw;
+}
 a
 {
   color:white;
