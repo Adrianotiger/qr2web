@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR to Web Inventory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- Useful for styles with static names... -->
+    <link href="{{ site.github.url }}/github.css" rel="stylesheet">
+  </head>
+  <body>
+    <div>
+      <table>
+        <tr>
+          <td>
+            <h1>HELP</h1>            
+          </td>
+        </tr>
+        <tr>
+          <td style='height:80%;'>
+            <hr style='width:60%'/>
+            <span style='overflow:auto;display:block;height:70vh;' id='span'>
+              <p>
+                <h3><a href='javascript:document.getElementById("span").scrollTop = parseInt(document.getElementById("howuse").getBoundingClientRect().top) - 130;'>How to use this app</a></h3>
+                <h3><a href='javascript:document.getElementById("span").scrollTop = parseInt(document.getElementById("config").getBoundingClientRect().top) - 130;'>Configuration</a></h3>
+                <h3><a href='javascript:document.getElementById("span").scrollTop = parseInt(document.getElementById("emulation").getBoundingClientRect().top) - 130;'>Mocha/Pic2Shop emulation</a></h3>
+              </p>
+              <p id='howuse'>
+                <hr>
+                <h3>How to use this app</h3>
+                This app is not a normal QR-reader, so if you downloaded it to "parse" a code, this is definitively the wrong app!<br>
+                This app need to be a part of a bigger project. Useful if you read barcodes for your inventory for example.<br>
+                Once the barcode was read, the app will forward this code to a webpage, this page can be your personal inventory home page or an external page. You define it in the settings.<br>
+                <br>
+                So, once opened the app and after setting the destination home page, you can begin to use the app:<br>
+                click on the barcode button to scan (the scan can also be started automatically from the webpage).<br>
+                After the scan is over, the internet page will receive your code and something can be done.<br>
+                <b>That's it!</b> this application is able to do this, not more ;)
+                <br><br>
+                If you are a developer, go to the home page to see how develop a webpage for this app (so that you can get the parsed QR code through the app).
+              </p>
+              <p id='config'>
+                <hr>
+                <h3>Configuration</h3>
+                Click on "..." to open an extended menu and then "Settings". Now you can set some options for the app:<br>
+                <h4>Home Page</h4>
+                This is the page that will be loaded, once the app is started. This is the most important setting, because the data will be forwarded to this page.
+                <h4>Emulation</h4>
+                The app is able to emulate other apps (from Android and Apple world) - it is in a beta phase. If something doesn't work correctly, write me a mail or post a message in the forum.
+                <h4>Barcodes</h4>
+                Even if it was born as QR reader to be faster, you can select also other barcodes types.
+                <h4>Portrait mode</h4>
+                Will force the app to stay in portrait and not rotate the webpage if you rotate the phone.
+                <h4>Save history</h4>
+                Every scan will be stored for a future use (up to 16 entries). Helpfull if you are offline when scanning the QR code.
+                <h4>App Language</h4>
+                Select between english, german and italian.
+              </p>
+              <p id='emulation'>
+                <hr>
+                <h3>Mocha/pic2Shop emulation</h3>
+                Always the same story... A nice app, but only available on the Play store or iTunes.<br>
+                I implemented a little emulation for this 2 apps. If you open a mochasoft protocol or a pic2shop pro protocol on a webpage, this app will try to send them the data like the real app.<br>
+                I can't grant the funtionality at 100% but if you discover a wrong parsing of the data you can write me or write a post in the blog.<br>
+                Mocha example (should open the mochasoft page with the parsed code): 
+                <a href='mochabarcode://CALLBACK=http://mochasoft.com/test3.htm'>mochabarcode://CALLBACK= http://mochasoft.com/test3.htm</a><br>
+                readbarcode:// to scan to a function (calls onscan(BARCODE) on your webpage) or mochabarcode://RUN is also accepted.<br>
+                Pic2Shop Pro example: 
+                <a href='p2spro://scan?'>p2spro://scan?</a><br>
+                will scan the code and insert it into the webpage with the default home page. You can set also callback URLs, like the original app.<br>
+                As wrote, this app only emulate the functionality and is not a porting or a copy of the app, so it could not work like expected.<br>
+                <b>The protocols (mochabarcode, p2spro and readbarcode) are implemented, so that there is at least 1 app in the store able to parse the codes with those protocols :D</b>
+              </p>
+              
+            </span>
+            <hr style='width:60%'/>
+          </td>
+        </tr>
+        <tr>
+          <td style='text-align:right;'>
+            Adriano Petrucci
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

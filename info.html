@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR to Web Inventory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <!-- Useful for styles with static names... -->
+    <link href="{{ site.github.url }}/github.css" rel="stylesheet">
+  </head>
+  <body>
+    <div>
+      <table>
+        <tr>
+          <td>
+            <h1>Info</h1>            
+          </td>
+        </tr>
+        <tr>
+          <td style='height:80%;'>
+            <p style='font-size:80%'>
+              My first app developed with Xamarin and ZXing libraries to read QR codes.<br>
+              Wrote for Windows Mobile to give Mocha and Pic2Shop functionality also to this phone.<br><br>
+              <b>This application is used to scan a QR code and redirect the code to a webpage. Perfect for inventory databases.</b><br><br>
+              For more information visit <a href='http://www.petrucci.ch/qrInventory/'>my home page</a> or write me at WP at petrucci dot com.
+            </p>
+            <hr style='width:60%'/>
+            Current Version: 1<br>
+            Your Version: <?php echo (isset($_GET['version'])?$_GET['version']:"unknown") ?>
+          </td>
+        </tr>
+        <tr>
+          <td style='text-align:right;'>
+            Adriano Petrucci
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

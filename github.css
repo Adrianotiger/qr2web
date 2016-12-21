@@ -1,0 +1,43 @@
+body
+{
+  background: linear-gradient(135deg, #959595 0%,#0d0d0d 46%,#010101 50%,#0a0a0a 53%,#4e4e4e 76%,#383838 87%,#1b1b1b 100%);
+  color: #ffff88;
+  margin:0px;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+}
+div
+{
+  background: radial-gradient(ellipse at center, rgba(0,0,50,0.9) 0%,rgba(0,0,50,0.1) 100%); 
+  border-style:ridge;
+  border-width:4px;
+  border-radius:20px;
+  position:absolute;
+  width:90vw;
+  height:80vh;
+  left:50%;
+  top:50%;
+  margin-left:-45vw;
+  margin-top:-40vh;
+}
+table
+{
+  width:98%;
+  height:100%;
+  margin:0 auto;
+  text-align:center;
+  font-size:5vw;
+}
+a
+{
+  color:white;
+}
+h2
+{
+  margin:0 auto;
+}
+h3
+{
+  margin:5px;
+}
