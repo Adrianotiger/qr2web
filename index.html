@@ -1,87 +1,14 @@
 ---
 layout: default
-title: QR2Web Inventory
+title: QR2Web Inventory - Home
 ---
-<script>
-	function onscan(qrCode)
-	{
-		document.getElementById('scannedResult').value = qrCode;
-		document.getElementById('barcodelookup').href='https://www.barcodelookup.com/' + qrCode;
-		document.getElementById('weblink').href=qrCode;
-
-		var qrCodeString = "" + qrCode;
-		if(qrCodeString.indexOf("http")===0)
-		{
-		  document.getElementById('weblink').parentNode.style.display = 'block';
-		  document.getElementById('barcodelookup').parentNode.style.display = 'none';
-		}
-		else
-		{
-		  document.getElementById('weblink').parentNode.style.display = 'none';
-		  document.getElementById('barcodelookup').parentNode.style.display = 'block';
-		}
-	}
-</script>
 <div class="blurb">
 	<h2>QR to WEB Inventory</h2>
-    
-    Thank you for downloading this app. To parse a QR code, press the "barcode-scanner" button on the top of this app or press this link:
-    <a href='qr2web://'>qr2web://</a>, this app will then open the scanner and the result will be displayed here:<br>
-    <input type='text' id='scannedResult' name='scanResult' value='scan...' /><br>
-    <div style='display:none;'><a href='https://www.barcodelookup.com/' id='barcodelookup' target='_blank' >SEARCH ON www.BarcodeLookup.com</a></div>
-    <div style='display:none;'><a href='' id='weblink' target='_blank' >OPEN LINK</a></div>
-    <br>
-    <hr>
-    <h3>Create your webpage using this app</h3>
-    This app is a shortcut between home page and the QR scanner. It allows to open javascript-functions passing the QR code value.<br>
-    Why an app? Simply, it doesn't ask always the access to your camera if you want scan a code. And you can get also GPS coorinates (future) directly to your webpage.<br>
-    Another cool function is that you can scan when you are offline and insert the code once you have internet access.<br>
-    More info on GitHub.
-	
+        Thank you for downloading this app. <br>
+	This app is an interface between QR scanner and webpages.<br>
+	To try it, open the <a href="scan.html">SCAN PAGE</a><br><br>
+	Get more information in the <a href="https://github.com/Adrianotiger/qr2web" target="_blank">GitHub Page</a>.<br><br>
+	If you want develop your webpage, read the manual in the <a href="https://github.com/Adrianotiger/qr2web/wiki" target="_blank">GitHub Wiki</a>.
 </div>
-<!--
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>QR to Web Inventory</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-    <link href="github.css" rel="stylesheet">
-    <script>
-      function onscan(qrCode)
-      {
-        document.getElementById('scannedResult').value = qrCode;
-        document.getElementById('barcodelookup').href='https://www.barcodelookup.com/' + qrCode;
-        document.getElementById('weblink').href=qrCode;
-        
-        var qrCodeString = "" + qrCode;
-        if(qrCodeString.indexOf("http")===0)
-        {
-          document.getElementById('weblink').parentNode.style.display = 'block';
-          document.getElementById('barcodelookup').parentNode.style.display = 'none';
-        }
-        else
-        {
-          document.getElementById('weblink').parentNode.style.display = 'none';
-          document.getElementById('barcodelookup').parentNode.style.display = 'block';
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <h2>QR to WEB Inventory</h2>
-    
-    Thank you for downloading this app. To parse a QR code, press the "barcode-scanner" button on the top of this app or press this link:
-    <a href='qr2web://'>qr2web://</a>, this app will then open the scanner and the result will be displayed here:<br>
-    <input type='text' id='scannedResult' name='scanResult' value='scan...' /><br>
-    <div style='display:none;'><a href='https://www.barcodelookup.com/' id='barcodelookup' target='_blank' >SEARCH ON www.BarcodeLookup.com</a></div>
-    <div style='display:none;'><a href='' id='weblink' target='_blank' >OPEN LINK</a></div>
-    <br>
-    <hr>
-    <h3>Create your webpage using this app</h3>
-    This app is a shortcut between home page and the QR scanner. It allows to open javascript-functions passing the QR code value.<br>
-    Why an app? Simply, it doesn't ask always the access to your camera if you want scan a code. And you can get also GPS coorinates (future) directly to your webpage.<br>
-    Another cool function is that you can scan when you are offline and insert the code once you have internet access.<br>
-    More info on GitHub.
-  </body>
-</html>
--->
+
+
