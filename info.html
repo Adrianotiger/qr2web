@@ -19,11 +19,8 @@ title: QR2Web Inventory - Info
               Current Version: 1<br>
               Your Version: 
               <script>
-                document.write("a");
                 var qs = document.location.search;
-                document.write("b");
                 qs = qs.split('+').join(' ');
-                document.write("c");
 
                 var params = {},
                     tokens,
@@ -36,7 +33,7 @@ title: QR2Web Inventory - Info
                     params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
                     document.write("params[" + decodeURIComponent(tokens[1]) + "] = " + decodeURIComponent(tokens[2]) + " - ");
                 }
-                if(params['version']) document.write(params['version']);
+                if(params['version']) document.write(parseInt(params['version']) / 10);
                 else document.write("unknown");
               </script>
             </span>
