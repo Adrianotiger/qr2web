@@ -19,12 +19,17 @@ title: QR2Web Inventory - Info
               Current Version: 1<br>
               Your Version: 
               <script>
+                document.write("a");
                 var qs = document.location.search;
+                document.write("b");
                 qs = qs.split('+').join(' ');
+                document.write("c");
 
                 var params = {},
                     tokens,
                     re = /[?&]?([^=]+)=([^&]*)/g;
+                
+                document.write("d");
 
                 while (tokens = re.exec(qs)) 
                 {
