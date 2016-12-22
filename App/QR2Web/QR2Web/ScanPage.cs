@@ -100,10 +100,10 @@ namespace QR2Web
 
 		public static bool IsAppURL(string url)
 		{
-			if (url.StartsWith("mochabarcode://") ||
-				url.StartsWith("readbarcode://") ||
-				url.StartsWith("p2spro://") || 
-				url.StartsWith("qr2web://"))
+			if (url.StartsWith("mochabarcode:") ||
+				url.StartsWith("readbarcode:") ||
+				url.StartsWith("p2spro:") || 
+				url.StartsWith("qr2web:"))
 			{
 				return true;
 			}

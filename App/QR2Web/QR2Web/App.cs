@@ -18,7 +18,7 @@ namespace QR2Web
 		private List<KeyValuePair<DateTime, string>> History = new List<KeyValuePair<DateTime, string>>(16);
 
 		public static App Instance { get; set; } = null;	// Used to access App from the different OS codes
-		public static int AppVersion { get; } = 1;          // Version of this app for the different OS codes
+		public static int AppVersion { get; } = 12;         // Version of this app for the different OS codes
 
 		/// <summary>
 		/// Constructor. Will initialize the view (for Xamarin), load the parameters and initialize the QR-scanner.
@@ -152,11 +152,11 @@ namespace QR2Web
 				}
 				else if (result.CompareTo(Language.GetText("Help")) == 0)
 				{
-					WebPageWebView.Source = "http://www.petrucci.ch/qrInventory/help.php";
+					WebPageWebView.Source = "https://adrianotiger.github.io/qr2web/help.html";
 				}
 				else if (result.CompareTo(Language.GetText("About")) == 0)
 				{
-					WebPageWebView.Source = "http://www.petrucci.ch/qrInventory/info.php?version=" + AppVersion.ToString() + "&os=" + Device.OS.ToString();
+					WebPageWebView.Source = "https://adrianotiger.github.io/qr2web/info.html?version=" + AppVersion.ToString() + "&os=" + Device.OS.ToString();
 				}
 
 			}
@@ -285,15 +285,17 @@ namespace QR2Web
 		/// </remarks>
 		static public void StartScanFromWeb(string url)
 		{
+			string urlWithoutProtocol;
 			// Check Mocha protocols
-			if(url.StartsWith("mochabarcode"))
+			if(url.StartsWith("mochabarcode:"))
 			{
-				if (url.StartsWith("mochabarcode:://CONFIG", StringComparison.CurrentCultureIgnoreCase))
+				urlWithoutProtocol = url.Substring("mochabarcode:".Length).TrimStart( new char [ '/' ]);
+				if (urlWithoutProtocol.StartsWith("CONFIG", StringComparison.CurrentCultureIgnoreCase))
 				{
 					//mochabarcode://CONFIG=http://mochasoft.com/test1.htm&autolock=1&function=1&field=1&
 					//history = 1 & scan = 1 & back = 1 & forward = 1 & reload = 1 & reloadstart = 1 & shake = 0
 					//& ignorefirst = 0 & ignorelast = 0 & beep = 1
-					string[] sParams = url.Substring("mochabarcode://".Length).Remove(' ').Split('&');
+					string[] sParams = urlWithoutProtocol.Remove(' ').Split('&');
 					foreach (string sParam in sParams)
 					{
 						if (sParam.IndexOf('=') > 0)
@@ -318,9 +320,9 @@ namespace QR2Web
 					}
 					Parameters.SaveParams();
 				}
-				else if (url.StartsWith("mochabarcode:://CALLBACK=", StringComparison.CurrentCultureIgnoreCase))
+				else if (urlWithoutProtocol.StartsWith("CALLBACK=", StringComparison.CurrentCultureIgnoreCase))
 				{
-					Parameters.TemporaryOptions.SetLookup("", url.Substring("mochabarcode:://CALLBACK=".Length), Parameters.EmulationTypes.MOCHASOFT);
+					Parameters.TemporaryOptions.SetLookup("", urlWithoutProtocol.Substring("CALLBACK=".Length), Parameters.EmulationTypes.MOCHASOFT);
 					Instance.StartScan();
 				}
 				else
@@ -333,18 +335,20 @@ namespace QR2Web
 			// check pic 2 shop pro protocol
 			else if(url.StartsWith("p2spro"))
 			{
-				if (url.StartsWith("p2spro://configure?", StringComparison.CurrentCultureIgnoreCase)
-					|| url.StartsWith("p2spro://configure/?", StringComparison.CurrentCultureIgnoreCase))
+				urlWithoutProtocol = url.Substring("p2spro:".Length).TrimStart(new char['/']);
+
+				if (urlWithoutProtocol.StartsWith("configure?", StringComparison.CurrentCultureIgnoreCase)
+					|| urlWithoutProtocol.StartsWith("configure/?", StringComparison.CurrentCultureIgnoreCase))
 				{
 					//p2spro://configure?lookup=LOOKUP_URL&home=HOME_URL&formats=EAN13,EAN8,UPCE,ITF,CODE39,CODE128,CODE93,STD2OF5,CODABAR,QR &gps=True|False
 					//&hidebuttons = True | False
 					//& autorotate = True | False
 					//& highres = True | False
 					//& settings = True | False
-					string[] sParams = url.Substring(
-							(url.StartsWith("p2spro://configure?", StringComparison.CurrentCultureIgnoreCase) ? 
-							"p2spro://configure?".Length :
-							"p2spro://configure/?".Length)
+					string[] sParams = urlWithoutProtocol.Substring(
+							(urlWithoutProtocol.StartsWith("configure?", StringComparison.CurrentCultureIgnoreCase) ? 
+							"configure?".Length :
+							"configure/?".Length)
 						).Remove(' ').Split('&');
 					foreach (string sParam in sParams)
 					{
@@ -375,11 +379,11 @@ namespace QR2Web
 					}
 					Parameters.SaveParams();
 				}
-				else if (url.StartsWith("p2spro://scan?", StringComparison.CurrentCultureIgnoreCase) ||
-					url.StartsWith("p2spro://scan/?", StringComparison.CurrentCultureIgnoreCase))
+				else if (urlWithoutProtocol.StartsWith("scan?", StringComparison.CurrentCultureIgnoreCase) ||
+					urlWithoutProtocol.StartsWith("scan/?", StringComparison.CurrentCultureIgnoreCase))
 
 				{
-					if(url.Contains("callback="))
+					if(urlWithoutProtocol.Contains("callback="))
 					{
 						string callbackCommand = url.Substring(url.IndexOf("callback=", StringComparison.CurrentCultureIgnoreCase) + "callback=".Length);
 						if (callbackCommand.IndexOf('&') > 0) callbackCommand = callbackCommand.Substring(0, callbackCommand.IndexOf('&'));
@@ -402,6 +406,8 @@ namespace QR2Web
 			// check qr to Web protocol
 			else if(url.StartsWith("qr2web"))
 			{
+				urlWithoutProtocol = url.Substring("qr2web:".Length).TrimStart(new char['/']);
+
 				Instance.StartScan();
 			}
 			// no protocol found, start the normal scan and return the result in the standard function
