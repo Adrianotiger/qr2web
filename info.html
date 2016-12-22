@@ -17,7 +17,21 @@ title: QR2Web Inventory - Info
               </p>
               <hr style='width:60%' />
               Current Version: 1<br>
-              Your Version: <?php echo (isset($_GET['version'])?$_GET['version']:"unknown") ?>
+              Your Version: 
+              <script>
+                var params = document.location.search;
+                qs = qs.split('+').join(' ');
+
+                var params = {},
+                    tokens,
+                    re = /[?&]?([^=]+)=([^&]*)/g;
+
+                while (tokens = re.exec(qs)) {
+                    params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+                }
+                if(params['version']) document.write(params['version']);
+                else document.write("unknown");
+              </script>
             </span>
           </td>
      </tr>
