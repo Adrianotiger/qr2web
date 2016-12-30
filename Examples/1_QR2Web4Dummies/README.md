@@ -1,11 +1,11 @@
 #QR2Web for dummies
 This is a simple HTML page.
 To test this page, you can open this link inside your app:
-https://github.com/Adrianotiger/qr2web/blob/master/Examples/1_QR2Web4Dummies/index.html
+https://adrianotiger.github.io/qr2web/demos/example1.html
 
 Or set this link as webpage in your app (under setting) and open this link [qr2web:/scan](qr2web:/scan):
 ```
-https://github.com/Adrianotiger/qr2web/blob/master/Examples/1_QR2Web4Dummies/index.html
+https://adrianotiger.github.io/qr2web/demos/example1.html
 ```
 
 The code of this page is really simple:
