@@ -35,14 +35,14 @@ namespace QR2Web.UWP
 		public void ShowFullScreen()
 		{
 			// no full screen on desktop PC
-			if (Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Desktop)
-			{
-				ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-			}
-			else
+			if (Xamarin.Forms.Device.Idiom == Xamarin.Forms.TargetIdiom.Phone)
 			{
 				ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 				ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+			}
+			else
+			{
+				ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 			}
 		}
 

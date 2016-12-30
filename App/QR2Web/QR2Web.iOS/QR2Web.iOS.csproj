@@ -174,6 +174,21 @@
   <ItemGroup>
     <BundleResource Include="Resources\QR.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\scanp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\scanr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\scanc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\scanl2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\scanl1.png" />
+  </ItemGroup>
   <Import Project="..\QR2Web\QR2Web.projitems" Label="Shared" Condition="Exists('..\QR2Web\QR2Web.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.175\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

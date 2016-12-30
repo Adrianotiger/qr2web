@@ -2206,8 +2206,8 @@ namespace QR2Web.Droid
 			// aapt resource value: 0x7f0200a0
 			public const int mr_ic_play_light = 2130837664;
 			
-			// aapt resource value: 0x7f0200a5
-			public const int notification_template_icon_bg = 2130837669;
+			// aapt resource value: 0x7f0200aa
+			public const int notification_template_icon_bg = 2130837674;
 			
 			// aapt resource value: 0x7f0200a1
 			public const int QR = 2130837665;
@@ -2216,10 +2216,25 @@ namespace QR2Web.Droid
 			public const int scanb = 2130837666;
 			
 			// aapt resource value: 0x7f0200a3
-			public const int scanh = 2130837667;
+			public const int scanc = 2130837667;
 			
 			// aapt resource value: 0x7f0200a4
-			public const int scanm = 2130837668;
+			public const int scanh = 2130837668;
+			
+			// aapt resource value: 0x7f0200a5
+			public const int scanl1 = 2130837669;
+			
+			// aapt resource value: 0x7f0200a6
+			public const int scanl2 = 2130837670;
+			
+			// aapt resource value: 0x7f0200a7
+			public const int scanm = 2130837671;
+			
+			// aapt resource value: 0x7f0200a8
+			public const int scanp = 2130837672;
+			
+			// aapt resource value: 0x7f0200a9
+			public const int scanr = 2130837673;
 			
 			static Drawable()
 			{

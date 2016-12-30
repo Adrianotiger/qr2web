@@ -114,6 +114,11 @@
     <None Include="Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="scanc.png" />
+    <Content Include="scanl1.png" />
+    <Content Include="scanl2.png" />
+    <Content Include="scanp.png" />
+    <Content Include="scanr.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

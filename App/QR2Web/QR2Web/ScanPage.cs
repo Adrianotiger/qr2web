@@ -21,9 +21,9 @@ namespace QR2Web
 		public async Task<ZXing.Result> StartScan()
 		{
 			var options = new ZXing.Mobile.MobileBarcodeScanningOptions();
-			options.TryHarder = true;
-			options.TryInverted = true;
-			options.AutoRotate = true;
+			//options.TryHarder = true;
+			//options.TryInverted = true;
+			//options.AutoRotate = true;
 			options.PossibleFormats = new List<ZXing.BarcodeFormat>();
 			options.PossibleFormats.Add(ZXing.BarcodeFormat.QR_CODE);
 			if (Parameters.Options.AcceptBarcode_Code)
@@ -46,24 +46,7 @@ namespace QR2Web
 			}
 
 			isScanning = true;
-
-			/*
-			var customOverlay = new StackLayout
-			{
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				VerticalOptions = LayoutOptions.FillAndExpand
-			};
-			Button torch = new Button
-			{
-				Text = "Toggle Torch"
-			};
-			torch.Clicked += delegate {
-
-			};
-			customOverlay.Children.Add(torch);
-			*/
-
-
+			
 			int iSecondsToScan = 10;
 			String BaseText = Language.GetText("AppTitle") + "\n" + Language.GetText("TimeToScan").Replace("XX", iSecondsToScan.ToString());
 
@@ -71,8 +54,8 @@ namespace QR2Web
 			scanner.BottomText = Language.GetText("ScannerText1");
 			scanner.CancelButtonText = Language.GetText("Cancel");
 			scanner.FlashButtonText = Language.GetText("ScannerText2");
-			scanner.TopText = BaseText;
-	
+			scanner.TopText = BaseText;	
+
 			Device.StartTimer(new TimeSpan(0, 0, 1), () =>
 			{
 				iSecondsToScan--;
@@ -90,7 +73,7 @@ namespace QR2Web
 				return true;
 			}
 			);
-			
+
 			ZXing.Result result = await scanner.Scan(options);
 			
 			isScanning = false;

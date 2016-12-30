@@ -116,6 +116,7 @@ namespace QR2Web
 		static private void FillDictionary()
 		{
 			AddText("AppTitle", new string[] { "QR to Web Inventory", "QR to Web Inventory", "QR to Web Inventory" });
+			AddText("AppTitleShort", new string[] { "QR2Web", "QR2Web", "QR2Web" });
 			AddText("Settings", new string[] { "Settings", "Einstellungen", "Impostazioni" });
 			AddText("Help", new string[] { "Help", "Hilfe", "Aiuto" });
 			AddText("About", new string[] { "About", "Über", "Info" });

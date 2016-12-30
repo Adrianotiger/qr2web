@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Xamarin.Forms;
+using ZXing.Net.Mobile.Forms;
 
 namespace QR2Web
 {
@@ -12,13 +14,20 @@ namespace QR2Web
 		private Button ScanButton;
 		private Button HistoryButton;
 		private Button MoreButton;
+		private Button HomeButton;
 		private WebView WebPageWebView;
 		private Scanner QRScanner;
+		private StackLayout TitleStack;
 
 		private List<KeyValuePair<DateTime, string>> History = new List<KeyValuePair<DateTime, string>>(16);
 
 		public static App Instance { get; set; } = null;	// Used to access App from the different OS codes
 		public static int AppVersion { get; } = 12;         // Version of this app for the different OS codes
+
+		protected override void OnAppLinkRequestReceived(Uri uri)
+		{
+			base.OnAppLinkRequestReceived(uri);
+		}
 
 		/// <summary>
 		/// Constructor. Will initialize the view (for Xamarin), load the parameters and initialize the QR-scanner.
@@ -32,8 +41,8 @@ namespace QR2Web
 			Parameters.LoadOptions();						// load app options
 
 			if (!Parameters.Options.SaveHistory) History.Clear();	// clear history if no history should be used
-			Language.SetLanguage(Parameters.Options.LanguageIndex); // set language for the app from options
-
+			Language.SetLanguage(Parameters.Options.LanguageIndex); // set language for the app from options	
+			
 			// create top-bar buttons
 			ScanButton = new Button
 			{
@@ -55,6 +64,19 @@ namespace QR2Web
 				},
 			};
 			HistoryButton.Clicked += HistoryScan_Clicked;
+
+			HomeButton = new Button
+			{
+				Image = new FileImageSource
+				{
+					File = "scanp.png",
+				},
+			};
+			HomeButton.Clicked += (sender, e) =>
+			{
+				WebPageWebView.Source = Parameters.Options.HomePage;
+			};
+
 			MoreButton = new Button
 			{
 				Image = new FileImageSource
@@ -82,6 +104,38 @@ namespace QR2Web
 					StartScanFromWeb(e.Url.ToString());
 				}
 			};
+			WebPageWebView.SizeChanged += (s, e) =>
+			{
+				while (TitleStack.Children.Count > 1)
+				{
+					TitleStack.Children.RemoveAt(1);
+				}
+				if (WebPageWebView.Bounds.Width > 200)
+					TitleStack.Children.Add(ScanButton);
+				if (WebPageWebView.Bounds.Width > 400)
+					TitleStack.Children.Add(HomeButton);
+				if (WebPageWebView.Bounds.Width > 300)
+					TitleStack.Children.Add(HistoryButton);
+				TitleStack.Children.Add(MoreButton);
+			};
+
+			TitleStack = new StackLayout
+			{
+				VerticalOptions = LayoutOptions.Fill,
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				HeightRequest = 50,
+				Orientation = StackOrientation.Horizontal,
+				Children = {
+								new Label
+								{
+									Text = Language.GetText("AppTitleShort"),
+									HorizontalOptions = LayoutOptions.StartAndExpand,
+									VerticalOptions = LayoutOptions.Fill,
+									VerticalTextAlignment = TextAlignment.Center,
+									TextColor = Color.Yellow
+								}
+							}
+			};
 
 			// Don't show button if there is no QR-history 
 			HistoryButton.IsVisible = Parameters.Options.SaveHistory;
@@ -94,27 +148,7 @@ namespace QR2Web
 					VerticalOptions = LayoutOptions.Fill,
 					HorizontalOptions = LayoutOptions.Fill,
 					Children = {
-						new StackLayout
-						{
-							VerticalOptions = LayoutOptions.Fill,
-							HorizontalOptions = LayoutOptions.FillAndExpand,
-							HeightRequest = 50,
-							Orientation = StackOrientation.Horizontal,
-							Children = {
-								new Label
-								{
-									Text = Language.GetText("AppTitle"),
-									HorizontalOptions = LayoutOptions.StartAndExpand,
-									VerticalOptions = LayoutOptions.Fill,
-									VerticalTextAlignment = TextAlignment.Center,
-									TextColor = Color.Yellow
-								},
-								ScanButton,
-								HistoryButton,
-								MoreButton
-							}
-
-						},
+						TitleStack,
 						WebPageWebView
 					}
 				},
@@ -198,6 +232,25 @@ namespace QR2Web
 		/// </summary>
 		public async void StartScan()
 		{
+			//////////////// TEST
+			CustomScanPage customPage = new CustomScanPage();
+
+			customPage.Disappearing += (s, e) =>
+			{
+				ZXing.Result result = customPage.result;
+
+				if (result != null)
+				{
+					AddHistory(result.Text);
+					OpenJSFunction(result.Text);
+				}
+
+				Parameters.TemporaryOptions.ResetOptions();
+			};
+
+			await App.Current.MainPage.Navigation.PushModalAsync(customPage);
+			
+			/*
 			ZXing.Result result = await QRScanner.StartScan();
 
 			if (result != null)
@@ -207,6 +260,7 @@ namespace QR2Web
 			}
 
 			Parameters.TemporaryOptions.ResetOptions();
+			*/
 		}
 
 		/// <summary>
