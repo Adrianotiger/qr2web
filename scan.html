@@ -80,6 +80,16 @@ title: QR2Web Inventory - Scan
 		    document.getElementById("buttons").appendChild(span);
 		}
 
+		if (qrCodeString.indexOf("geo:") === 0 || qrCodeString.indexOf("GEO:") === 0)
+		{
+		    //var geo = qrCodeString.substring(4);
+		    //var lat = geo.substring(0, phone.indexOf(":"));
+		    //var lon = geo.substring(phone.indexOf(":") + 1);
+		    //var span = createButtonNode("images/b_sms.png", "sms://" + phone + "?body=" + encodeURI(message), "send SMS");
+		    var span = createButtonNode("images/b_sms.png", qrCodeString, "send SMS");
+		    document.getElementById("buttons").appendChild(span);
+		}
+
         /*
 		document.getElementById('barcodelookup').href = 'https://www.barcodelookup.com/' + qrCode;
 		document.getElementById('weblink').href=qrCode;
