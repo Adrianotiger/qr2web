@@ -8,7 +8,7 @@ title: QR2Web Inventory - Scan
     {
         var span = document.createElement("div");
         span.setAttribute("class", "btn");
-        span.setAttribute("style", "width:100px;height:100px;");
+        span.setAttribute("style", "width:100px;height:100px;display:table;");
         var a = document.createElement("a");
         a.setAttribute("href", link);
         a.setAttribute("target", "_blank");
@@ -63,6 +63,23 @@ title: QR2Web Inventory - Scan
 		    document.getElementById("buttons").appendChild(span);
 		}
 
+		if (qrCodeString.indexOf("matmsg:") === 0 || qrCodeString.indexOf("MATMSG:") === 0)
+		{
+		    var newString = qrCodeString.substring(7);
+		    var mailto = "";
+		    var mailsub = "";
+		    var mailbody = "";
+		    if (qrCodeString.indexOf("to:") > 0 && qrCodeString.indexOf(";sub:") > 0)
+		    {
+		        mailto = qrCodeString.substring(qrCodeString.indexOf("to:") + 3, qrCodeString.indexOf(";sub:"));
+		        mailsub = qrCodeString.substring(qrCodeString.indexOf(";sub:") + 4, qrCodeString.indexOf(";body:"));
+		        mailbody = qrCodeString.substring(qrCodeString.indexOf(";body:") + 6);
+		        mailbody.trimRight(";");
+		    }
+		    var span = createButtonNode("images/b_call.png", "mailto:" + mailto + "?subject=" + encodeURI(mailsub) + "&body=" + encodeURI(mailbody), "Phone Call");
+		    document.getElementById("buttons").appendChild(span);
+		}
+
         /*
 		document.getElementById('barcodelookup').href = 'https://www.barcodelookup.com/' + qrCode;
 		document.getElementById('weblink').href=qrCode;
@@ -103,7 +120,7 @@ title: QR2Web Inventory - Scan
 		</tr>
    	</table>
     <hr width="50%" />
-    <div id="buttons">
+    <div id="buttons" style="text-align:center;display:block;margin:0 auto;">
 
 
     </div>
