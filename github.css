@@ -76,3 +76,22 @@ h3
 {
   margin:5px;
 }
+.btn 
+{
+  background: #d1de59;
+  background-image: linear-gradient(to bottom, #d1de59, #ab7344);
+  border-radius: 14px;
+  box-shadow: 3px 4px 8px #666666;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover 
+{
+  background: #94bdd6;
+  background-image: linear-gradient(to bottom, #94bdd6, #2b678f);
+  text-decoration: none;
+}
