@@ -3,27 +3,24 @@ layout: default
 title: QR2Web Inventory - Scan
 ---
 <script>
-    function createImgNode(src)
+    
+    function createButtonNode(image, link, text)
     {
-        var img = document.createElement("img");
-        img.setAttribute("src", src);
-        img.setAttribute("style", "width:64px;");
-        return img;
-    }
-
-    function createButtonNode(img, link, text)
-    {
-        var span = document.createElement("a");
+        var span = document.createElement("span");
         span.setAttribute("class", "btn");
         span.setAttribute("style", "width:200px;height:200px;");
-        span.setAttribute("href", link);
-        span.setAttribute("target", "_blank");
-        var img = createImgNode(img);
+        var a = document.createElement("a");
+        a.setAttribute("href", link);
+        a.setAttribute("target", "_blank");
+        var img = document.createElement("img");
+        img.setAttribute("src", image);
+        img.setAttribute("style", "width:64px;");
         var txt = document.createTextNode(text);
         var br = document.createElement("br");
-        span.appendChild(img);
-        span.appendChild(br);
-        span.appendChild(txt);
+        a.appendChild(img);
+        a.appendChild(br);
+        a.appendChild(txt);
+        span.appendChild(a);
         return span;
     }
 
