@@ -3,10 +3,38 @@ layout: default
 title: QR2Web Inventory - Scan
 ---
 <script>
+    function createImgNode(src)
+    {
+        var img = document.createElement("img");
+        img.setAttribute("img", src);
+        img.setAttribute("style", "width:64px;");
+        return img;
+    }
+
 	function onscan(qrCode)
 	{
-		document.getElementById('scannedResult').value = qrCode;
-		document.getElementById('barcodelookup').href='https://www.barcodelookup.com/' + qrCode;
+	    document.getElementById('scannedResult').value = qrCode;
+
+	    while (document.getElementById("buttons").hasChildNodes())
+	    {
+	        document.getElementById("buttons").removeChild(document.getElementById("buttons").childNodes[0]);
+	    }
+
+		if (qrCodeString.indexOf("http") === 0)
+		{
+		    var span = document.createElement("a");
+		    span.setAttribute("class", "btn");
+		    span.setAttribute("style", "width:200px;height:200px;");
+		    span.setAttribute("href", qrCode);
+		    var img = createImgNode("images/b_url.png");
+		    var txt = document.createTextNode("Open URL");
+		    span.appendChild(img);
+		    span.appendChild(txt);
+
+		    document.getElementById("buttons").appendChild(span);
+		}
+        /*
+		document.getElementById('barcodelookup').href = 'https://www.barcodelookup.com/' + qrCode;
 		document.getElementById('weblink').href=qrCode;
 
 		var qrCodeString = "" + qrCode;
@@ -20,7 +48,9 @@ title: QR2Web Inventory - Scan
 		  document.getElementById('weblink').parentNode.style.display = 'none';
 		  document.getElementById('barcodelookup').parentNode.style.display = 'block';
 		}
+        */
 	}
+
 </script>
 <div class="blurb">
 	<h1>QR to WEB Inventory</h1>
@@ -37,14 +67,16 @@ title: QR2Web Inventory - Scan
 				       />
 			</td>
 			<td>
-				<a href='qr2web:/scan' style='border-style:ridge;border-radius:3px;border-width:2px;border-color:white;height:68px;'>
+				<a href='qr2web:/scan'>
 					<img src='images/scan.png' style='height:64px;'>
 				</a>
 			</td>
 		</tr>
-	</table>
-    	<h3>3. Action</h3>
-    	Once the result is know, you can do something with this code:<br>
+   	</table>
+    <hr width="50%" />
+    <div id="buttons">
+
+    </div>
     	<div style='display:none;'><a href='https://www.barcodelookup.com/' id='barcodelookup' target='_blank' >SEARCH ON www.BarcodeLookup.com</a></div>
     	<div style='display:none;'><a href='' id='weblink' target='_blank' >OPEN LINK</a></div>
     	<br>
