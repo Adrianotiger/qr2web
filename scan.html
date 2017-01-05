@@ -29,6 +29,10 @@ title: QR2Web Inventory - Scan
 	    var qrCodeString = "" + qrCode;
 
 	    document.getElementById('scannedResult').value = qrCode;
+	    if (qrCodeString.length > 13)
+	        document.getElementById('scannedResult').style.fontsize = (30 - parseInt((qrCodeString.length - 14) / 3)) + "px";
+	    else
+	        document.getElementById('scannedResult').style.fontsize = 30;
 
 	    while (document.getElementById("buttons").hasChildNodes())
 	    {
@@ -38,6 +42,15 @@ title: QR2Web Inventory - Scan
 		if (qrCodeString.indexOf("http") === 0 || qrCodeString.indexOf("www.") === 0)
 		{
 		    var span = createButtonNode("images/b_url.png", qrCodeString, "Open URL");
+		    document.getElementById("buttons").appendChild(span);
+		}
+
+		if (qrCodeString.indexOf("smsto:") === 0 || qrCodeString.indexOf("SMSTO:") === 0)
+		{
+		    var phone = qrCodeString.substring(7);
+		    var message = phone.substring(phone.indexOf(":"));
+		    phone = phone.substring(0, phone.indexOf(":"));
+		    var span = createButtonNode("images/b_sms.png", "sms://" + phone + "?body=" + encodeURI(message), "send SMS");
 		    document.getElementById("buttons").appendChild(span);
 		}
 
@@ -70,7 +83,6 @@ title: QR2Web Inventory - Scan
 				       id='scannedResult' 
 				       name='scanResult' 
 				       value='scan...'
-				       readonly
 				       style='width:100%;height:40px;font-size:30px;border-radius:4px;text-align:center;'
 				       />
 			</td>
@@ -90,7 +102,7 @@ title: QR2Web Inventory - Scan
     	<div style='display:none;'><a href='' id='weblink' target='_blank' >OPEN LINK</a></div>
     	<br>
   	<h2>AND NOW?</h2>
-    <!--<button onclick="javascript:onscan('http://www.petrucci.ch');">insert link</button>-->
+    <button onclick="javascript:onscan('http://www.petrucci.ch');">insert link</button>
 	<a href="https://github.com/Adrianotiger/qr2web/" target="_blank">
 		Visit the GitHub page
 	</a>
