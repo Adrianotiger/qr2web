@@ -6,13 +6,31 @@ title: QR2Web Inventory - Scan
     function createImgNode(src)
     {
         var img = document.createElement("img");
-        img.setAttribute("img", src);
+        img.setAttribute("src", src);
         img.setAttribute("style", "width:64px;");
         return img;
     }
 
+    function createButtonNode(img, link, text)
+    {
+        var span = document.createElement("a");
+        span.setAttribute("class", "btn");
+        span.setAttribute("style", "width:200px;height:200px;");
+        span.setAttribute("href", link);
+        span.setAttribute("target", "_blank");
+        var img = createImgNode(img);
+        var txt = document.createTextNode(text);
+        var br = document.createElement("br");
+        span.appendChild(img);
+        span.appendChild(br);
+        span.appendChild(txt);
+        return span;
+    }
+
 	function onscan(qrCode)
-	{
+    {
+	    var qrCodeString = "" + qrCode;
+
 	    document.getElementById('scannedResult').value = qrCode;
 
 	    while (document.getElementById("buttons").hasChildNodes())
@@ -20,19 +38,12 @@ title: QR2Web Inventory - Scan
 	        document.getElementById("buttons").removeChild(document.getElementById("buttons").childNodes[0]);
 	    }
 
-		if (qrCodeString.indexOf("http") === 0)
+		if (qrCodeString.indexOf("http") === 0 || qrCodeString.indexOf("www.") === 0)
 		{
-		    var span = document.createElement("a");
-		    span.setAttribute("class", "btn");
-		    span.setAttribute("style", "width:200px;height:200px;");
-		    span.setAttribute("href", qrCode);
-		    var img = createImgNode("images/b_url.png");
-		    var txt = document.createTextNode("Open URL");
-		    span.appendChild(img);
-		    span.appendChild(txt);
-
+		    var span = createButtonNode("images/b_url.png", qrCodeString, "Open URL");
 		    document.getElementById("buttons").appendChild(span);
 		}
+
         /*
 		document.getElementById('barcodelookup').href = 'https://www.barcodelookup.com/' + qrCode;
 		document.getElementById('weblink').href=qrCode;
@@ -76,11 +87,13 @@ title: QR2Web Inventory - Scan
     <hr width="50%" />
     <div id="buttons">
 
+
     </div>
     	<div style='display:none;'><a href='https://www.barcodelookup.com/' id='barcodelookup' target='_blank' >SEARCH ON www.BarcodeLookup.com</a></div>
     	<div style='display:none;'><a href='' id='weblink' target='_blank' >OPEN LINK</a></div>
     	<br>
   	<h2>AND NOW?</h2>
+    <!--<button onclick="javascript:onscan('http://www.petrucci.ch');">insert link</button>-->
 	<a href="https://github.com/Adrianotiger/qr2web/" target="_blank">
 		Visit the GitHub page
 	</a>
