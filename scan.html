@@ -10,6 +10,7 @@ title: QR2Web Inventory - Scan
         span.setAttribute("class", "btn");
         span.setAttribute("style", "width:200px;height:200px;");
         var a = document.createElement("a");
+        a.addEventListener("onclick", "alert(this.href)");
         a.setAttribute("href", link);
         a.setAttribute("target", "_blank");
         var img = document.createElement("img");
@@ -102,7 +103,6 @@ title: QR2Web Inventory - Scan
     	<div style='display:none;'><a href='' id='weblink' target='_blank' >OPEN LINK</a></div>
     	<br>
   	<h2>AND NOW?</h2>
-    <button onclick="javascript:onscan('http://www.petrucci.ch');">insert link</button>
 	<a href="https://github.com/Adrianotiger/qr2web/" target="_blank">
 		Visit the GitHub page
 	</a>
