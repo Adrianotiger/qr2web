@@ -76,7 +76,7 @@ title: QR2Web Inventory - Scan
 		        mailbody = qrCodeString.substring(qrCodeString.indexOf(";body:") + 6);
 		        mailbody.trimRight(";");
 		    }
-		    var span = createButtonNode("images/b_email.png", "mailto:" + mailto + "?subject=" + encodeURI(mailsub) + "&body=" + encodeURI(mailbody), "Phone Call");
+		    var span = createButtonNode("images/b_email.png", "mailto:" + mailto + "?subject=" + encodeURI(mailsub) + "&body=" + encodeURI(mailbody), "Send Mail");
 		    document.getElementById("buttons").appendChild(span);
 		}
 
@@ -86,7 +86,7 @@ title: QR2Web Inventory - Scan
 		    //var lat = geo.substring(0, phone.indexOf(":"));
 		    //var lon = geo.substring(phone.indexOf(":") + 1);
 		    //var span = createButtonNode("images/b_sms.png", "sms://" + phone + "?body=" + encodeURI(message), "send SMS");
-		    var span = createButtonNode("images/b_sms.png", qrCodeString, "send SMS");
+		    var span = createButtonNode("images/b_maps.png", qrCodeString, "View on Map");
 		    document.getElementById("buttons").appendChild(span);
 		}
 
