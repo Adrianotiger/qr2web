@@ -47,11 +47,11 @@ title: QR2Web Inventory - Scan
 
 		if (qrCodeString.indexOf("smsto:") === 0 || qrCodeString.indexOf("SMSTO:") === 0)
 		{
-		    var phone = qrCodeString.substring(7);
+		    var phone = qrCodeString.substring(6);
 		    if (phone.indexOf(":") > 0)
 		    {
 		        var message = phone.substring(phone.indexOf(":") + 1);
-		        phone = phone.substring(0, phone.indexOf(":"));
+		        phone = phone.substring(0, phone.indexOf(":") - 1);
 		        var span = createButtonNode("images/b_sms.png", "sms://" + phone + "?body=" + encodeURI(message), "send SMS");
 		        document.getElementById("buttons").appendChild(span);
 		    }
