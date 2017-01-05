@@ -8,9 +8,8 @@ title: QR2Web Inventory - Scan
     {
         var span = document.createElement("div");
         span.setAttribute("class", "btn");
-        span.setAttribute("style", "width:200px;height:200px;");
+        span.setAttribute("style", "width:100px;height:100px;");
         var a = document.createElement("a");
-        a.addEventListener("onclick", "alert(this.href)");
         a.setAttribute("href", link);
         a.setAttribute("target", "_blank");
         var img = document.createElement("img");
@@ -49,9 +48,18 @@ title: QR2Web Inventory - Scan
 		if (qrCodeString.indexOf("smsto:") === 0 || qrCodeString.indexOf("SMSTO:") === 0)
 		{
 		    var phone = qrCodeString.substring(7);
-		    var message = phone.substring(phone.indexOf(":"));
-		    phone = phone.substring(0, phone.indexOf(":"));
-		    var span = createButtonNode("images/b_sms.png", "sms://" + phone + "?body=" + encodeURI(message), "send SMS");
+		    if (phone.indexOf(":") > 0)
+		    {
+		        var message = phone.substring(phone.indexOf(":") + 1);
+		        phone = phone.substring(0, phone.indexOf(":"));
+		        var span = createButtonNode("images/b_sms.png", "sms://" + phone + "?body=" + encodeURI(message), "send SMS");
+		        document.getElementById("buttons").appendChild(span);
+		    }
+		}
+
+		if (qrCodeString.indexOf("tel:") === 0 || qrCodeString.indexOf("TEL:") === 0)
+		{
+		    var span = createButtonNode("images/b_call.png", qrCodeString, "Phone Call");
 		    document.getElementById("buttons").appendChild(span);
 		}
 
