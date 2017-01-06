@@ -8,7 +8,7 @@ title: QR2Web Inventory - Scan
     {
         var span = document.createElement("div");
         span.setAttribute("class", "btn");
-        span.setAttribute("style", "width:100px;height:100px;display:table;");
+        span.setAttribute("style", "width:100px;height:100px;display:inline-table;");
         var a = document.createElement("a");
         a.setAttribute("href", link);
         a.setAttribute("target", "_blank");
@@ -124,7 +124,9 @@ title: QR2Web Inventory - Scan
 			</td>
 		</tr>
    	</table>
-    <hr width="50%" />
+    
+	<span style='overflow:auto;display:block;height:50vh;' id='span'>
+		<hr style='width:50%' />
     <div id="buttons" style="text-align:center;display:table;margin:0 auto;">
 
 
@@ -141,5 +143,6 @@ title: QR2Web Inventory - Scan
                 Develop your own webpage
         </a>
         <br>
+	</span>
 	
 </div>
