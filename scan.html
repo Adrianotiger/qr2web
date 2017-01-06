@@ -92,13 +92,13 @@ title: QR2Web Inventory - Scan
         
         if(Number(qrCodeString) > 1000)
         {
-        	var span = createButtonNode("images/b_search.png", "http://www.upcitemdb.com/upc/" + qrCodeString, "Search on UPC ItemDB");
+        	var span = createButtonNode("images/b_search.png", "http://www.upcitemdb.com/upc/" + qrCodeString, "UPC ItemDB");
 		    document.getElementById("buttons").appendChild(span);
             
-            span = createButtonNode("images/b_search.png", "https://www.upcdatabase.com/item/" + qrCodeString, "Search on UPC Database");
+            span = createButtonNode("images/b_search.png", "https://www.upcdatabase.com/item/" + qrCodeString, "UPC Database");
 		    document.getElementById("buttons").appendChild(span);
             
-            span = createButtonNode("images/b_search.png", "https://www.barcodelookup.com/" + qrCodeString, "Search on BarcodeLookup");
+            span = createButtonNode("images/b_search.png", "https://www.barcodelookup.com/" + qrCodeString, "Barcode Lookup");
 		    document.getElementById("buttons").appendChild(span);
         }
 	}
