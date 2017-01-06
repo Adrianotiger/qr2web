@@ -79,7 +79,7 @@ title: QR2Web Inventory - Scan
 		    var span = createButtonNode("images/b_email.png", "mailto:" + mailto + "?subject=" + encodeURI(mailsub) + "&body=" + encodeURI(mailbody), "Send Mail");
 		    document.getElementById("buttons").appendChild(span);
 		}
-
+        
 		if (qrCodeString.indexOf("geo:") === 0 || qrCodeString.indexOf("GEO:") === 0)
 		{
 		    //var geo = qrCodeString.substring(4);
@@ -89,23 +89,18 @@ title: QR2Web Inventory - Scan
 		    var span = createButtonNode("images/b_maps.png", qrCodeString, "View on Map");
 		    document.getElementById("buttons").appendChild(span);
 		}
-
-        /*
-		document.getElementById('barcodelookup').href = 'https://www.barcodelookup.com/' + qrCode;
-		document.getElementById('weblink').href=qrCode;
-
-		var qrCodeString = "" + qrCode;
-		if(qrCodeString.indexOf("http")===0)
-		{
-		  document.getElementById('weblink').parentNode.style.display = 'block';
-		  document.getElementById('barcodelookup').parentNode.style.display = 'none';
-		}
-		else
-		{
-		  document.getElementById('weblink').parentNode.style.display = 'none';
-		  document.getElementById('barcodelookup').parentNode.style.display = 'block';
-		}
-        */
+        
+        if(Number(qrCodeString) === qrCodeString)
+        {
+        	var span = createButtonNode("images/b_search.png", "http://www.upcitemdb.com/upc/" + qrCodeString, "Search on UPC ItemDB");
+		    document.getElementById("buttons").appendChild(span);
+            
+            span = createButtonNode("images/b_search.png", "https://www.upcdatabase.com/item/" + qrCodeString, "Search on UPC Database");
+		    document.getElementById("buttons").appendChild(span);
+            
+            span = createButtonNode("images/b_search.png", "https://www.barcodelookup.com/" + qrCodeString, "Search on BarcodeLookup");
+		    document.getElementById("buttons").appendChild(span);
+        }
 	}
 
 </script>
