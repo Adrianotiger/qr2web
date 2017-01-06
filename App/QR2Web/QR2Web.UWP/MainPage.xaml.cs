@@ -57,6 +57,7 @@ namespace QR2Web.UWP
 		public void InitExternalLibraries()
 		{
 			ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer.Init();
+
 		}
 
 		public void InitOSSettings()

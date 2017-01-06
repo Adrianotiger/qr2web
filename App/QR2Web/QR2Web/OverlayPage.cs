@@ -34,21 +34,23 @@ namespace QR2Web
 			var torch = new Button
 			{
 				Text = "Torch",
-				HorizontalOptions = LayoutOptions.FillAndExpand
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				TextColor = Color.White
 			};
 			torch.Clicked += delegate {
-				zxing.ToggleTorch();
+				zxing.ToggleTorch();				
 			};
 
 			var abort = new Button
 			{
 				Text = "Abort",
-				HorizontalOptions = LayoutOptions.FillAndExpand
+				HorizontalOptions = LayoutOptions.FillAndExpand,
+				TextColor = Color.White
 			};
 			abort.Clicked += delegate {
 				zxing.RaiseScanResult(null);
 			};
-
+			
 			var customOverlayTop = new StackLayout
 			{
 				HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -65,13 +67,15 @@ namespace QR2Web
 					{
 						Text = Language.GetText("AppTitle"),
 						HorizontalTextAlignment = TextAlignment.Center,
-						HorizontalOptions = LayoutOptions.CenterAndExpand
+						HorizontalOptions = LayoutOptions.CenterAndExpand,
+						TextColor = Color.White
 					},
 					new Label
 					{
 						Text = "Scan QR code...",
 						HorizontalTextAlignment = TextAlignment.Center,
-						HorizontalOptions = LayoutOptions.CenterAndExpand
+						HorizontalOptions = LayoutOptions.CenterAndExpand,
+						TextColor = Color.White
 					}
 				}
 			};
@@ -108,12 +112,10 @@ namespace QR2Web
 				BackgroundColor = Color.Black,
 				Opacity = 0.7,
 				Padding = new Thickness(0, 10, 0, 10),
-				Children =
-				{
-					abort,
-					torch,
-				}
 			};
+
+			customOverlayBottom.Children.Add(abort);
+			if(zxing.HasTorch) customOverlayBottom.Children.Add(torch);
 
 			var customOverlay = new Grid
 			{
@@ -150,12 +152,13 @@ namespace QR2Web
 			// The root page of your application
 			Content = grid;
 		}
-
+		
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
 
 			zxing.IsScanning = true;
+			
 		}
 
 		protected override void OnDisappearing()

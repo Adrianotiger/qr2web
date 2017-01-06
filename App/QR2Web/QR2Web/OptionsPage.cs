@@ -70,11 +70,8 @@ namespace QR2Web
 			languagePicker.SelectedIndex = Parameters.Options.LanguageIndex;
 			languagePicker.SelectedIndexChanged += (s, e) => { saveSettings = true; };
 					
-
-
 			Label NeedRestartText = new Label { Text = "--------------------------\n" + Language.GetText("NeedRestart") };
-
-
+			
 			Content = new StackLayout
 			{
 				Padding = new Thickness(10),
@@ -149,6 +146,8 @@ namespace QR2Web
 					NeedRestartText
 				},
 			};
+
+			NavigationPage.SetHasBackButton(this, true);
 		}
 
 		/// <summary>

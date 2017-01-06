@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -32,6 +33,48 @@ namespace QR2Web.UWP
 			this.Suspending += OnSuspending;
 		}
 
+		private void InitXamarin(IActivatedEventArgs e)
+		{
+			//// Workaround to show the scanner also on Windows.
+			List<Assembly> assembliesToInclude = new List<Assembly>();
+
+			assembliesToInclude.Add(typeof(ZXing.BarcodeReader).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Reader).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.BaseLuminanceSource).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Binarizer).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.BinaryBitmap).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Dimension).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.LuminanceSource).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.MultiFormatReader).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.PlanarYUVLuminanceSource).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Result).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.ResultPoint).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.RGBLuminanceSource).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.SupportClass).GetTypeInfo().Assembly);
+
+			assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingBarcodeImageView).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerView).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingDefaultOverlay).GetTypeInfo().Assembly);
+
+			assembliesToInclude.Add(typeof(ZXing.Net.Mobile.ZXing_Net_Mobile_WindowsUniversal_XamlTypeInfo.XamlMetaDataProvider).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingBarcodeImageViewRenderer).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
+
+			assembliesToInclude.Add(typeof(ZXing.Mobile.MobileBarcodeScanner).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Mobile.MobileBarcodeScannerBase).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Mobile.MobileBarcodeScanningOptions).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Mobile.ScanPage).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Mobile.MobileBarcodeScannerBase).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Mobile.SoftwareBitmapLuminanceSource).GetTypeInfo().Assembly);
+			assembliesToInclude.Add(typeof(ZXing.Mobile.ZXingScannerControl).GetTypeInfo().Assembly);
+
+			Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+			//// End workaround, the original init is only 1 line:
+
+			//Xamarin.Forms.Forms.Init(e);
+		}
+
 		/// <summary>
 		/// Invoked when the application is launched normally by the end user.  Other entry points
 		/// will be used such as when the application is launched to open a specific file.
@@ -58,7 +101,7 @@ namespace QR2Web.UWP
 
 				rootFrame.NavigationFailed += OnNavigationFailed;
 
-				Xamarin.Forms.Forms.Init(e);
+				InitXamarin(e);
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{
@@ -86,8 +129,8 @@ namespace QR2Web.UWP
 			{
 				ProtocolActivatedEventArgs pargs = (ProtocolActivatedEventArgs)args;
 				bool success = false;
-
-				if(pargs.PreviousExecutionState == ApplicationExecutionState.ClosedByUser ||
+				
+				if (pargs.PreviousExecutionState == ApplicationExecutionState.ClosedByUser ||
 					pargs.PreviousExecutionState == ApplicationExecutionState.NotRunning)
 				{
 					Frame rootFrame = Window.Current.Content as Frame;
@@ -101,8 +144,8 @@ namespace QR2Web.UWP
 
 						rootFrame.NavigationFailed += OnNavigationFailed;
 
-						Xamarin.Forms.Forms.Init(args);
-						
+						InitXamarin(args);
+
 						// Place the frame in the current Window
 						Window.Current.Content = rootFrame;
 					}

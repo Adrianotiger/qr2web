@@ -5,7 +5,7 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using ZXing.Net.Mobile.Forms;
+//using ZXing.Net.Mobile.Forms;
 
 namespace QR2Web
 {
@@ -107,6 +107,11 @@ namespace QR2Web
 			else if(Parameters.Options.Emulation > 0)
 			{
 				Emulation = Parameters.Options.Emulation;
+			}
+
+			if(scanCode.IndexOf("\n") > 0 || scanCode.IndexOf("\r") > 0)
+			{
+				scanCode = System.Net.WebUtility.UrlEncode(scanCode);
 			}
 
 			switch (Emulation)

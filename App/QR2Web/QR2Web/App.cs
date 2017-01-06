@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 
 using Xamarin.Forms;
-using ZXing.Net.Mobile.Forms;
+//using ZXing.Net.Mobile.Forms;
 
 namespace QR2Web
 {
@@ -15,14 +15,17 @@ namespace QR2Web
 		private Button HistoryButton;
 		private Button MoreButton;
 		private Button HomeButton;
+		private Button RefreshButton;
+		private Button SettingsButton;
 		private WebView WebPageWebView;
 		private Scanner QRScanner;
 		private StackLayout TitleStack;
+		private DateTime lastWindowUpdate;
 
 		private List<KeyValuePair<DateTime, string>> History = new List<KeyValuePair<DateTime, string>>(16);
 
 		public static App Instance { get; set; } = null;	// Used to access App from the different OS codes
-		public static int AppVersion { get; } = 12;         // Version of this app for the different OS codes
+		public static int AppVersion { get; } = 13;         // Version of this app for the different OS codes
 
 		protected override void OnAppLinkRequestReceived(Uri uri)
 		{
@@ -42,50 +45,11 @@ namespace QR2Web
 
 			if (!Parameters.Options.SaveHistory) History.Clear();	// clear history if no history should be used
 			Language.SetLanguage(Parameters.Options.LanguageIndex); // set language for the app from options	
-			
+
+
 			// create top-bar buttons
-			ScanButton = new Button
-			{
-				Image = new FileImageSource
-				{					
-					File = "scanb.png",
-				},
-			};
-			ScanButton.Clicked += (sender, e) =>
-			{
-				StartScan();
-			};
-
-			HistoryButton = new Button
-			{
-				Image = new FileImageSource
-				{
-					File = "scanh.png",
-				},
-			};
-			HistoryButton.Clicked += HistoryScan_Clicked;
-
-			HomeButton = new Button
-			{
-				Image = new FileImageSource
-				{
-					File = "scanp.png",
-				},
-			};
-			HomeButton.Clicked += (sender, e) =>
-			{
-				WebPageWebView.Source = Parameters.Options.HomePage;
-			};
-
-			MoreButton = new Button
-			{
-				Image = new FileImageSource
-				{
-					File = "scanm.png",
-				},
-			};
-			MoreButton.Clicked += MoreScan_Clicked;
-
+			InitButtons();
+			
 			// create webView for the page
 			WebPageWebView = new WebView
 			{
@@ -106,17 +70,34 @@ namespace QR2Web
 			};
 			WebPageWebView.SizeChanged += (s, e) =>
 			{
-				while (TitleStack.Children.Count > 1)
+				if(TitleStack.Children.Count == 1)
 				{
-					TitleStack.Children.RemoveAt(1);
+					lastWindowUpdate = DateTime.Now;
 				}
+				else
+				{
+					if((DateTime.Now - lastWindowUpdate).TotalSeconds > 2)
+					{
+						while (TitleStack.Children.Count > 1)
+						{
+							TitleStack.Children.RemoveAt(1);
+						}
+						lastWindowUpdate = DateTime.Now;
+					}
+				}
+				
 				if (WebPageWebView.Bounds.Width > 200)
 					TitleStack.Children.Add(ScanButton);
 				if (WebPageWebView.Bounds.Width > 400)
 					TitleStack.Children.Add(HomeButton);
+				if (WebPageWebView.Bounds.Width > 500)
+					TitleStack.Children.Add(RefreshButton);
 				if (WebPageWebView.Bounds.Width > 300)
 					TitleStack.Children.Add(HistoryButton);
+				if (WebPageWebView.Bounds.Width > 600)
+					TitleStack.Children.Add(SettingsButton);
 				TitleStack.Children.Add(MoreButton);
+				
 			};
 
 			TitleStack = new StackLayout
@@ -155,6 +136,78 @@ namespace QR2Web
 				Padding = new Thickness(0),
 				BackgroundColor = Color.Black,
 			};
+
+			NavigationPage.SetHasBackButton(MainPage, false);
+		}
+
+		private void InitButtons()
+		{
+			// create top-bar buttons
+			ScanButton = new Button
+			{
+				Image = new FileImageSource
+				{
+					File = "scanb.png",
+				},
+			};
+			ScanButton.Clicked += (sender, e) =>
+			{
+				StartScan();
+			};
+
+			HistoryButton = new Button
+			{
+				Image = new FileImageSource
+				{
+					File = "scanh.png",
+				},
+			};
+			HistoryButton.Clicked += HistoryScan_Clicked;
+
+			HomeButton = new Button
+			{
+				Image = new FileImageSource
+				{
+					File = "scanp.png",
+				},
+			};
+			HomeButton.Clicked += (sender, e) =>
+			{
+				WebPageWebView.Source = Parameters.Options.HomePage;
+			};
+
+			RefreshButton = new Button
+			{
+				Image = new FileImageSource
+				{
+					File = "scanr.png",
+				},
+			};
+			RefreshButton.Clicked += (sender, e) =>
+			{
+				WebPageWebView.Source = (WebPageWebView.Source as UrlWebViewSource).Url;
+			};
+
+			SettingsButton = new Button
+			{
+				Image = new FileImageSource
+				{
+					File = "scanc.png",
+				},
+			};
+			SettingsButton.Clicked += async (sender, e) =>
+			{
+				await App.Current.MainPage.Navigation.PushModalAsync(new OptionsPage());
+			};
+
+			MoreButton = new Button
+			{
+				Image = new FileImageSource
+				{
+					File = "scanm.png",
+				},
+			};
+			MoreButton.Clicked += MoreScan_Clicked;
 		}
 
 		/// <summary>

@@ -21,13 +21,13 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>6.0</string>
+	<string>8.1</string>
 	<key>CFBundleDisplayName</key>
-	<string>QR2Web</string>
+	<string>qr2web Inventory</string>
 	<key>CFBundleIdentifier</key>
-	<string>ch.petrucci.QR2Web</string>
+	<string>ch.petrucci.qr2web-Inventory</string>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>2</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon-60@2x.png</string>
@@ -59,6 +59,10 @@
 		</dict>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
+	<string>1.3</string>
+	<key>UIMainStoryboardFile</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile~ipad</key>
+	<string>LaunchScreen</string>
 </dict>
 </plist>
