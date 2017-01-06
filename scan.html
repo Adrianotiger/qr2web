@@ -90,7 +90,7 @@ title: QR2Web Inventory - Scan
 		    document.getElementById("buttons").appendChild(span);
 		}
         
-        if(Number(qrCodeString) === qrCodeString)
+        if(Number(qrCodeString) > 1000)
         {
         	var span = createButtonNode("images/b_search.png", "http://www.upcitemdb.com/upc/" + qrCodeString, "Search on UPC ItemDB");
 		    document.getElementById("buttons").appendChild(span);
