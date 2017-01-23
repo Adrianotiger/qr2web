@@ -1,7 +1,10 @@
 
 Scan codes with the smartphones and forward the parsed code to a webpage.
 
-[DOWNLOAD APP FROM THIS PAGE](https://github.com/Adrianotiger/qr2web/wiki/download)
+<a href="https://github.com/Adrianotiger/qr2web/wiki/download">Download App directly from store:
+
+<img src="https://github.com/Adrianotiger/qr2web/raw/gh-pages/images/stores.png">
+</a>
 
 ### Why this project?
 You find always more QR codes on the web and it is also easy to generate QR codes for own projects. Good smartphones (with Android or Windows Mobile) are able to scan a QR code directly from a webpage. Older smartphones and cheaper smartphones need an app because they are not able to access the camera from the webpage. So you need an app for each OS (=> store accounts, developer accounts, and $$$).
