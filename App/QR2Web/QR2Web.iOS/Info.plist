@@ -27,7 +27,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>ch.petrucci.qr2web-Inventory</string>
 	<key>CFBundleVersion</key>
-	<string>2</string>
+	<string>3</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon-60@2x.png</string>
@@ -45,6 +45,8 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow app to use GPS position</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -59,10 +61,10 @@
 		</dict>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.3</string>
-	<key>UIMainStoryboardFile</key>
-	<string>LaunchScreen</string>
+	<string>1.4</string>
 	<key>UIMainStoryboardFile~ipad</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
 </dict>
 </plist>

@@ -5,6 +5,7 @@ using System.Linq;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
+using CoreLocation;
 
 namespace QR2Web.iOS
 {
@@ -23,6 +24,8 @@ namespace QR2Web.iOS
 		//
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
+			global::Xamarin.Forms.Forms.Init();
+
 			LoadApplication (new QR2Web.App ());
 
 			InitExternalLibraries();
@@ -48,12 +51,13 @@ namespace QR2Web.iOS
 		
 		public void InitExternalLibraries()
 		{
-			global::Xamarin.Forms.Forms.Init();
 			ZXing.Net.Mobile.Forms.iOS.Platform.Init();
 		}
 
 		public void InitOSSettings()
 		{
+			var manager = new CLLocationManager();
+			manager.RequestWhenInUseAuthorization();
 		}
 
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations(UIApplication application, [Transient] UIWindow forWindow)
@@ -61,7 +65,7 @@ namespace QR2Web.iOS
 			if(Parameters.Options.LockPortrait)
 				return UIInterfaceOrientationMask.Portrait;
 			else
-				return base.GetSupportedInterfaceOrientations(application, forWindow);
+				return UIInterfaceOrientationMask.Portrait | UIInterfaceOrientationMask.Landscape;
 		}
 	}
 }

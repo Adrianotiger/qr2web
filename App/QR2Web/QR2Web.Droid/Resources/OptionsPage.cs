@@ -31,7 +31,7 @@ namespace QR2Web
 			webPageValue.TextChanged += (s, e) => { saveSettings = true; };
 
 			Label emulationModeText = new Label { Text = Language.GetText("Option2_1") };
-			emulationPicker = new Picker { HorizontalOptions = LayoutOptions.End };
+			emulationPicker = new Picker { Title = Language.GetText("Option2_1") };
 			emulationPicker.Items.Add(Language.GetText("Option2_2"));
 			emulationPicker.Items.Add("MochaSoft");
 			emulationPicker.Items.Add("Pic2Shop");
@@ -62,7 +62,7 @@ namespace QR2Web
 			saveHistorySwitch.Toggled += (s, e) => { saveSettings = true; };
 
 			Label languageText = new Label { Text = Language.GetText("Option6_1") + " *" };
-			languagePicker = new Picker { HorizontalOptions = LayoutOptions.End };
+			languagePicker = new Picker { Title = Language.GetText("Option6_1") };
 			languagePicker.Items.Add(Language.GetText("Option6_2"));
 			languagePicker.Items.Add(Language.GetText("Option6_3"));
 			languagePicker.Items.Add(Language.GetText("Option6_4"));
@@ -92,16 +92,7 @@ namespace QR2Web
 				var rootPage = new NavigationPage(this);
 				await rootPage.PopAsync();
 			};
-			Label optionTitle = new Label
-			{
-				Text = Language.GetText("Settings"),
-				FontSize = 20,
-				HorizontalTextAlignment = TextAlignment.Center,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				VerticalTextAlignment = TextAlignment.Center,
-				VerticalOptions = LayoutOptions.CenterAndExpand,
-				TextColor = Color.Blue
-			};
+			Label optionTitle = new Label { Text = Language.GetText("Settings"), FontSize = 20, HorizontalTextAlignment = TextAlignment.Center, HorizontalOptions = LayoutOptions.FillAndExpand };
 
 			if(Device.OS == TargetPlatform.iOS)
 				backbuttonLayout.Children.Add(backbuttonButton);

@@ -139,6 +139,7 @@ namespace QR2Web
 				HorizontalOptions = LayoutOptions.FillAndExpand,
 			};
 			grid.Children.Add(zxing);
+			//grid.Children.Add(overlay);
 			grid.Children.Add(customOverlay);
 
 			// The root page of your application

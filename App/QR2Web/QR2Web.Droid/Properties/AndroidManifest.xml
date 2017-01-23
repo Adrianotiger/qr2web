@@ -1,9 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="1.3" android:versionCode="13">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="1.4" android:versionCode="14" package="ch.petrucci.qr2web">
 	<uses-sdk android:minSdkVersion="17" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.FLASHLIGHT" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<application android:label="QR to Web Inventory" android:icon="@drawable/QR">
 		<activity android:icon="@drawable/QR" android:label="QR2Web Inventory" android:name="MainActivity">
 			<intent-filter>
