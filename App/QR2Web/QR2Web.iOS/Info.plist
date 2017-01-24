@@ -27,7 +27,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>ch.petrucci.qr2web-Inventory</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon-60@2x.png</string>
@@ -61,7 +61,7 @@
 		</dict>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.4</string>
+	<string>1.5</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

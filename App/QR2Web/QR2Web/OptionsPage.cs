@@ -222,7 +222,6 @@ namespace QR2Web
 				Parameters.Options.SaveHistory = saveHistorySwitch.IsToggled;
 				Parameters.Options.LanguageIndex = languagePicker.SelectedIndex;
 				Parameters.Options.UseLocation = sendLocationSwitch.IsToggled;
-				Parameters.SaveParams();
 			}
 
 			this.Navigation.PopModalAsync();	// close this page and return the the preview page (main page)

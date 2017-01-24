@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Plugin.Settings;
+using Plugin.Settings.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
@@ -10,6 +12,14 @@ namespace QR2Web
 	/// </summary>
     static class Parameters
     {
+		private static ISettings AppSettings
+		{
+			get
+			{
+				return CrossSettings.Current;
+			}
+		}
+
 		/// <summary>
 		/// App can try to emulate some other protocols.
 		/// </summary>
@@ -26,15 +36,73 @@ namespace QR2Web
 		/// </summary>
 		static public class Options
 		{
-			static public string HomePage { get; set; }			// callback home page - page to open when the app starts
-			static public int Emulation { get; set; }			// emulation used after parsing a code
-			static public bool AcceptBarcode_Code { get; set; }	// if Code (39, 93 and 128) should be parse by the scanner
-			static public bool AcceptBarcode_Ean { get; set; }  // if Ean (8, 13) should be parse by the scanner
-			static public bool AcceptBarcode_Upc { get; set; }  // if UPC (A, E, EAN) should be parse by the scanner
-			static public bool LockPortrait { get; set; }		// lock app in portrait mode
-			static public bool SaveHistory { get; set; }        // save scanned codes in a history
-			static public bool UseLocation { get; set; }        // if the location should be forwarded to webpage
-			static public int LanguageIndex { get; set; }		// language used for this app
+			#region Setting Constants
+
+			private const string HomePageKey = "opt_homepage";
+			private const string EmulationKey = "opt_emulation";
+			private const string AcceptCodeKey = "opt_accept_code";
+			private const string AcceptEANKey = "opt_accept_ean";
+			private const string AcceptUPCKey = "opt_accept_upc";
+			private const string LockPortraitKey = "opt_portrait";
+			private const string SaveHistoryKey = "opt_history";
+			private const string UseLocationyKey = "opt_location";
+			private const string LanguageKey = "opt_language";
+
+			#endregion
+
+			public static string HomePage                       // start page
+			{
+				get { return AppSettings.GetValueOrDefault<string>(HomePageKey, "https://adrianotiger.github.io/qr2web/scan.html"); }
+				set { AppSettings.AddOrUpdateValue<string>(HomePageKey, value); }
+			}
+
+			public static int Emulation                         // emulation used after parsing a code
+			{
+				get { return AppSettings.GetValueOrDefault<int>(EmulationKey, EmulationTypes.NORMAL); }
+				set { AppSettings.AddOrUpdateValue<int>(EmulationKey, value); }
+			}
+
+			public static bool AcceptBarcode_Code				// if Code (39, 93 and 128) should be parse by the scanner
+			{
+				get { return AppSettings.GetValueOrDefault<bool>(AcceptCodeKey, false); }
+				set { AppSettings.AddOrUpdateValue<bool>(AcceptCodeKey, value); }
+			}
+
+			public static bool AcceptBarcode_Ean				// if Ean (8, 13) should be parse by the scanner
+			{
+				get { return AppSettings.GetValueOrDefault<bool>(AcceptEANKey, false); }
+				set { AppSettings.AddOrUpdateValue<bool>(AcceptEANKey, value); }
+			}
+
+			public static bool AcceptBarcode_Upc				// if UPC (A, E, EAN) should be parse by the scanner
+			{
+				get { return AppSettings.GetValueOrDefault<bool>(AcceptUPCKey, false); }
+				set { AppSettings.AddOrUpdateValue<bool>(AcceptUPCKey, value); }
+			}
+
+			public static bool LockPortrait						// lock app in portrait mode
+			{
+				get { return AppSettings.GetValueOrDefault<bool>(LockPortraitKey, true); }
+				set { AppSettings.AddOrUpdateValue<bool>(LockPortraitKey, value); }
+			}
+
+			public static bool SaveHistory                      // save scanned codes in a history
+			{
+				get { return AppSettings.GetValueOrDefault<bool>(SaveHistoryKey, true); }
+				set { AppSettings.AddOrUpdateValue<bool>(SaveHistoryKey, value); }
+			}
+
+			public static bool UseLocation                      // if the location should be forwarded to webpage
+			{
+				get { return AppSettings.GetValueOrDefault<bool>(UseLocationyKey, false); }
+				set { AppSettings.AddOrUpdateValue<bool>(UseLocationyKey, value); }
+			}
+
+			public static int LanguageIndex                     // language used for this app
+			{
+				get { return AppSettings.GetValueOrDefault<int>(LanguageKey, 0); }
+				set { AppSettings.AddOrUpdateValue<int>(LanguageKey, value); }
+			}
 		}
 
 		/// <summary>
@@ -71,116 +139,61 @@ namespace QR2Web
 			static public int GetEmulation() { return Emulation; }
 
 		}
-
-		static private string History { get; set; } = "";		// code history as single string (to save it as parameter)
 		
-		/// <summary>
-		/// Get the value of a parameter. If the parameter doesn't exists, use the default value.
-		/// </summary>
-		/// <param name="valueKey">key of the saved parameter</param>
-		/// <param name="defaultValue">default value, if the parameter can't be found</param>
-		/// <returns>string containing the parameter value</returns>
-		static public string GetSavedValue(string valueKey, string defaultValue = "")
+		private static string History                     // code history as single string (to save it as parameter)
 		{
-			object retValue;
-			if (Application.Current.Properties.TryGetValue(valueKey, out retValue))
-			{
-				if (retValue is string) return (string)retValue;
-			}
-			return defaultValue;
-		}
-
-		/// <summary>
-		/// Load all parameters from memory and copy them to the member variables of this class.
-		/// Default values of each parameter are set here.
-		/// </summary>
-		static public void LoadOptions()
-		{
-			Options.HomePage = GetSavedValue("opt_homepage", "https://adrianotiger.github.io/qr2web/scan.html");
-			Options.Emulation = int.Parse(GetSavedValue("opt_emulation", EmulationTypes.NORMAL.ToString()));
-			Options.AcceptBarcode_Code = bool.Parse(GetSavedValue("opt_accept_code", "false"));
-			Options.AcceptBarcode_Ean = bool.Parse(GetSavedValue("opt_accept_ean", "false"));
-			Options.AcceptBarcode_Upc = bool.Parse(GetSavedValue("opt_accept_upc", "false"));
-			Options.LockPortrait = bool.Parse(GetSavedValue("opt_portrait", "true"));
-			Options.SaveHistory = bool.Parse(GetSavedValue("opt_history", "true"));
-			Options.LanguageIndex = int.Parse(GetSavedValue("opt_language", "0"));
-			Options.UseLocation = bool.Parse(GetSavedValue("opt_location", "false"));
+			get { return AppSettings.GetValueOrDefault<string>("history", ""); }
+			set { AppSettings.AddOrUpdateValue<string>("history", value); }
 		}
 
 		/// <summary>
 		/// Load parsed codes history from local memory (saved as one string)
 		/// </summary>
-		/// <param name="History">reference to the history variable</param>
-		static public void LoadHistory(ref List<KeyValuePair<DateTime, string>> History)
+		/// <param name="savedHistory">reference to the history variable</param>
+		static public void LoadHistory(ref List<KeyValuePair<DateTime, string>> savedHistory)
 		{
-			object ScannedCodes;
-			if (Application.Current.Properties.TryGetValue("history", out ScannedCodes))
+			string[] sCode = History.Split('#');
+			try
 			{
-				if (ScannedCodes is string)
+				for (int i = 0; i < sCode.Length; i++)
 				{
-					string sCodes = (string)ScannedCodes;
-					string[] sCode = sCodes.Split('#');
-					try
+					if (sCode[i].IndexOf("$") > 0)
 					{
-						for (int i = 0; i < sCode.Length; i++)
-						{
-							if (sCode[i].IndexOf("$") > 0)
-							{
-								string[] sC = sCode[i].Split('$');
-								DateTime dt = DateTime.Parse(sC[0]);
-								History.Add(
-									new KeyValuePair<DateTime, string>
-									(
-										dt,
-										sC[1]
-									)
-								);
-							}
-						}
-					}
-					catch (Exception)
-					{
-
+						string[] sC = sCode[i].Split('$');
+						DateTime dt = DateTime.Parse(sC[0]);
+						savedHistory.Add(
+							new KeyValuePair<DateTime, string>
+							(
+								dt,
+								sC[1]
+							)
+						);
 					}
 				}
+			}
+			catch (Exception)
+			{
+
 			}
 		}
 
 		/// <summary>
 		/// Save history list to local memory.
 		/// </summary>
-		/// <param name="History">reference to the history valiable</param>
-		static public void SaveHistory(ref List<KeyValuePair<DateTime, string>> History)
+		/// <param name="newHistory">reference to the history valiable</param>
+		static public void SaveHistory(ref List<KeyValuePair<DateTime, string>> newHistory)
 		{
 			string sCodes = "";
-			for (int i = 0; i < Math.Min(History.Count, 10); i++)
+			for (int i = 0; i < Math.Min(newHistory.Count, 10); i++)
 			{
-				sCodes += History[i].Key.ToString();
+				sCodes += newHistory[i].Key.ToString();
 				sCodes += "$";
-				sCodes += History[i].Value;
+				sCodes += newHistory[i].Value;
 				sCodes += "#";
 			}
-			Application.Current.Properties["history"] = sCodes;
 
-			SaveParams();
+			History = sCodes;
 		}
-		
-		/// <summary>
-		/// Save parameters (need to save every time an option was changed)
-		/// </summary>
-		static public async void SaveParams()
-		{
-			Application.Current.Properties["opt_homepage"] = Options.HomePage.ToString();
-			Application.Current.Properties["opt_emulation"] = Options.Emulation.ToString();
-			Application.Current.Properties["opt_accept_code"] = Options.AcceptBarcode_Code.ToString();
-			Application.Current.Properties["opt_accept_ean"] = Options.AcceptBarcode_Ean.ToString();
-			Application.Current.Properties["opt_accept_upc"] = Options.AcceptBarcode_Upc.ToString();
-			Application.Current.Properties["opt_portrait"] = Options.LockPortrait.ToString();
-			Application.Current.Properties["opt_history"] = Options.SaveHistory.ToString();
-			Application.Current.Properties["opt_language"] = Options.LanguageIndex.ToString();
-			Application.Current.Properties["opt_location"] = Options.UseLocation.ToString();
 
-			await Application.Current.SavePropertiesAsync();
-		}
 	}
 }

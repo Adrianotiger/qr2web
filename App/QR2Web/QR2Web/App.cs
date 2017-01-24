@@ -25,7 +25,7 @@ namespace QR2Web
 		private List<KeyValuePair<DateTime, string>> History = new List<KeyValuePair<DateTime, string>>(16);
 
 		public static App Instance { get; set; } = null;	// Used to access App from the different OS codes
-		public static int AppVersion { get; } = 14;         // Version of this app for the different OS codes
+		public static int AppVersion { get; } = 15;         // Version of this app for the different OS codes
 
 		protected override void OnAppLinkRequestReceived(Uri uri)
 		{
@@ -41,7 +41,6 @@ namespace QR2Web
 			QRScanner = new Scanner();						// initialize scanner class (ZXing scanner)
 
 			Parameters.LoadHistory(ref History);			// load scan results history
-			Parameters.LoadOptions();                       // load app options
 
 			if (Parameters.Options.UseLocation)
 				QRLocation.InitLocation();
@@ -449,7 +448,6 @@ namespace QR2Web
 							}
 						}
 					}
-					Parameters.SaveParams();
 				}
 				else if (urlWithoutProtocol.StartsWith("CALLBACK=", StringComparison.CurrentCultureIgnoreCase))
 				{
@@ -508,7 +506,6 @@ namespace QR2Web
 							}
 						}
 					}
-					Parameters.SaveParams();
 				}
 				else if (urlWithoutProtocol.StartsWith("scan?", StringComparison.CurrentCultureIgnoreCase) ||
 					urlWithoutProtocol.StartsWith("scan/?", StringComparison.CurrentCultureIgnoreCase))
@@ -597,8 +594,6 @@ namespace QR2Web
 			{
 				Language.SetLanguage(dicQueryString["language"]);
 			}
-
-			Parameters.SaveParams();
 		}
 		
 	}
