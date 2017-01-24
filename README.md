@@ -1,7 +1,10 @@
 
 Scan codes with the smartphones and forward the parsed code to a webpage.
 
-[DOWNLOAD APP FROM THIS PAGE](https://github.com/Adrianotiger/qr2web/wiki/download)
+<a href="https://github.com/Adrianotiger/qr2web/wiki/download">Download App directly from store:
+
+<img src="https://github.com/Adrianotiger/qr2web/raw/gh-pages/images/stores.png">
+</a>
 
 ### Why this project?
 You find always more QR codes on the web and it is also easy to generate QR codes for own projects. Good smartphones (with Android or Windows Mobile) are able to scan a QR code directly from a webpage. Older smartphones and cheaper smartphones need an app because they are not able to access the camera from the webpage. So you need an app for each OS (=> store accounts, developer accounts, and $$$).
@@ -28,9 +31,11 @@ It was possible to create this app thanks to Microsoft, Xamarin and ZXing librar
 
 App was developed with [Visual Studio 2015](https://www.visualstudio.com/)
 
-using the [Xamarin NuGet extension](https://www.xamarin.com/)
+using the [Xamarin NuGet extension](https://www.xamarin.com/),
 
-and the [ZXing BarcodeScanner library](https://github.com/Redth/ZXing.Net.Mobile)
+the [ZXing BarcodeScanner library](https://github.com/Redth/ZXing.Net.Mobile)
+
+and the [Geolocator Plugin](https://github.com/jamesmontemagno/xamarin.plugins)
 
 ### License
 You can use this code and change it, you can also create your own app.
