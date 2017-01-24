@@ -31,9 +31,11 @@ It was possible to create this app thanks to Microsoft, Xamarin and ZXing librar
 
 App was developed with [Visual Studio 2015](https://www.visualstudio.com/)
 
-using the [Xamarin NuGet extension](https://www.xamarin.com/)
+using the [Xamarin NuGet extension](https://www.xamarin.com/),
 
-and the [ZXing BarcodeScanner library](https://github.com/Redth/ZXing.Net.Mobile)
+the [ZXing BarcodeScanner library](https://github.com/Redth/ZXing.Net.Mobile)
+
+and the [Geolocator Plugin](https://github.com/jamesmontemagno/xamarin.plugins)
 
 ### License
 You can use this code and change it, you can also create your own app.
