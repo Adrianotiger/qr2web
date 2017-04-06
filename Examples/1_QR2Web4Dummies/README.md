@@ -13,7 +13,7 @@ The code of this page is really simple:
 <html>
 <head>
   <script>
-  function onscan(barcode)
+  function onQR2WebCodeScan(barcode)
   {
     document.getElementById("scanResult").innerHTML = barcode;
   }
