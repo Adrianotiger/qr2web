@@ -103,7 +103,7 @@ namespace QR2Web
 				TextColor = Color.Blue
 			};
 
-			if(Device.OS == TargetPlatform.iOS)
+			if(Device.RuntimePlatform == Device.iOS)
 				backbuttonLayout.Children.Add(backbuttonButton);
 			backbuttonLayout.Children.Add(optionTitle);
 			

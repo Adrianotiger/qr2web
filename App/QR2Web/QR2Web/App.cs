@@ -25,7 +25,7 @@ namespace QR2Web
 		private List<KeyValuePair<DateTime, string>> History = new List<KeyValuePair<DateTime, string>>(16);
 
 		public static App Instance { get; set; } = null;	// Used to access App from the different OS codes
-		public static int AppVersion { get; } = 15;         // Version of this app for the different OS codes
+		public static int AppVersion { get; } = 16;         // Version of this app for the different OS codes
 
 		protected override void OnAppLinkRequestReceived(Uri uri)
 		{
@@ -174,10 +174,7 @@ namespace QR2Web
 					File = "scanp.png",
 				},
 			};
-			HomeButton.Clicked += (sender, e) =>
-			{
-				WebPageWebView.Source = Parameters.Options.HomePage;
-			};
+			HomeButton.Clicked += GoToHomePage;
 
 			RefreshButton = new Button
 			{
@@ -210,8 +207,16 @@ namespace QR2Web
 			MoreButton.Clicked += MoreScan_Clicked;
 		}
 
-		private void RefreshWebPage(object sender, EventArgs e)
+		private void GoToHomePage(object sender, EventArgs e)
 		{
+			Device.BeginInvokeOnMainThread(() =>
+			{
+				WebPageWebView.Source = Parameters.Options.HomePage;
+			});
+		}
+
+		private void RefreshWebPage(object sender, EventArgs e)
+		{	
 			Device.BeginInvokeOnMainThread(() =>
 			{
 				WebPageWebView.Source = (WebPageWebView.Source as UrlWebViewSource).Url;
@@ -243,7 +248,7 @@ namespace QR2Web
 				}
 				else if (result.CompareTo(Language.GetText("HomePage")) == 0)
 				{
-					WebPageWebView.Source = Parameters.Options.HomePage;
+					GoToHomePage(sender, e);
 				}
 				else if (result.CompareTo(Language.GetText("Help")) == 0)
 				{
@@ -251,7 +256,7 @@ namespace QR2Web
 				}
 				else if (result.CompareTo(Language.GetText("About")) == 0)
 				{
-					WebPageWebView.Source = "https://adrianotiger.github.io/qr2web/info.html?version=" + AppVersion.ToString() + "&os=" + Device.OS.ToString();
+					WebPageWebView.Source = "https://adrianotiger.github.io/qr2web/info.html?version=" + AppVersion.ToString() + "&os=" + Device.RuntimePlatform.ToString();
 				}
 
 			}

@@ -1,5 +1,6 @@
 ﻿using Plugin.Geolocator;
 using Plugin.Geolocator.Abstractions;
+using System;
 using System.Threading.Tasks;
 
 namespace QR2Web
@@ -8,13 +9,14 @@ namespace QR2Web
     {
 		static private IGeolocator locator = CrossGeolocator.Current;
 		static private bool isUpdatingLocation = false;
+		static private int unsuccessCount = 0;
 
 		static public Position CurrentPosition;
 
 		static public void InitLocation(int accuracyInMeters = 100, bool updateLocationInBackground = true)
 		{
 			locator.DesiredAccuracy = accuracyInMeters;
-			//locator.AllowsBackgroundUpdates = updateLocationInBackground;
+			locator.AllowsBackgroundUpdates = updateLocationInBackground;
 			UpdatePosition();
 		}
 
@@ -32,16 +34,11 @@ namespace QR2Web
 		{
 			if (isUpdatingLocation)
 			{
-				while (isUpdatingLocation)
-				{
-					await Task.Delay(200);
-				}
+				await Task.Delay(200);
 			}
 			else
 			{
-				isUpdatingLocation = true;
-				CurrentPosition = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
-				isUpdatingLocation = false;
+				UpdatePosition();
 			}
 
 			return CurrentPosition;
@@ -51,9 +48,26 @@ namespace QR2Web
 		{
 			if (!isUpdatingLocation)
 			{
+				bool Success = false;
+				Position newPosition;
 				isUpdatingLocation = true;
-				CurrentPosition = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
-				isUpdatingLocation = false;
+				try
+				{
+					newPosition = await locator.GetPositionAsync(timeoutMilliseconds: 20000);
+					Success = true;
+					CurrentPosition = newPosition;
+					unsuccessCount = 0;
+					isUpdatingLocation = false;
+				}
+				catch(Exception)
+				{
+
+				}
+
+				if (!Success && unsuccessCount < 6)
+				{
+					UpdatePosition();
+				}
 			}
 		}
 

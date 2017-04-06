@@ -145,25 +145,25 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ZXing.Net.Mobile.Core, Version=1.0.6211.31972, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ZXing.Net.Mobile.Core, Version=1.0.6211.33373, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\ZXing.Net.Mobile\Build\Forms\Release\uwp\ZXing.Net.Mobile.Core.dll</HintPath>
+      <HintPath>..\..\..\..\ZXing.Net.Mobile2\Build\Forms\Release\uwp\ZXing.Net.Mobile.Core.dll</HintPath>
     </Reference>
-    <Reference Include="ZXing.Net.Mobile.Forms, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ZXing.Net.Mobile.Forms, Version=1.0.6211.33379, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\ZXing.Net.Mobile\Build\Forms\Release\uwp\ZXing.Net.Mobile.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\ZXing.Net.Mobile2\Build\Forms\Release\uwp\ZXing.Net.Mobile.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="ZXing.Net.Mobile.Forms.WindowsUniversal, Version=2.1.47.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ZXing.Net.Mobile.Forms.WindowsUniversal, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\ZXing.Net.Mobile\Build\Forms\Release\uwp\ZXing.Net.Mobile.Forms.WindowsUniversal.dll</HintPath>
+      <HintPath>..\..\..\..\ZXing.Net.Mobile2\Build\Forms\Release\uwp\ZXing.Net.Mobile.Forms.WindowsUniversal.dll</HintPath>
     </Reference>
     <Reference Include="zxing.portable, Version=0.14.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\ZXing.Net.Mobile\Build\Forms\Release\uwp\zxing.portable.dll</HintPath>
+      <HintPath>..\..\..\..\ZXing.Net.Mobile2\Build\Forms\Release\uwp\zxing.portable.dll</HintPath>
     </Reference>
-    <Reference Include="ZXingNetMobile, Version=1.0.6211.31974, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="ZXingNetMobile, Version=1.0.6211.33386, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\ZXing.Net.Mobile\Build\Forms\Release\uwp\ZXingNetMobile.dll</HintPath>
+      <HintPath>..\..\..\..\ZXing.Net.Mobile2\Build\Forms\Release\uwp\ZXingNetMobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
