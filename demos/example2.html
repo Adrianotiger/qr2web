@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR2Web for dummies - Example</title>
+  <script>
+  function onQR2WebCodeScan(barcode)
+  {
+    document.getElementById("scanResult").innerHTML = barcode;
+  }
+  function onQR2WebLocation(json)
+  {
+    var mapData = JSON.parse(json);
+    myMap(mapData.latitude, mapData.longitude);
+  }
+  </script>
+</head>
+<body style="margin:0 auto;">
+  <h1>Example 1</h1>
+  <h2>QR2Web with GPS data</h2>
+  Click on the SCAN button in your app 
+  or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
+  <br><br>
+  <div id="scanResult" style="background-color:yellow"><i>SCAN RESULT</i></div>
+  
+  <div id="map" style="width:400px;height:400px;background:yellow;display:none;"></div>
+  <script>
+  function myMap(lat, lng) {
+    var map = document.getElementById("map");
+    map.style.display = "block";
+    var mapOptions = {
+        center: new google.maps.LatLng(lat, lng),
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    }
+    var map = new google.maps.Map(map, mapOptions);
+  }
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+</body>
+</html>
