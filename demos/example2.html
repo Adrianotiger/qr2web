@@ -5,11 +5,14 @@
   <script>
   function onQR2WebCodeScan(barcode)
   {
+    console.log("Got barcode: " + barcode);
     document.getElementById("scanResult").innerHTML = barcode;
   }
   function onQR2WebLocation(json)
   {
+    console.log("Got location: " + json);
     var mapData = JSON.parse(json);
+    console.log(mapData);
     myMap(mapData.latitude, mapData.longitude);
   }
   </script>
