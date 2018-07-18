@@ -108,7 +108,8 @@ namespace QR2Web
 			};
 
 			customOverlayBottom.Children.Add(abort);
-			if(zxing.HasTorch) customOverlayBottom.Children.Add(torch);
+			//if(zxing.HasTorch) customOverlayBottom.Children.Add(torch); BUG on library, this returns always FALSE
+			customOverlayBottom.Children.Add(torch);
 
 			var customOverlay = new Grid
 			{

@@ -211,7 +211,7 @@ namespace QR2Web
 			{
 				if(!Parameters.Options.UseLocation && sendLocationSwitch.IsToggled)
 				{
-					QRLocation.UpdatePosition();
+					QRLocation.InitLocation();
 				}
 				Parameters.Options.HomePage = webPageValue.Text;
 				Parameters.Options.Emulation = emulationPicker.SelectedIndex;

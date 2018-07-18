@@ -7,78 +7,71 @@ namespace QR2Web
 {
 	static class QRLocation
     {
-		static private IGeolocator locator = CrossGeolocator.Current;
-		static private bool isUpdatingLocation = false;
-		static private int unsuccessCount = 0;
+        static private Position CurrentPosition;
 
-		static public Position CurrentPosition;
-
-		static public void InitLocation(int accuracyInMeters = 100, bool updateLocationInBackground = true)
+        static public async void InitLocation(int accuracyInMeters = 100, bool updateLocationInBackground = true)
 		{
-			locator.DesiredAccuracy = accuracyInMeters;
-			locator.AllowsBackgroundUpdates = updateLocationInBackground;
-			UpdatePosition();
-		}
+            CrossGeolocator.Current.DesiredAccuracy = accuracyInMeters;
 
-		static public bool IsLocationAvailableOnDevice()
+            if (!CrossGeolocator.Current.IsListening)
+            {
+                await StartListening();
+            }
+        }
+
+        static private async Task StartListening()
+        {
+            if (CrossGeolocator.Current.IsListening)
+                return;
+
+            await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(30), 500, true);
+
+            CrossGeolocator.Current.PositionChanged += Current_PositionChanged;
+            CrossGeolocator.Current.PositionError += Current_PositionError; ;
+        }
+
+        private static void Current_PositionError(object sender, PositionErrorEventArgs e)
+        {
+            Console.WriteLine("Error reading position: " + e.Error);
+        }
+
+        private static void Current_PositionChanged(object sender, PositionEventArgs e)
+        {
+            CurrentPosition = e.Position;
+            var output = "Full: Lat: " + CurrentPosition.Latitude + " Long: " + CurrentPosition.Longitude;
+            output += "\n" + $"Time: {CurrentPosition.Timestamp}";
+            output += "\n" + $"Heading: {CurrentPosition.Heading}";
+            output += "\n" + $"Speed: {CurrentPosition.Speed}";
+            output += "\n" + $"Accuracy: {CurrentPosition.Accuracy}";
+            output += "\n" + $"Altitude: {CurrentPosition.Altitude}";
+            output += "\n" + $"Altitude Accuracy: {CurrentPosition.AltitudeAccuracy}";
+            Console.WriteLine(output);
+        }
+
+
+        static public bool IsLocationAvailableOnDevice()
 		{
-			return locator.IsGeolocationAvailable;
+			return CrossGeolocator.Current.IsGeolocationAvailable;
 		}
 
 		static public bool IsLocationEnabledOnDevice()
 		{
-			return locator.IsGeolocationEnabled;
+			return CrossGeolocator.Current.IsGeolocationEnabled;
 		}
 
-		static public async Task<Position> GetPosition()
+		static public Position GetPosition()
 		{
-			if (isUpdatingLocation)
-			{
-				await Task.Delay(200);
-			}
-			else
-			{
-				UpdatePosition();
-			}
-
 			return CurrentPosition;
 		}
-
-		static public async void UpdatePosition()
+        
+		static public string GenerateJavascriptString()
 		{
-			if (!isUpdatingLocation)
-			{
-				bool Success = false;
-				Position newPosition;
-				isUpdatingLocation = true;
-				try
-				{
-					newPosition = await locator.GetPositionAsync(timeoutMilliseconds: 20000);
-					Success = true;
-					CurrentPosition = newPosition;
-					unsuccessCount = 0;
-					isUpdatingLocation = false;
-				}
-				catch(Exception)
-				{
-
-				}
-
-				if (!Success && unsuccessCount < 6)
-				{
-					UpdatePosition();
-				}
-			}
-		}
-
-		static public async Task<string> GenerateJavascriptString()
-		{
-			var pos = await GetPosition();
+			var pos = GetPosition();
 			var json = "";
 			json += "{";
-			json += " \"latitude\" : \"" + pos.Latitude + "\", ";
-			json += " \"longitude\" : \"" + pos.Longitude + "\", ";
-			json += " \"accuracy\" : \"" + pos.Accuracy + "\", ";
+			json += " \"latitude\" : \"" + pos.Latitude.ToString().Replace(",", ".") + "\", ";
+			json += " \"longitude\" : \"" + pos.Longitude.ToString().Replace(",", ".") + "\", ";
+			json += " \"accuracy\" : \"" + pos.Accuracy.ToString().Replace(",", ".") + "\", ";
 			json += " \"timestamp\" : \"" + pos.Timestamp.ToUnixTimeSeconds() + "\" ";
 			json +=	"}";
 

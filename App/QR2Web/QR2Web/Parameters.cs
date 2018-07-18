@@ -12,14 +12,6 @@ namespace QR2Web
 	/// </summary>
     static class Parameters
     {
-		private static ISettings AppSettings
-		{
-			get
-			{
-				return CrossSettings.Current;
-			}
-		}
-
 		/// <summary>
 		/// App can try to emulate some other protocols.
 		/// </summary>
@@ -52,56 +44,56 @@ namespace QR2Web
 
 			public static string HomePage                       // start page
 			{
-				get { return AppSettings.GetValueOrDefault<string>(HomePageKey, "https://adrianotiger.github.io/qr2web/scan.html"); }
-				set { AppSettings.AddOrUpdateValue<string>(HomePageKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(HomePageKey, "https://adrianotiger.github.io/qr2web/scan.html"); }
+				set { CrossSettings.Current.AddOrUpdateValue(HomePageKey, value); }
 			}
 
 			public static int Emulation                         // emulation used after parsing a code
 			{
-				get { return AppSettings.GetValueOrDefault<int>(EmulationKey, EmulationTypes.NORMAL); }
-				set { AppSettings.AddOrUpdateValue<int>(EmulationKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(EmulationKey, EmulationTypes.NORMAL); }
+				set { CrossSettings.Current.AddOrUpdateValue(EmulationKey, value); }
 			}
 
 			public static bool AcceptBarcode_Code				// if Code (39, 93 and 128) should be parse by the scanner
 			{
-				get { return AppSettings.GetValueOrDefault<bool>(AcceptCodeKey, false); }
-				set { AppSettings.AddOrUpdateValue<bool>(AcceptCodeKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(AcceptCodeKey, false); }
+				set { CrossSettings.Current.AddOrUpdateValue(AcceptCodeKey, value); }
 			}
 
 			public static bool AcceptBarcode_Ean				// if Ean (8, 13) should be parse by the scanner
 			{
-				get { return AppSettings.GetValueOrDefault<bool>(AcceptEANKey, false); }
-				set { AppSettings.AddOrUpdateValue<bool>(AcceptEANKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(AcceptEANKey, false); }
+				set { CrossSettings.Current.AddOrUpdateValue(AcceptEANKey, value); }
 			}
 
 			public static bool AcceptBarcode_Upc				// if UPC (A, E, EAN) should be parse by the scanner
 			{
-				get { return AppSettings.GetValueOrDefault<bool>(AcceptUPCKey, false); }
-				set { AppSettings.AddOrUpdateValue<bool>(AcceptUPCKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(AcceptUPCKey, false); }
+				set { CrossSettings.Current.AddOrUpdateValue(AcceptUPCKey, value); }
 			}
 
 			public static bool LockPortrait						// lock app in portrait mode
 			{
-				get { return AppSettings.GetValueOrDefault<bool>(LockPortraitKey, true); }
-				set { AppSettings.AddOrUpdateValue<bool>(LockPortraitKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(LockPortraitKey, true); }
+				set { CrossSettings.Current.AddOrUpdateValue(LockPortraitKey, value); }
 			}
 
 			public static bool SaveHistory                      // save scanned codes in a history
 			{
-				get { return AppSettings.GetValueOrDefault<bool>(SaveHistoryKey, true); }
-				set { AppSettings.AddOrUpdateValue<bool>(SaveHistoryKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(SaveHistoryKey, true); }
+				set { CrossSettings.Current.AddOrUpdateValue(SaveHistoryKey, value); }
 			}
 
 			public static bool UseLocation                      // if the location should be forwarded to webpage
 			{
-				get { return AppSettings.GetValueOrDefault<bool>(UseLocationyKey, false); }
-				set { AppSettings.AddOrUpdateValue<bool>(UseLocationyKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(UseLocationyKey, false); }
+				set { CrossSettings.Current.AddOrUpdateValue(UseLocationyKey, value); }
 			}
 
 			public static int LanguageIndex                     // language used for this app
 			{
-				get { return AppSettings.GetValueOrDefault<int>(LanguageKey, 0); }
-				set { AppSettings.AddOrUpdateValue<int>(LanguageKey, value); }
+				get { return CrossSettings.Current.GetValueOrDefault(LanguageKey, 0); }
+				set { CrossSettings.Current.AddOrUpdateValue(LanguageKey, value); }
 			}
 		}
 
@@ -142,8 +134,8 @@ namespace QR2Web
 		
 		private static string History                     // code history as single string (to save it as parameter)
 		{
-			get { return AppSettings.GetValueOrDefault<string>("history", ""); }
-			set { AppSettings.AddOrUpdateValue<string>("history", value); }
+			get { return CrossSettings.Current.GetValueOrDefault("history", ""); }
+			set { CrossSettings.Current.AddOrUpdateValue("history", value); }
 		}
 
 		/// <summary>

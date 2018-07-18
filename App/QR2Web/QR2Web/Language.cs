@@ -125,7 +125,7 @@ namespace QR2Web
 			AddText("Cancel", new string[] { "Cancel", "Abbrechnen", "Annulla" });
 			AddText("Yes", new string[] { "Yes", "Ja", "Sì" });
 			AddText("No", new string[] { "No", "Nein", "No" });
-			AddText("Torch", new string[] { "Torch", "Lampe", "Torcha" });
+			AddText("Torch", new string[] { "Torch", "Lampe", "Torcia" });
 			AddText("ScannerText1", new string[] { "Scan with a distance of 20-30cm", "Abstand von 20-30cm halten", "Leggere da una distanza di 20-30cm" });
 			AddText("ScannerText2", new string[] { "Light On/Off", "Licht Ein/Aus", "Luce On/Off" });
 			AddText("NeedRestart", new string[] { "(* App must be restarted)", "(* App muss neu gestartet werden)", "(* necessita un riavvio dell'app)" });

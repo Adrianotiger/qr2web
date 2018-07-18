@@ -101,12 +101,12 @@ namespace QR2Web
 				TitleStack.Children.Add(MoreButton);
 				
 			};
-
-			TitleStack = new StackLayout
+            
+            TitleStack = new StackLayout
 			{
 				VerticalOptions = LayoutOptions.Fill,
 				HorizontalOptions = LayoutOptions.FillAndExpand,
-				HeightRequest = 50,
+				HeightRequest = 45,
 				Orientation = StackOrientation.Horizontal,
 				Children = {
 								new Label
@@ -186,13 +186,13 @@ namespace QR2Web
 			RefreshButton.Clicked += RefreshWebPage;
 
 			SettingsButton = new Button
-			{
+			{   
 				Image = new FileImageSource
 				{
 					File = "scanc.png",
 				},
 			};
-			SettingsButton.Clicked += async (sender, e) =>
+            SettingsButton.Clicked += async (sender, e) =>
 			{
 				await App.Current.MainPage.Navigation.PushModalAsync(new OptionsPage());
 			};
@@ -325,7 +325,7 @@ namespace QR2Web
 
 			if(Parameters.Options.UseLocation)
 			{
-				QRLocation.UpdatePosition();
+				QRLocation.InitLocation();
 			}
 
 			await App.Current.MainPage.Navigation.PushModalAsync(customPage);
@@ -353,9 +353,9 @@ namespace QR2Web
 		/// Execute the callback function in the webpage, passing the current location.
 		/// </summary>
 		/// <param name="scanCode">Code or text parsed from barcode</param>
-		public async void OpenJSFunctionLocation()
+		public void OpenJSFunctionLocation()
 		{
-			string jsString = await QRLocation.GenerateJavascriptString();
+			string jsString = QRLocation.GenerateJavascriptString();
 
 			try
 			{

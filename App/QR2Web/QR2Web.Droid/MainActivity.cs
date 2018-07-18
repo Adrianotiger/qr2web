@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using ZXing.Mobile;
 using System.Threading.Tasks;
+using Plugin.CurrentActivity;
 
 namespace QR2Web.Droid
 {
@@ -38,7 +39,9 @@ namespace QR2Web.Droid
 
 			Xamarin.Forms.Forms.Init(this, bundle);
 
-			LoadApplication(new QR2Web.App());
+            CrossCurrentActivity.Current.Init(this, bundle);
+
+            LoadApplication(new QR2Web.App());
 
 			InitOSSettings(bundle);
 			InitExternalLibraries();
@@ -100,7 +103,8 @@ namespace QR2Web.Droid
 
 		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
 		{
-			global::ZXing.Net.Mobile.Forms.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+			//global::ZXing.Net.Mobile.Forms.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+			global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 }
