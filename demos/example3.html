@@ -9,7 +9,7 @@
   
   <input type='text' id='applink' value='starpassprnt://v1/print/nopreview?back=" + encodeURIComponent(window.href) + "&popup=disable&html=" + encodeURIComponent("<html><body>This is a text</body></html>")' />
   <br>
-  <input type='button' value='Open' onclick='window.open(document.getElementById("applink").value);' />
+  <input type='button' value='Open' onclick='location.href=document.getElementById("applink").value;' />
   
 </body>
 </html>
