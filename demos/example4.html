@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR2Web open External app - Example</title>
+  <script>
+    function checkFromApp()
+    {
+      return(typeof QR2WEB !== 'undefined')
+    }
+    
+    function check()
+    {
+      var d = document.createElement("div");
+      d.appendChild(document.createTextNode("Started from App: " + (checkFromApp() ? "TRUE" : "FALSE")));
+      document.body.appendChild(d);
+    }
+    
+  </script>
+</head>
+<body style="margin:0 auto;">
+  <h1>Example 4</h1>
+  <h2>Check if application was started from app</h2>
+  
+  <input type='button' value='CHECK' onclick='check();' />
+  
+  <script>
+    document.write("Started from App: ");
+    document.write(checkFromApp() ? "TRUE" : "FALSE"); 
+  </script>
+  <br>
+</body>
+</html>
