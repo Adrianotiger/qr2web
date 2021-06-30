@@ -24,7 +24,10 @@
   <input type='button' value='CHECK' onclick='check();' />
   <br><hr>
   <script>
-    addEventListener("load", ()=>{check();});
+    addEventListener("load", ()=>{
+      // leave at least 20ms to let the app set the QR2WEB const.
+      setTimeout(()=>{ check(); }, 20);
+    });
   </script>
   <br>
 </body>
