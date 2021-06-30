@@ -14,8 +14,8 @@ This app is a simple QR scanner that will start over a simple link on the web. O
 So you need to write a webpage and give this free app to your users. **You don't need to write any app for this functionality anymore**, only the webpage.
 
 ### On which smartphone does it works?
-The project was made with Xamarin and ZXing library. So it works with Android (>4.1), Windows Mobile (10), Windows (10) and iOS (>7).
-Because I don't have any developer account on Android and iOS, I can give only the Windows Store link and Android APK. Maybe in future someone will compile and upload this app on the store for Android and iOS.
+The project was made with Xamarin and ZXing library. So it works with Android (>4.1), Windows (10) and iOS (>7).
+Because I don't have any developer account on iOS, I can give only the Windows Store link and Android Play link. Maybe in future someone will compile and upload this app on the store for iOS.
 
 ### GitHub Structure
 App source code is in the [App folder](https://github.com/Adrianotiger/qr2web/tree/master/App) 

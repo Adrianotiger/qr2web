@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR2Web open External app - Example</title>
+</head>
+<body style="margin:0 auto;">
+  <h1>Example 3</h1>
+  <h2>QR2Web with external app</h2>
+  
+  <input type='text' id='applink' value='starpassprnt://v1/print/nopreview?back=" + encodeURIComponent(window.href) + "&popup=disable&html=" + encodeURIComponent("<html><body>This is a text</body></html>")' />
+  <br>
+  <input type='button' value='Open' onclick='location.href=document.getElementById("applink").value;' />
+  
+</body>
+</html>
