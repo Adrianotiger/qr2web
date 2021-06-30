@@ -24,10 +24,19 @@ namespace QR2Web
             if (CrossGeolocator.Current.IsListening)
                 return;
 
-            await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(30), 500, true);
+            if (!IsLocationAvailableOnDevice() || !IsLocationEnabledOnDevice()) return;
 
-            CrossGeolocator.Current.PositionChanged += Current_PositionChanged;
-            CrossGeolocator.Current.PositionError += Current_PositionError; ;
+            try
+            {
+                await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(30), 500, true);
+
+                CrossGeolocator.Current.PositionChanged += Current_PositionChanged;
+                CrossGeolocator.Current.PositionError += Current_PositionError; ;
+            }
+            catch(Exception)
+            {
+
+            }
         }
 
         private static void Current_PositionError(object sender, PositionErrorEventArgs e)

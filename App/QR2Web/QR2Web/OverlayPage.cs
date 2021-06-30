@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
+using static ZXing.Mobile.MobileBarcodeScanningOptions;
 
 namespace QR2Web
 {
@@ -162,31 +166,57 @@ namespace QR2Web
 		private void SetScanOptions()
 		{
 			var options = new ZXing.Mobile.MobileBarcodeScanningOptions();
-			//options.TryHarder = true;
-			//options.TryInverted = true;
-			//options.AutoRotate = true;
-			options.PossibleFormats = new List<ZXing.BarcodeFormat>();
-			options.PossibleFormats.Add(ZXing.BarcodeFormat.QR_CODE);
-			if (Parameters.Options.AcceptBarcode_Code)
+            //options.TryHarder = true;
+            //options.TryInverted = true;
+            //options.AutoRotate = true;
+            options.PossibleFormats = new List<ZXing.BarcodeFormat>
+            {
+                ZXing.BarcodeFormat.QR_CODE
+            };
+            if (Parameters.Options.AcceptBarcode_Code)
 			{
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.CODE_39);
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.CODE_93);
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.CODE_128);
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.CODABAR);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.CODE_39);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.CODE_93);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.CODE_128);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.CODABAR);
 			}
 			if (Parameters.Options.AcceptBarcode_Ean)
 			{
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.EAN_8);
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.EAN_13);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.EAN_8);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.EAN_13);
 			}
 			if (Parameters.Options.AcceptBarcode_Upc)
 			{
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.UPC_A);
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.UPC_E);
-				options.PossibleFormats.Add(ZXing.BarcodeFormat.UPC_EAN_EXTENSION);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.UPC_A);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.UPC_E);
+				options.PossibleFormats.Append(ZXing.BarcodeFormat.UPC_EAN_EXTENSION);
 			}
 
+			// solve camera resolution bug (up to ZXing 3.1.0 beta2)
+			options.CameraResolutionSelector = new CameraResolutionSelectorDelegate((List<CameraResolution> availableResolutions) =>
+			{
+				CameraResolution result = null;
+
+				double aspectTolerance = 0.1;
+				var displayOrientationHeight = DeviceDisplay.MainDisplayInfo.Orientation == DisplayOrientation.Portrait ? DeviceDisplay.MainDisplayInfo.Height : DeviceDisplay.MainDisplayInfo.Width;
+				var displayOrientationWidth = DeviceDisplay.MainDisplayInfo.Orientation == DisplayOrientation.Portrait ? DeviceDisplay.MainDisplayInfo.Width : DeviceDisplay.MainDisplayInfo.Height;
+
+				var targetRatio = displayOrientationHeight / displayOrientationWidth;
+				var targetHeight = displayOrientationHeight;
+				var minDiff = double.MaxValue;
+
+				foreach (var r in availableResolutions.Where(r => Math.Abs(((double)r.Width / r.Height) - targetRatio) < aspectTolerance))
+				{
+					if (Math.Abs(r.Height - targetHeight) < minDiff)
+						minDiff = Math.Abs(r.Height - targetHeight);
+					result = r;
+				}
+				return result;
+			});
+
 			zxing.Options = options;
+
+			
 		}
 		
 		protected override void OnAppearing()

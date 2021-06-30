@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QR2Web.Droid", "QR2Web\QR2Web.Droid\QR2Web.Droid.csproj", "{A66D0700-97BB-4541-B317-D481B9EFD233}"
 EndProject
@@ -16,7 +16,6 @@ Global
 		QR2Web\QR2Web\QR2Web.projitems*{2d820a3c-dff9-42d2-b555-204af6f3f9d7}*SharedItemsImports = 4
 		QR2Web\QR2Web\QR2Web.projitems*{48dc103c-5d34-4aa4-9936-504ffc87dac8}*SharedItemsImports = 13
 		QR2Web\QR2Web\QR2Web.projitems*{a66d0700-97bb-4541-b317-d481b9efd233}*SharedItemsImports = 4
-		QR2Web\QR2Web\QR2Web.projitems*{c3426058-d4e9-4411-8420-3a8952cc5956}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -212,5 +211,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {458353B7-02AD-420F-AB4C-96D4D9A9B4ED}
 	EndGlobalSection
 EndGlobal

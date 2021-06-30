@@ -23,7 +23,7 @@ namespace QR2Web
 				url.StartsWith("p2spro:") || 
 				url.StartsWith("qr2web:"))
 			{
-				return true;
+				return true; 
 			}
 			else
 			{

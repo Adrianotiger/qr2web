@@ -12,12 +12,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Language.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Location.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MainPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OptionsPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OverlayPage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Parameters.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ScanPage.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)GettingStarted.Xamarin" />
   </ItemGroup>
 </Project>

@@ -12,7 +12,7 @@ using Plugin.CurrentActivity;
 
 namespace QR2Web.Droid
 {
-	[Activity(Label = "QR2Web Inventory",
+	[Activity(Label = "QR2Web",
 		Icon = "@drawable/icon",
 		MainLauncher = true,
 		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
@@ -49,6 +49,8 @@ namespace QR2Web.Droid
 			LockPortrait(Parameters.Options.LockPortrait);
 
 			intentDataRead = false;
+
+			//Android.Webkit.WebStorage.Instance.DeleteAllData(); // delete cache
 		}
 
 		protected override void OnStart()
@@ -89,11 +91,8 @@ namespace QR2Web.Droid
 
 		public void InitExternalLibraries()
 		{
-			//global::Xamarin.Forms.Forms.Init(this, bundle);
-			ZXing.Net.Mobile.Forms.Android.Platform.Init();
-
-			// Initialize the scanner first so we can track the current context 
-			MobileBarcodeScanner.Initialize(Application);
+			Xamarin.Essentials.Platform.Init(Application);
+			ZXing.Net.Mobile.Forms.Android.Platform.Init();			
 		}
 
 		public void InitOSSettings(Bundle bundle)
@@ -103,8 +102,8 @@ namespace QR2Web.Droid
 
 		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
 		{
-			//global::ZXing.Net.Mobile.Forms.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-			global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+			Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 }
