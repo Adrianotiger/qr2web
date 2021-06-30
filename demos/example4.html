@@ -22,10 +22,9 @@
   <h2>Check if application was started from app</h2>
   
   <input type='button' value='CHECK' onclick='check();' />
-  
+  <br><hr>
   <script>
-    document.write("Started from App: ");
-    document.write(checkFromApp() ? "TRUE" : "FALSE"); 
+    addEventListener("load", ()=>{check();});
   </script>
   <br>
 </body>
