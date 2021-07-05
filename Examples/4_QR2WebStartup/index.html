@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR2Web check if page is inside app - Example</title>
+  <script>
+    function checkFromApp()
+    {
+      return(typeof QR2WEB !== 'undefined')
+    }
+    
+    function check()
+    {
+      var d = document.createElement("div");
+      d.appendChild(document.createTextNode("Started from App: " + (checkFromApp() ? "TRUE" : "FALSE")));
+      document.body.appendChild(d);
+    }
+    
+  </script>
+</head>
+<body style="margin:0 auto;">
+  <h1>Example 4</h1>
+  <h2>Check if application was started from app</h2>
+  
+  <input type='button' value='CHECK' onclick='check();' />
+  <br><hr>
+  <script>
+    addEventListener("load", ()=>{
+      // leave at least 10ms to let the app set the QR2WEB const.
+      setTimeout(()=>{ check(); }, 10);
+    });
+  </script>
+  <br>
+</body>
+</html>

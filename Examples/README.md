@@ -8,3 +8,6 @@ If you activate the location in the app, you will see where you scanned the QR c
 
 ## Example 3: QR2Web with other apps ([open](3_QR2WebScheme))
 You can start other apps over this app, for example to print a receipt.
+
+## Example 3: QR2Web check startup ([open](4_QR2WebStartup))
+Find out if the PWA was started from the app or from a browser.
