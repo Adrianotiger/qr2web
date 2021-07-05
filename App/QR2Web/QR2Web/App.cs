@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-
 using Xamarin.Forms;
-using Xamarin.Essentials;
-//using ZXing.Net.Mobile.Forms;
 
 namespace QR2Web
 {
@@ -33,8 +28,14 @@ namespace QR2Web
         public App(bool withBackButton = false)
         {
             Instance = this;
-            QRScanner = new Scanner();                      // initialize scanner class (ZXing scanner)
             HasBackButton = withBackButton;
+
+            MainPage = new LauncherPage();
+        }
+
+        public void LoadMainPage()
+        {
+            QRScanner = new Scanner();                      // initialize scanner class (ZXing scanner)
 
             Parameters.LoadHistory(ref History);            // load scan results history
 
@@ -45,13 +46,42 @@ namespace QR2Web
             Language.SetLanguage(Parameters.Options.LanguageIndex); // set language for the app from options	
 
             QRPage = new QRMainPage();
-            MainPage = QRPage;
+        }
+
+        public bool IsMainPageReady()
+        {
+            return QRPage.IsLoaded();
+        }
+
+        public void StartMainPage()
+        {
+            NavigateTo(QRPage);
+        }
+
+        public void NavigateTo(Page p)
+        {
+            (MainPage as LauncherPage).AddPage(p);
+        }
+
+        public bool GoBack()
+        {
+            if (QRPage.Back()) return true;
+            return false;
+        }
+
+        public async void CloseScan()
+        {
+            var n = (MainPage as LauncherPage).Navigation;
+            if (n.NavigationStack[n.NavigationStack.Count - 1].GetType() == typeof(CustomScanPage))
+            {
+                await n.PopAsync();
+            }
         }
 
         /// <summary>
         /// Start the QR-scan page (ZXing library). Will add the scan result to history and execute the Javascript-function on the webpage.
         /// </summary>
-        public async void StartScan()
+        public void StartScan()
         {
             //////////////// TEST
             CustomScanPage customPage = new CustomScanPage();
@@ -78,7 +108,8 @@ namespace QR2Web
                 QRLocation.InitLocation();
             }
 
-            await App.Current.MainPage.Navigation.PushModalAsync(customPage);
+            NavigateTo(customPage);
+            //await App.Current.MainPage.Navigation.PushModalAsync(customPage);
         }
 
         /// <summary>

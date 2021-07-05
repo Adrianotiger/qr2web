@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace QR2Web
 {
-    class QRMainPage : NavigationPage
+    class QRMainPage : ContentPage
     {
         private Button ScanButton;
         private Button HistoryButton;
@@ -18,6 +18,7 @@ namespace QR2Web
         private WebView WebPageWebView;
         private StackLayout TitleStack;
         private DateTime lastWindowUpdate;
+        private bool firstPageLoaded = false;
 
         public QRMainPage()
         {
@@ -39,6 +40,7 @@ namespace QR2Web
             WebPageWebView.Navigated += (s, e) =>
             {
                 var url = e.Url;
+                firstPageLoaded = true;
 
                 Console.WriteLine(url);
                 if (url.StartsWith("http"))// http or https
@@ -65,7 +67,14 @@ namespace QR2Web
                 else if (!url.StartsWith("http"))
                 {
                     var uri = new Uri(url);
-                    await Launcher.TryOpenAsync(uri);
+                    try
+                    {
+                        await Launcher.OpenAsync(uri);
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     e.Cancel = true;
                 }
                 else // http or https
@@ -117,17 +126,17 @@ namespace QR2Web
                 Children = {
                                 new Label
                                 {
-                                    Text = Language.GetText("AppTitleShort"),
+                                    Text = "QR 2 Web",
                                     HorizontalOptions = LayoutOptions.StartAndExpand,
                                     VerticalOptions = LayoutOptions.Fill,
                                     VerticalTextAlignment = TextAlignment.Center,
-                                    TextColor = Color.Yellow
+                                    TextColor = Color.SkyBlue
                                 }
                             }
             };
 
             // The root page of your application
-            var content = new StackLayout
+            Content = new StackLayout
             {
                 VerticalOptions = LayoutOptions.Fill,
                 HorizontalOptions = LayoutOptions.Fill,
@@ -137,38 +146,24 @@ namespace QR2Web
                         WebPageWebView
                     }
             };
-            var page0 = new ContentPage { Content = content };
-            SetHasNavigationBar(page0, false);
-            SetHasBackButton(page0, App.HasBackButton);
-
-            if (App.HasBackButton)
-            {
-                var page1 = new ContentPage {  };
-                SetHasNavigationBar(page1, false);
-                SetHasBackButton(page1, true);
-                Navigation.PushAsync(page1);
-            }
-
-            Navigation.PushAsync(page0);
 
             Padding = new Thickness(0);
             BackgroundColor = Color.Black;
         }
 
-        protected override bool OnBackButtonPressed()
+        public bool IsLoaded()
         {
-            if(Navigation.NavigationStack.Count > 2)
-            {
-                Navigation.PopAsync();
-            }
+            return firstPageLoaded;
+        }
+
+        public bool Back()
+        {
             if (WebPageWebView.CanGoBack)
             {
                 WebPageWebView.GoBack();
+                return true;
             }
-
-            if (App.HasBackButton) return true;
-
-            return base.OnBackButtonPressed();
+            return false;
         }
 
         private void InitButtons()
@@ -220,13 +215,10 @@ namespace QR2Web
                     File = "scanc.png",
                 },
             };
-            SettingsButton.Clicked += async (sender, e) =>
+            SettingsButton.Clicked += (sender, e) =>
             {
                 var optionsPage = new OptionsPage { BackgroundColor = Color.White };
-                SetHasNavigationBar(optionsPage, false);
-                SetHasBackButton(optionsPage, App.HasBackButton);
-                await Navigation.PushAsync(optionsPage);
-                //await App.Current.MainPage.Navigation.PushModalAsync(new OptionsPage());
+                App.Instance.NavigateTo(optionsPage);
             };
 
             MoreButton = new Button
@@ -257,7 +249,7 @@ namespace QR2Web
             {
                 if (result.CompareTo(Language.GetText("Settings")) == 0)
                 {
-                    await Navigation.PushModalAsync(new OptionsPage());
+                    App.Instance.NavigateTo(new OptionsPage());
                 }
                 else if (result.CompareTo(Language.GetText("RefreshPage")) == 0)
                 {

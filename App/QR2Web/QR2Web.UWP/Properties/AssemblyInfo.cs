@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("QR to Web")]
+[assembly: AssemblyTitle("QR 2 Web")]
 [assembly: AssemblyDescription("Scan a code and send it to a webpage")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
