@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
@@ -19,14 +20,14 @@ using Xamarin.Forms;
 
 namespace QR2Web.UWP
 {
-    public sealed partial class MainPage
+    public sealed partial class MainPage : OSInterface
     {
         public MainPage()
         {
             this.InitializeComponent();
 
             
-            LoadApplication(new QR2Web.App(true));
+            LoadApplication(new QR2Web.App(this, true));
 
             InitOSSettings();
             InitExternalLibraries();
@@ -65,6 +66,24 @@ namespace QR2Web.UWP
         public void InitOSSettings()
         {
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        }
+
+        public bool OpenExternalUrl(string url)
+        {
+            bool success = true;
+            try
+            {
+                new Task(async() =>
+                {
+                    await Windows.System.Launcher.LaunchUriAsync(new Uri(url));
+                });
+            }
+            catch (Exception)
+            {
+                //Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+                success = false;
+            }
+            return success;
         }
     }
 }

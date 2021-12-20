@@ -26,7 +26,7 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x64|arm</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
@@ -114,7 +114,9 @@
     <None Include="QR2Web.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="torch.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="numeric.png" />
     <Content Include="scanc.png" />
     <Content Include="scanl1.png" />
     <Content Include="scanl2.png" />
@@ -154,10 +156,10 @@
       <Version>3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
-      <Version>1.6.1</Version>
+      <Version>1.7.0</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.12" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2291" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.13" />
     <PackageReference Include="ZXing.Net.Mobile">
       <Version>3.1.0-beta2</Version>
     </PackageReference>

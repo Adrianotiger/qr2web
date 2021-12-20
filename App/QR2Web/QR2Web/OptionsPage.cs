@@ -16,6 +16,7 @@ namespace QR2Web
         private Picker emulationPicker;                             // emulation option
         private Switch[] acceptedCodesSwitch = new Switch[4];       // accepted codes option
         private Label[] acceptedCodesTexts = new Label[4];          // texts for the accepted codes
+        private Label[] acceptedCodesDesc = new Label[4];          // texts for the accepted codes
         private Switch sendLocationSwitch;                          // location activation option
         private Switch lockPortraitSwitch;                          // lock portrait mode option
         private Switch saveHistorySwitch;                           // save history option
@@ -41,12 +42,16 @@ namespace QR2Web
             Label acceptedCodesText = new Label { Text = Language.GetText("Option3_1") };
             acceptedCodesTexts[0] = new Label { Text = "QR", WidthRequest = 100, VerticalTextAlignment = TextAlignment.Center };
             acceptedCodesSwitch[0] = new Switch { IsToggled = true, IsEnabled = false };
+            acceptedCodesDesc[0] = new Label { Text = "QR-Codes", HorizontalTextAlignment = TextAlignment.End };
             acceptedCodesTexts[1] = new Label { Text = "CODE", WidthRequest = 100, VerticalTextAlignment = TextAlignment.Center };
             acceptedCodesSwitch[1] = new Switch { IsToggled = Parameters.Options.AcceptBarcode_Code, IsEnabled = true };
+            acceptedCodesDesc[1] = new Label { Text = "Code-39/93/128/bar", HorizontalTextAlignment = TextAlignment.End };
             acceptedCodesTexts[2] = new Label { Text = "EAN", WidthRequest = 100, VerticalTextAlignment = TextAlignment.Center };
             acceptedCodesSwitch[2] = new Switch { IsToggled = Parameters.Options.AcceptBarcode_Ean, IsEnabled = true };
+            acceptedCodesDesc[2] = new Label { Text = "Ean 8/13", HorizontalTextAlignment = TextAlignment.End };
             acceptedCodesTexts[3] = new Label { Text = "UPC", WidthRequest = 100, VerticalTextAlignment = TextAlignment.Center };
             acceptedCodesSwitch[3] = new Switch { IsToggled = Parameters.Options.AcceptBarcode_Upc, IsEnabled = true };
+            acceptedCodesDesc[3] = new Label { Text = "Upc-A/E/EAN", HorizontalTextAlignment = TextAlignment.End };
 
             for (int i = 0; i < 4; i++)
             {
@@ -121,7 +126,8 @@ namespace QR2Web
                         Children =
                         {
                             acceptedCodesTexts[0],
-                            acceptedCodesSwitch[0]
+                            acceptedCodesSwitch[0],
+                            acceptedCodesDesc[0]
                         }
                     },
                     new StackLayout
@@ -130,7 +136,8 @@ namespace QR2Web
                         Children =
                         {
                             acceptedCodesTexts[1],
-                            acceptedCodesSwitch[1]
+                            acceptedCodesSwitch[1],
+                            acceptedCodesDesc[1]
                         }
                     },
                     new StackLayout
@@ -139,7 +146,8 @@ namespace QR2Web
                         Children =
                         {
                             acceptedCodesTexts[2],
-                            acceptedCodesSwitch[2]
+                            acceptedCodesSwitch[2],
+                            acceptedCodesDesc[2]
                         }
                     },
                     new StackLayout
@@ -148,7 +156,8 @@ namespace QR2Web
                         Children =
                         {
                             acceptedCodesTexts[3],
-                            acceptedCodesSwitch[3]
+                            acceptedCodesSwitch[3],
+                            acceptedCodesDesc[3]
                         }
                     },
                     webPageText,

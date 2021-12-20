@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="1.8.2" android:versionCode="22" package="ch.petrucci.qr2web_2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="2.1" android:versionCode="26" package="ch.petrucci.qr2web_2">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.INTERNET" />

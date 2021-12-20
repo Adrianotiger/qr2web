@@ -35,6 +35,16 @@ namespace QR2Web
                             HorizontalTextAlignment = TextAlignment.Center,
                             FontSize = 10,
                             Margin = new Thickness(10),
+                            VerticalOptions = LayoutOptions.Center
+                        },
+                        new Label
+                        {
+                            TextColor = Color.LightBlue,
+                            Text = "Version " + VersionTracking.CurrentVersion,
+                            VerticalTextAlignment = TextAlignment.Start,
+                            HorizontalTextAlignment = TextAlignment.Center,
+                            FontSize = 10,
+                            Margin = new Thickness(10),
                             VerticalOptions = LayoutOptions.FillAndExpand
                         }
                     }
@@ -51,17 +61,19 @@ namespace QR2Web
 
         private void Page0_Appearing(object sender, EventArgs e)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
-                Task.Delay(50);
-                App.Instance.LoadMainPage();
-                for(var j=0;j<10;j++)
-                {
-                    if (!App.Instance.IsMainPageReady()) Task.Delay(50);
-                }
+                await Task.Delay(20);
+                App.Instance.LoadMainPage(true);
+                await Task.Delay(100);
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     App.Instance.StartMainPage();
+                });
+                await Task.Delay(1000);
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    App.Instance.LoadMainPage(false);
                 });
             });
         }

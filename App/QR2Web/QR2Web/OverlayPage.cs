@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using ZXing.Mobile;
@@ -28,22 +29,88 @@ namespace QR2Web
 
             zxing.OnScanResult += Zxing_OnScanResult;
 
-            var torch = new Button
+            var inText = new Label
             {
-                Text = Language.GetText("Torch"),
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = Color.White
+                HeightRequest = 32,
+                WidthRequest = 120,
+                BackgroundColor = Color.White,
+                Text = "",
+                FontSize = 28,
+                FontAttributes = FontAttributes.Bold,
+                VerticalTextAlignment = TextAlignment.Center,
+                HorizontalTextAlignment = TextAlignment.Center
+            };
+            string[] texts = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "⬅", "0", "▶" };
+            var buttons = new Button[texts.Length];
+            for(var j=0;j<texts.Length; j++)
+            {
+                buttons[j] = new Button { Text = texts[j], WidthRequest = 65, HeightRequest = 65, CornerRadius = 6, FontSize = 28, FontAttributes = FontAttributes.Bold };
+                buttons[j].Clicked += (s, e) =>
+                {
+                    if(int.TryParse((s as Button).Text, out int num))
+                    {
+                        inText.Text += (s as Button).Text;
+                    }
+                    else if((s as Button).Text == "⬅")
+                    {
+                        if (inText.Text.Length > 0) inText.Text = inText.Text.Substring(0, inText.Text.Length - 1);
+                    }
+                    else
+                    {
+                        zxing.RaiseScanResult(new ZXing.Result(inText.Text, Encoding.ASCII.GetBytes(inText.Text), null, ZXing.BarcodeFormat.QR_CODE));
+                    }
+                };
+            }
+            var customKeyboard = new Grid
+            {
+                RowDefinitions = new RowDefinitionCollection { new RowDefinition { Height = 38 }, new RowDefinition { Height = 72 }, new RowDefinition { Height = 72 }, new RowDefinition { Height = 72 }, new RowDefinition { Height = 72 } },
+                ColumnDefinitions = new ColumnDefinitionCollection { new ColumnDefinition { Width = 72 }, new ColumnDefinition { Width = 72 }, new ColumnDefinition { Width = 72 } },
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.Center,
+                IsVisible = false,
+                BackgroundColor = Color.FromRgba(1.0, 1.0, 1.0, 0.7),
+                Padding = new Thickness(10, 5, 10, 2)
+            };
+            customKeyboard.Children.Add(inText, 0, 0);
+            for (var j = 0; j < texts.Length; j++)
+            {
+                customKeyboard.Children.Add(buttons[j], j % 3, 1 + (int)(j / 3));
+            }
+            Grid.SetColumnSpan(inText, 3);
+
+            var torch = new ImageButton
+            {
+                Source = "torch.png",
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.End,
+                HeightRequest = 96,
+                WidthRequest = 96
             };
             torch.Clicked += delegate
             {
                 zxing.ToggleTorch();
             };
 
+            var keyboard = new ImageButton
+            {
+                Source = "numeric.png",
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.Start,
+                HeightRequest = 96,
+                WidthRequest = 96
+            };
+            keyboard.Clicked += delegate
+            {
+                if (customKeyboard.IsVisible) customKeyboard.IsVisible = false;
+                else customKeyboard.IsVisible = true;
+            };
+
             var abort = new Button
             {
                 Text = Language.GetText("Cancel"),
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                TextColor = Color.White
+                TextColor = Color.White,
+                HeightRequest = 300
             };
             abort.Clicked += delegate
             {
@@ -83,7 +150,7 @@ namespace QR2Web
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
-                Opacity = 0.6,
+                Opacity = 0.7,
                 Children =
                 {
                     new Image
@@ -99,7 +166,21 @@ namespace QR2Web
                         HorizontalOptions = LayoutOptions.CenterAndExpand,
                         Source = "scanl2.png",
                         Aspect = Aspect.AspectFill
-                    }
+                    },
+                    new Xamarin.Forms.Shapes.Rectangle
+                    {
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.CenterAndExpand,
+                        WidthRequest = 170,
+                        HeightRequest = 170,
+                        Stroke = Brush.Black,
+                        StrokeThickness = 1,
+                        RadiusX = 3,
+                        RadiusY = 3
+                    },
+                    torch,
+                    keyboard,
+                    customKeyboard
                 }
             };
 
@@ -115,7 +196,7 @@ namespace QR2Web
 
             customOverlayBottom.Children.Add(abort);
             //if(zxing.HasTorch) customOverlayBottom.Children.Add(torch); BUG on library, this returns always FALSE
-            customOverlayBottom.Children.Add(torch);
+            //customOverlayBottom.Children.Add(torch);
 
             var customOverlay = new Grid
             {

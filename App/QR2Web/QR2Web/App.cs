@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace QR2Web
 {
     public class App : Application
     {
-        private Scanner QRScanner;
-        private QRMainPage QRPage;
+        private Scanner QRScanner = null;
+        private QRMainPage QRPage = null;
 
         public static List<KeyValuePair<DateTime, string>> History = new List<KeyValuePair<DateTime, string>>(16);
 
         public static App Instance { get; set; } = null;    // Used to access App from the different OS codes
-        public static int AppVersion { get; } = 18;         // Version of this app for the different OS codes
+        public static int AppVersion { get; } = 21;         // Version of this app for the different OS codes
 
         public static bool HasBackButton { get; private set; }
+        public static OSInterface IOS { get; private set; }
 
         protected override void OnAppLinkRequestReceived(Uri uri)
         {
@@ -25,27 +28,37 @@ namespace QR2Web
         /// <summary>
         /// Constructor. Will initialize the view (for Xamarin), load the parameters and initialize the QR-scanner.
         /// </summary>
-        public App(bool withBackButton = false)
+        public App(OSInterface osi, bool withBackButton = false)
         {
             Instance = this;
             HasBackButton = withBackButton;
+            IOS = osi;
 
             MainPage = new LauncherPage();
         }
 
-        public void LoadMainPage()
+        public void LoadMainPage(bool baseInit = true)
         {
-            QRScanner = new Scanner();                      // initialize scanner class (ZXing scanner)
+            if (baseInit)
+            {
+                Language.SetLanguage(Parameters.Options.LanguageIndex); // set language for the app from options	
 
-            Parameters.LoadHistory(ref History);            // load scan results history
+                QRPage = new QRMainPage();
+            }
+            else
+            {
+                QRScanner = new Scanner();                      // initialize scanner class (ZXing scanner)
 
-            if (Parameters.Options.UseLocation)
-                QRLocation.InitLocation();
+                Parameters.LoadHistory(ref History);            // load scan results history
 
-            if (!Parameters.Options.SaveHistory) History.Clear();   // clear history if no history should be used
-            Language.SetLanguage(Parameters.Options.LanguageIndex); // set language for the app from options	
+                if (Parameters.Options.UseLocation)
+                    QRLocation.InitLocation();
 
-            QRPage = new QRMainPage();
+                if (!Parameters.Options.SaveHistory) History.Clear();   // clear history if no history should be used
+
+                QRPage.Initialize();
+            }
+            
         }
 
         public bool IsMainPageReady()
@@ -311,7 +324,51 @@ namespace QR2Web
 
                 if (urlWithoutProtocol.ToLower().StartsWith("parameters"))
                 {
-                    saveNewParameters(urlWithoutProtocol.Substring("parameters".Length).TrimStart('/'));
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        SaveNewParameters(urlWithoutProtocol.Substring("parameters".Length).TrimStart('/'));
+                    });
+                }
+                else if (urlWithoutProtocol.ToLower().StartsWith("torch"))
+                {
+                    var time = urlWithoutProtocol.ToLower().Split("/");
+                    if(time.Length == 2 && time[1] != "off")
+                    {
+                        new Task(async () =>
+                        {
+                            try
+                            {
+                                MainThread.BeginInvokeOnMainThread(async () =>
+                                {
+                                    await Flashlight.TurnOnAsync();
+                                });
+                                int timeout = 2000;
+                                int.TryParse(time[1], out timeout);
+                                if (timeout < 1000) timeout = 1000;
+                                else if (timeout > 30000) timeout = 30000;
+                                await Task.Delay(timeout);
+                                MainThread.BeginInvokeOnMainThread(async () =>
+                                {
+                                    await Flashlight.TurnOffAsync();
+                                });
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.Write(ex);
+                            }
+                        }).Start();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Xamarin.Essentials.Flashlight.TurnOffAsync();
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.Write(ex);
+                        }
+                    }
                 }
                 else
                 {
@@ -325,7 +382,7 @@ namespace QR2Web
             }
         }
 
-        public static async void saveNewParameters(string paramString)
+        public static async void SaveNewParameters(string paramString)
         {
 
             Dictionary<string, string> dicQueryString =
@@ -367,6 +424,11 @@ namespace QR2Web
             if (dicQueryString.ContainsKey("language"))
             {
                 Language.SetLanguage(dicQueryString["language"]);
+            }
+
+            if (dicQueryString.ContainsKey("webpage"))
+            {
+                Instance.QRPage.SetSource(Parameters.Options.HomePage);
             }
         }
 
