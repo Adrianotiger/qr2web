@@ -362,7 +362,10 @@ namespace QR2Web
                     {
                         try
                         {
-                            Xamarin.Essentials.Flashlight.TurnOffAsync();
+                            MainThread.BeginInvokeOnMainThread(async () =>
+                            {
+                                await Flashlight.TurnOffAsync();
+                            });
                         }
                         catch(Exception ex)
                         {

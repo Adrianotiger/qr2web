@@ -1,20 +1,25 @@
  <!DOCTYPE html>
 <html>
 <head>
-  <title>QR2Web for dummies - Example</title>
-  <script>
-  function onQR2WebCodeScan(barcode)
-  {
-    document.getElementById("scanResult").innerHTML = barcode;
-  }
-  </script>
+    <title>QR2Web for dummies - Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        function onQR2WebCodeScan(barcode)
+        {
+            document.getElementById("scanResult").innerHTML = barcode;
+        }
+    </script>
+    <style>
+        body {text-align:center;}
+        div { padding: 20px; margin: 20px; }
+    </style>
 </head>
 <body style="margin:0 auto;">
   <h1>Example 1</h1>
   <h2>QR2Web for dummies</h2>
   Click on the SCAN button in your app 
   or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
-  <br><br>
+  <br>
   <div id="scanResult" style="background-color:yellow"><i>SCAN RESULT</i></div>
 </body>
 </html>

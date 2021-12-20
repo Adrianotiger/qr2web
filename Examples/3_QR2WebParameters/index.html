@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR2Web Parameters - Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+        }
+
+        input {
+            margin: 3px;
+            padding: 3px;
+        }
+        img {
+            width: 80vw;
+            max-width: 400px;
+        }
+        div
+        {
+            width: 90vw;
+            overflow-wrap: break-word;
+            white-space: normal;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body style="margin:0 auto;">
+  <h1>Example 3</h1>
+  <h2>QR2Web set parameters over a link:</h2>
+  
+  <form id="form">
+      <table>
+          <tr>
+              <td>Webpage:</td>
+              <td><input type="url" name="webpage" value="https://adrianotiger.github.io/qr2web/scan.html" style="min-width:60vw" /></td>
+          </tr>
+          <tr>
+              <td>Force Portrait:</td>
+              <td><input type="radio" name="portrait" value="true" checked />YES - <input type="radio" name="portrait" value="false" />NO</td>
+          </tr>
+          <tr>
+              <td>Language:</td>
+              <td><input type="radio" name="language" value="en" checked />English - <input type="radio" name="language" value="de" />Deutsch - <input type="radio" name="language" value="it" />Italiano</td>
+          </tr>
+          <tr>
+              <td></td>
+              <td><input type="button" value="Generate Link" onclick="createLink()" /></td>
+          </tr>
+      </table>
+  </form>
+  <div id="link"></div>
+  <br><hr>
+  Or pack it in a QR code:<br>
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIBAMAAABfdrOtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURf///wAAAFXC034AAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKHSURBVHja7ZZrbgMxCITNDez7X7ZqapkZYNOnVLYdfqwSFvgsZTJmKBSKRmErxMTsLnpkd8JOWXqEEKQ5BHWwISN207jXLi8jZj1XkKYQFxPqZJ73LhYUYfHwQYLcGrJJZ/RCdWFiCPInIHQ9cNmEvvEtdQny6xAPnz8ojBsN7g7C1XMF+SyE4xuQEO9BwgMh+1GVCfIzkCoSzntQQqvw+4+HIL8LIavH8kIloSxUwMslSHvIOIrBG3yw3yf+jM3hc5abIM0gxrKyt9HGsklnQR3ZEZuPvFwkBGkESaQgt9SDJ3D+ac8hSF/IIc3jKAYSIvQ5ATVgXKhLkD6QEW8LQ3vAbJrpaFTlhcQEaQYh8y8E8nhgt6O9DBM4QZCvQ6rfmS/69MPP4kbw0YK0hxAJy3ci+cCAP/iK98SqXF6QppD0DmWzjq3wPjDRbLhsVH4vSD8IOopFdS2WDdoKCguz49JWBGkGCaQ0OHSflwOliQoV5B6QSjbsLcFAwkxOWH2pCNIK4huA3wBJTGggWzZhs1i1YgXpDEm4xWtCsWpYVNrVWQT5AmRw8aR/f7Z6PFzYAZMFCHIHyFXH45F2OT8G9rFCBWkNMX43I3WA32NQy+kLdiRIfwj2euKpnxzMGvw1nUqQppARFRXQIcHXTq0uQe4Awa2A5LQ7/PNpoPukEJYJ0htSBXZviBXjQu05wSjtSJBeENr5oBxeFZvFhIpwFkcL8oOQXeJ/2pBNwA/88PhVkC4Q1FG+oZNznyv9SQhyV8hOoJiollVp3HK5SAjSG4JWEVS0DzFxNOJWcQhBmkKwJCwSE7KGJJ45o/uYIO0hpXqCgGbcJmato0t1CdIMolAo/kWM8QISGUEBCW0fmwAAAABJRU5ErkJggg==" />
+  <script>
+      function createLink()
+      {
+          var inps = document.getElementById("form");
+          var link = "qr2web:/parameters/webpage=" + inps["webpage"].value + "&portrait=" + inps["portrait"].value + "&language=" + inps["language"].value;
+          document.getElementById("link").innerHTML = "<hr><a href='" + link + "'>" + link + "</a>";
+      }
+  </script>
+</body>
+</html>
