@@ -10,6 +10,7 @@ title: QR2Web with GPS
     function onQR2WebLocation(json) {
         var mapData = JSON.parse(json);
         var map = L.map('map').setView([mapData.longitude, mapData.latitude], 10);
+        document.getElementById("scanResult").innerHTML += mapData.longitude + "/" + mapData.latitude;
     }
 </script>
 <div class="blurb">
