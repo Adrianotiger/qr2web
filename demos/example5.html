@@ -24,7 +24,7 @@ title: QR2Web with GPS
   Activate the location (under settings) and click on the SCAN button in your app 
   or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
   <br><br>
-  <div id="scanResult" style="background-color:yellow"><i>SCAN RESULT</i></div>
+  <div id="scanResult" style="background-color:yellow;color:#00a;"><i>SCAN RESULT</i></div>
   
   <div id="map" style="width:400px;height:400px;background:yellow;max-width:100vw;">Google Map</div>
   <script>
@@ -33,7 +33,8 @@ title: QR2Web with GPS
     var mapOptions = {
         center: new google.maps.LatLng(lat, lng),
         zoom: 15,
-        mapTypeId: google.maps.MapTypeId.HYBRID
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        mapId: '4081e51310b93061'
     }
     var map = new google.maps.Map(map, mapOptions);
   }
