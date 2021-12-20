@@ -20,19 +20,16 @@ title: QR2Web with GPS
   <br><br>
   <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i>SCAN RESULT</i></div>
   
-  <div id="map" style="width:80vw;height:50vh;background:yellow;max-width:100vw;">Google Map</div>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+  <div id="map" style="width:80vw;height:50vh;background:yellow;max-width:100vw;color:#00a;padding:0px;">Leaflet Map</div>
   <script>
   function myMap(lat, lng) {
-    var map = document.getElementById("map");
-    var mapOptions = {
-        center: new google.maps.LatLng(lat, lng),
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.HYBRID,
-        mapId: '4081e51310b93061'
-    }
-    var map = new google.maps.Map(map, mapOptions);
+    var map = L.map('map').setView([lat, lng], 10);
   }
   </script>
-
-  <script src="https://maps.googleapis.com/maps/api/js"></script>
 </div>
