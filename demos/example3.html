@@ -1,33 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>QR2Web Parameters - Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            text-align: center;
-        }
+---
+layout: default
+title: QR2Web Parameters
+---
 
-        input {
-            margin: 3px;
-            padding: 3px;
-        }
-        img {
-            width: 80vw;
-            max-width: 400px;
-        }
-        div
-        {
-            width: 90vw;
-            overflow-wrap: break-word;
-            white-space: normal;
-            margin: 0 auto;
-        }
-    </style>
-</head>
-<body style="margin:0 auto;">
+<style>
+input {
+    margin: 3px;
+    padding: 3px;
+}
+img {
+    width: 80vw;
+    max-width: 400px;
+}
+div
+{
+    width: 90vw;
+    overflow-wrap: break-word;
+    white-space: normal;
+    margin: 0 auto;
+}
+</style>
+<div class="blurb">
   <h1>Example 3</h1>
-  <h2>QR2Web set parameters over a link:</h2>
+  <h2>{{ page.title }}</h2>
+  Setting app over a link:
   
   <form id="form">
       <table>
@@ -61,5 +57,4 @@
           document.getElementById("link").innerHTML = "<hr><a href='" + link + "'>" + link + "</a>";
       }
   </script>
-</body>
-</html>
+</div>
