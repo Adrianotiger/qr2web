@@ -6,6 +6,8 @@ Scan codes with the smartphones and forward the parsed code to a webpage.
 <img src="https://github.com/Adrianotiger/qr2web/raw/gh-pages/images/stores.png">
 </a>
 
+<img src="https://github.com/Adrianotiger/qr2web/blob/b745516fedebe9faf29e6c8229ec0c7e50e87c4a/screenshots/Screenshot_2021-12-20-15-54-23-635_ch.petrucci.qr2web_2.jpg" width="200px"> <img src="https://github.com/Adrianotiger/qr2web/blob/b745516fedebe9faf29e6c8229ec0c7e50e87c4a/screenshots/Screenshot_2021-12-20-15-54-23-635_ch.petrucci.qr2web_2.jpg" width="200px">
+
 ### Why this project?
 You find always more QR codes on the web and it is also easy to generate QR codes for own projects. Good smartphones (with Android or Windows Mobile) are able to scan a QR code directly from a webpage. Older smartphones and cheaper smartphones need an app because they are not able to access the camera from the webpage. So you need an app for each OS (=> store accounts, developer accounts, and $$$).
 
