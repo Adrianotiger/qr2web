@@ -1,44 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR2Web with GPS - Example</title>
-  <script>
-  function onQR2WebCodeScan(barcode)
-  {
-    console.log("Got barcode: " + barcode);
-    document.getElementById("scanResult").innerHTML = barcode;
-  }
-  function onQR2WebLocation(json)
-  {
-    console.log("Got location: " + json);
-    var mapData = JSON.parse(json);
-    console.log(mapData);
-    myMap(mapData.latitude, mapData.longitude);
-  }
-  </script>
+  <title>QR2Web open External app - Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      text-align: center;
+    }
+    input {
+      width: 80vw;
+      margin: 3px;
+      padding: 3px;
+    }
+  </style>
 </head>
 <body style="margin:0 auto;">
   <h1>Example 2</h1>
-  <h2>QR2Web with GPS data</h2>
-  Activate the location (under settings) and click on the SCAN button in your app 
-  or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
-  <br><br>
-  <div id="scanResult" style="background-color:yellow"><i>SCAN RESULT</i></div>
-  
-  <div id="map" style="width:400px;height:400px;background:yellow;max-width:100vw;">Google Map</div>
-  <script>
-  function myMap(lat, lng) {
-    var map = document.getElementById("map");
-    var mapOptions = {
-        center: new google.maps.LatLng(lat, lng),
-        zoom: 15,
-        mapTypeId: google.maps.MapTypeId.HYBRID
-    }
-    var map = new google.maps.Map(map, mapOptions);
-  }
-  </script>
+  <h2>QR2Web with external app</h2>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5tubrzk_iOYZTr_Na0jsT3SD3-QcjurM"></script>
+  link:<br>
+  <input type='text' id='applink' value='starpassprnt://v1/print/nopreview?back=" + encodeURIComponent(window.href) + "&popup=disable&html=" + encodeURIComponent("<html><body>This is a text</body></html>")' />
+  <input type='button' value='Open link' onclick='location.href=document.getElementById("applink").value;' />
+  <br><br> or Open Telegram App: <br>
+  <input type='button' value='tg://msg?text=Hello' onclick='location.href="tg://msg?text=Hello"' />
+
+
 </body>
 </html>

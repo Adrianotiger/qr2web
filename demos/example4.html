@@ -1,35 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>QR2Web check if page is inside app - Example</title>
-  <script>
-    function checkFromApp()
-    {
-      return(typeof QR2WEB !== 'undefined')
-    }
-    
-    function check()
-    {
-      var d = document.createElement("div");
-      d.appendChild(document.createTextNode("Started from App: " + (checkFromApp() ? "TRUE" : "FALSE")));
-      document.body.appendChild(d);
-    }
-    
-  </script>
+    <title>QR2Web advanced features - Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+        }
+
+        div {
+            padding: 20px;
+            margin: 20px;
+        }
+    </style>
 </head>
 <body style="margin:0 auto;">
-  <h1>Example 4</h1>
-  <h2>Check if application was started from app</h2>
-  
-  <input type='button' value='CHECK' onclick='check();' />
-  <br><hr>
-  <script>
-    addEventListener("load", ()=>{
-      // leave at least 10ms to let the app set the QR2WEB const.
-      setTimeout(()=>{ check(); }, 10);
-    });
-  </script>
-  <br>
+    <h1>Example 4</h1>
+    <h2>QR2Web with advanced features</h2>
+
+    <hr>
+    <h2>Torch</h2>
+    You can light up or off the torch directly over the webpage, using <code>qr2web:/torch/on</code> and <code>qr2web:/torch/off</code><br>
+    <input type="button" value="Power ON torch for 5 seconds..." onclick="qr2web:/torch/5000" />
+    <hr>
+
 </body>
 </html>
