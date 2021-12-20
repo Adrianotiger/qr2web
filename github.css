@@ -11,10 +11,10 @@ body
 footer
 {
   position:absolute;
-  height:40px;
+  height:4vh;
   width:100vw;
   bottom:0px;
-  font-size:25px;
+  font-size:3vh;
 }  
 div.blurb
 {
@@ -25,10 +25,12 @@ div.blurb
   position:absolute;
   width:90vw;
   height:80vh;
+  max-height: 80%;
   left:50%;
   top:50%;
   margin-left:-45vw;
   margin-top:-40vh;
+  overflow-y: auto;
 }
 @media all and (orientation:landscape)
 {
@@ -54,9 +56,9 @@ div.blurb
 }
 td.nav
 {
-  height:15vh;
-  line-height:1vh;
-  font-size:3vw;
+  height:10vh;
+  line-height:6vh;
+  font-size:2.5vh;
   vertical-align:top;
 }
 img.nav
