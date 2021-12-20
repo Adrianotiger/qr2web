@@ -1,31 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>QR2Web with GPS - Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            text-align: center;
-        }
+---
+layout: default
+title: QR2Web with GPS
+---
 
-        div {
-            padding: 20px;
-            margin: 20px;
-        }
-    </style>
-    <script>
-        function onQR2WebCodeScan(barcode) {
-            document.getElementById("scanResult").innerHTML = barcode;
-        }
-        function onQR2WebLocation(json) {
-            var mapData = JSON.parse(json);
-            myMap(mapData.latitude, mapData.longitude);
-        }
-    </script>
-</head>
-<body style="margin:0 auto;">
-  <h1>Example 5</h1>
-  <h2>QR2Web with GPS data</h2>
+<style>
+    div {
+        padding: 20px;
+        margin: 20px;
+    }
+</style>
+<script>
+    function onQR2WebCodeScan(barcode) {
+        document.getElementById("scanResult").innerHTML = barcode;
+    }
+    function onQR2WebLocation(json) {
+        var mapData = JSON.parse(json);
+        myMap(mapData.latitude, mapData.longitude);
+    }
+</script>
+<div class="blurb">
+    <h1>Example 5</h1>
+    <h2>{{ page.title }}</h2>
   Activate the location (under settings) and click on the SCAN button in your app 
   or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
   <br><br>
@@ -45,5 +40,4 @@
   </script>
 
   <script src="https://maps.googleapis.com/maps/api/js"></script>
-</body>
-</html>
+</div>
