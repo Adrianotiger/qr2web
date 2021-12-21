@@ -33,7 +33,8 @@ title: QR2Web with GPS
         document.getElementById("scanResult").innerHTML += "y";
     }
     setTimeout(()=>{
-        onQR2WebLocation({"latitude":"47.48","longitude":"9.30","accuracy":"50.5","timestamp":"456456"});
+        var o = '{"latitude":"47.48","longitude":"9.30","accuracy":"50.5","timestamp":"456456"}';
+        onQR2WebLocation(o);
     }, 1000);
 </script>
 <div class="blurb">
@@ -42,7 +43,7 @@ title: QR2Web with GPS
   Activate the location (under settings) and click on the SCAN button in your app 
   or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
   <br><br>
-  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 7 - SCAN RESULT</i></div>
+  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 8 - SCAN RESULT</i></div>
   
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css"/>
   <script src="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js"></script>
