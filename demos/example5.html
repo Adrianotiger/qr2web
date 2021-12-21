@@ -9,6 +9,7 @@ title: QR2Web with GPS
     }
     function onQR2WebLocation(json) {
         let mapData;
+        document.getElementById("scanResult").innerHTML += " (";
         try {   
             mapData = JSON.parse(json);
         }
@@ -17,17 +18,19 @@ title: QR2Web with GPS
         }
         document.getElementById("scanResult").innerHTML += mapData['latitude'] + "/" + mapData['longitude'];
         if(typeof mapData['longitude'] == 'undefined') {document.getElementById("scanResult").innerHTML += " - no pos"; return;}
-        document.getElementById("scanResult").innerHTML += "X";
+        document.getElementById("scanResult").innerHTML += ")";
         L.mapbox.accessToken = "pk.eyJ1IjoiYWRyaWFub3RpZ2VyIiwiYSI6ImNreGV4d2w0MjF3bDAzMmt0dXppMDA4dmQifQ.foIvIrYgCAppnBfMhGMw9Q";
-        document.getElementById("scanResult").innerHTML += "X";
+        document.getElementById("scanResult").innerHTML += ".";
         var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
             attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
             tileSize: 512,
             zoomOffset: -1
         });
+        document.getElementById("scanResult").innerHTML += "x";
         var map = L.map('map')
                     .addLayer(mapboxTiles)
-                    .setView([mapData.latitude, mapData.longitude], 15);
+                    .setView([mapData['latitude'], mapData['longitude']], 15);
+        document.getElementById("scanResult").innerHTML += "y";
     }
 </script>
 <div class="blurb">
@@ -36,7 +39,7 @@ title: QR2Web with GPS
   Activate the location (under settings) and click on the SCAN button in your app 
   or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
   <br><br>
-  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 5 - SCAN RESULT</i></div>
+  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 6 - SCAN RESULT</i></div>
   
   <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css"/>
   <script src="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js"></script>
