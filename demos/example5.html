@@ -8,19 +8,18 @@ title: QR2Web with GPS
         document.getElementById("scanResult").innerHTML = barcode;
     }
     function onQR2WebLocation(json) {
-        document.getElementById("scanResult").innerHTML += json;
         let mapData;
-        try
-        {   
+        try {   
             mapData = JSON.parse(json);
         }
-        catch
-        {
+        catch {
             mapData = {}
         }
         document.getElementById("scanResult").innerHTML += mapData['latitude'] + "/" + mapData['longitude'];
-        if(typeof mapData.longitude == 'undefined') {document.getElementById("scanResult").innerHTML += " - no pos"; return;}
+        if(typeof mapData['longitude'] == 'undefined') {document.getElementById("scanResult").innerHTML += " - no pos"; return;}
+        document.getElementById("scanResult").innerHTML += "X";
         L.mapbox.accessToken = "pk.eyJ1IjoiYWRyaWFub3RpZ2VyIiwiYSI6ImNreGV4d2w0MjF3bDAzMmt0dXppMDA4dmQifQ.foIvIrYgCAppnBfMhGMw9Q";
+        document.getElementById("scanResult").innerHTML += "X";
         var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
             attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
             tileSize: 512,
@@ -37,13 +36,9 @@ title: QR2Web with GPS
   Activate the location (under settings) and click on the SCAN button in your app 
   or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
   <br><br>
-  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 4 -SCAN RESULT</i></div>
+  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 5 - SCAN RESULT</i></div>
   
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-  crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-  crossorigin=""></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css"/>
+  <script src="https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js"></script>
   <div id="map" style="width:80vw;height:40vh;background:yellow;max-width:100vw;color:#00a;padding:0px;margin:0 auto;">Leaflet Map</div>
 </div>
