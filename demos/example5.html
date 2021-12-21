@@ -29,7 +29,7 @@ title: QR2Web with GPS
         document.getElementById("scanResult").innerHTML += "x";
         var map = L.map('map')
                     .addLayer(mapboxTiles)
-                    .setView([mapData['latitude'], mapData['longitude']], 15);
+                    .setView([mapData['latitude'], mapData['longitude']], 10);
         document.getElementById("scanResult").innerHTML += "y";
     }
     setTimeout(()=>{
