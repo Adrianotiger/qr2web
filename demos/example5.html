@@ -9,7 +9,7 @@ title: QR2Web with GPS
     }
     function onQR2WebLocation(json) {
         document.getElementById("scanResult").innerHTML += ".";
-        document.getElementById("scanResult").innerHTML += "json";
+        document.getElementById("scanResult").innerHTML += json;
         var mapData = JSON.parse(json);
         document.getElementById("scanResult").innerHTML += ".";
         L.mapbox.accessToken = "pk.eyJ1IjoiYWRyaWFub3RpZ2VyIiwiYSI6ImNreGV4d2w0MjF3bDAzMmt0dXppMDA4dmQifQ.foIvIrYgCAppnBfMhGMw9Q";
@@ -30,7 +30,7 @@ title: QR2Web with GPS
   Activate the location (under settings) and click on the SCAN button in your app 
   or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
   <br><br>
-  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 2 -SCAN RESULT</i></div>
+  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 3 -SCAN RESULT</i></div>
   
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
