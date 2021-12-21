@@ -9,14 +9,16 @@ title: QR2Web with GPS
     }
     function onQR2WebLocation(json) {
         var mapData = JSON.parse(json);
-        var map = L.map('map').setView([mapData.latitude, mapData.longitude], 13);
+        L.mapbox.accessToken = "pk.eyJ1IjoiYWRyaWFub3RpZ2VyIiwiYSI6ImNreGV4d2w0MjF3bDAzMmt0dXppMDA4dmQifQ.foIvIrYgCAppnBfMhGMw9Q";
         document.getElementById("scanResult").innerHTML += mapData.latitude + "/" + mapData.longitude;
-        L.tileLayer('https://api.mapbox.com/styles/v1/adrianotiger/tiles/0/0/0', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 15,
-            id: 'mapbox/streets-v11',
-            accessToken: 'pk.eyJ1IjoiYWRyaWFub3RpZ2VyIiwiYSI6ImNreGV4d2w0MjF3bDAzMmt0dXppMDA4dmQifQ.foIvIrYgCAppnBfMhGMw9Q'
-        }).addTo(map);
+        var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
+            attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            tileSize: 512,
+            zoomOffset: -1
+        });
+        var map = L.map('map')
+                    .addLayer(mapboxTiles)
+                    .setView([mapData.latitude, mapData.longitude], 15);
     }
 </script>
 <div class="blurb">
