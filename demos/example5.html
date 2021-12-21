@@ -9,10 +9,18 @@ title: QR2Web with GPS
     }
     function onQR2WebLocation(json) {
         document.getElementById("scanResult").innerHTML += json;
-        var mapData = JSON.parse(json);
+        let mapData;
+        try
+        {   
+            mapData = JSON.parse(json);
+        }
+        catch
+        {
+            mapData = {}
+        }
+        document.getElementById("scanResult").innerHTML += mapData['latitude'] + "/" + mapData['longitude'];
         if(typeof mapData.longitude == 'undefined') {document.getElementById("scanResult").innerHTML += " - no pos"; return;}
         L.mapbox.accessToken = "pk.eyJ1IjoiYWRyaWFub3RpZ2VyIiwiYSI6ImNreGV4d2w0MjF3bDAzMmt0dXppMDA4dmQifQ.foIvIrYgCAppnBfMhGMw9Q";
-        document.getElementById("scanResult").innerHTML += mapData.latitude + "/" + mapData.longitude;
         var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
             attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
             tileSize: 512,
@@ -29,7 +37,7 @@ title: QR2Web with GPS
   Activate the location (under settings) and click on the SCAN button in your app 
   or open this link: <a href="qr2web:/scan">qr2web:/scan</a>
   <br><br>
-  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 3 -SCAN RESULT</i></div>
+  <div id="scanResult" style="background-color:yellow;color:#00a;padding: 20px;margin: 20px;"><i> 4 -SCAN RESULT</i></div>
   
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
