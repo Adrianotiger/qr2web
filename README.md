@@ -37,7 +37,7 @@ There is also a  [Blog](https://adrianotiger.github.io/qr2web/blog) for future u
 ### Credits
 It was possible to create this app thanks to Microsoft, Xamarin and ZXing libraries.
 
-App was developed with [Visual Studio 2015](https://www.visualstudio.com/)
+App was developed with [Visual Studio 2019](https://www.visualstudio.com/)
 
 using the [Xamarin NuGet extension](https://www.xamarin.com/),
 
