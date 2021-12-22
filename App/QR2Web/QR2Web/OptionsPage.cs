@@ -76,7 +76,15 @@ namespace QR2Web
 
             Label sendLocationText = new Label { Text = Language.GetText("Option7_1"), HorizontalOptions = LayoutOptions.StartAndExpand, VerticalTextAlignment = TextAlignment.Center };
             sendLocationSwitch = new Switch { IsToggled = Parameters.Options.UseLocation, HorizontalOptions = LayoutOptions.End };
-            sendLocationSwitch.Toggled += (s, e) => { saveSettings = true; };
+            sendLocationSwitch.Toggled += (s, e) => {
+                if (!QRLocation.IsLocationAvailableOnDevice() && sendLocationSwitch.IsToggled)
+                {
+                    sendLocationSwitch.IsToggled = false;
+                    App.IOS.EnablePermissionLocation();
+                    return;
+                }
+                saveSettings = true; 
+            };
 
             Label NeedRestartText = new Label { Text = "--------------------------\n" + Language.GetText("NeedRestart") };
 

@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace QR2Web
 {
-	static class QRLocation
+    static class QRLocation
     {
-        static private Position CurrentPosition;
+        private static Position CurrentPosition;
 
-        static public async void InitLocation(int accuracyInMeters = 100, bool updateLocationInBackground = true)
-		{
+        public static async void InitLocation(int accuracyInMeters = 100, bool updateLocationInBackground = true)
+        {
             CrossGeolocator.Current.DesiredAccuracy = accuracyInMeters;
 
             if (!CrossGeolocator.Current.IsListening)
@@ -19,21 +19,32 @@ namespace QR2Web
             }
         }
 
-        static private async Task StartListening()
+        private static async Task StartListening()
         {
             if (CrossGeolocator.Current.IsListening)
                 return;
 
-            if (!IsLocationAvailableOnDevice() || !IsLocationEnabledOnDevice()) return;
+            if (!IsLocationAvailableOnDevice())
+            {
+                return;
+            }
+            if(!IsLocationEnabledOnDevice())
+            {
+                await App.Instance.MainPage.DisplayAlert("No GPS", "Location is disabled on your device, please activate it to use this functionality.", "OK");
+                return;
+            }
 
             try
             {
-                await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(30), 500, true);
+                var success = await CrossGeolocator.Current.StartListeningAsync(TimeSpan.FromSeconds(30), 500, true);
 
-                CrossGeolocator.Current.PositionChanged += Current_PositionChanged;
-                CrossGeolocator.Current.PositionError += Current_PositionError; ;
+                if (success)
+                {
+                    CrossGeolocator.Current.PositionChanged += Current_PositionChanged;
+                    CrossGeolocator.Current.PositionError += Current_PositionError; ;
+                }
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
@@ -47,7 +58,7 @@ namespace QR2Web
         private static void Current_PositionChanged(object sender, PositionEventArgs e)
         {
             CurrentPosition = e.Position;
-            var output = "Full: Lat: " + CurrentPosition.Latitude + " Long: " + CurrentPosition.Longitude;
+            string output = "Full: Lat: " + CurrentPosition.Latitude + " Long: " + CurrentPosition.Longitude;
             output += "\n" + $"Time: {CurrentPosition.Timestamp}";
             output += "\n" + $"Heading: {CurrentPosition.Heading}";
             output += "\n" + $"Speed: {CurrentPosition.Speed}";
@@ -58,40 +69,47 @@ namespace QR2Web
         }
 
 
-        static public bool IsLocationAvailableOnDevice()
-		{
-			return CrossGeolocator.Current.IsGeolocationAvailable;
-		}
+        public static bool IsLocationAvailableOnDevice()
+        {
+            return CrossGeolocator.Current.IsGeolocationAvailable;
+        }
 
-		static public bool IsLocationEnabledOnDevice()
-		{
-			return CrossGeolocator.Current.IsGeolocationEnabled;
-		}
+        public static bool IsLocationEnabledOnDevice()
+        {
+            return CrossGeolocator.Current.IsGeolocationEnabled;
+        }
 
-		static public Position GetPosition()
-		{
-			return CurrentPosition;
-		}
-        
-		static public string GenerateJavascriptString()
-		{
-			var pos = GetPosition();
-			var json = "";
-			json += "{";
-			json += " \"latitude\" : \"" + pos.Latitude.ToString().Replace(",", ".") + "\", ";
-			json += " \"longitude\" : \"" + pos.Longitude.ToString().Replace(",", ".") + "\", ";
-			json += " \"accuracy\" : \"" + pos.Accuracy.ToString().Replace(",", ".") + "\", ";
-			json += " \"timestamp\" : \"" + pos.Timestamp.ToUnixTimeSeconds() + "\" ";
-			json +=	"}";
+        public static Position GetPosition()
+        {
+            return CurrentPosition;
+        }
 
-			string jscall = "";
-			jscall = "window.setTimeout(function() {";
-			jscall += "try {";
-			jscall += "   if (\"function\" === typeof onQR2WebLocation){";
-			jscall += "       onQR2WebLocation('" + json + "');}";
-			jscall += "}catch(e){}}, 100);";
+        public static string GenerateJavascriptString()
+        {
+            Position pos = GetPosition();
+            string json = "";
+            if (pos != null)
+            {
+                json += "{";
+                json += " \"latitude\" : \"" + pos.Latitude.ToString().Replace(",", ".") + "\", ";
+                json += " \"longitude\" : \"" + pos.Longitude.ToString().Replace(",", ".") + "\", ";
+                json += " \"accuracy\" : \"" + pos.Accuracy.ToString().Replace(",", ".") + "\", ";
+                json += " \"timestamp\" : \"" + pos.Timestamp.ToUnixTimeSeconds() + "\" ";
+                json += "}";
+            }
+            else
+            {
+                json += "{\"latitude\":\"0.0\", \"longitude\":\"0.0\", \"accuracy\":\"10000.0\",\"timestamp\":\"0\"}";
+            }
 
-			return jscall;
-		}
-	}
+            string jscall = "";
+            jscall = "window.setTimeout(function() {";
+            jscall += "try {";
+            jscall += "   if (\"function\" === typeof onQR2WebLocation){";
+            jscall += "       onQR2WebLocation('" + json + "');}";
+            jscall += "}catch(e){}}, 100);";
+
+            return jscall;
+        }
+    }
 }

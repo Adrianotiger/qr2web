@@ -12,10 +12,10 @@ namespace QR2Web
         private Scanner QRScanner = null;
         private QRMainPage QRPage = null;
 
-        public static List<KeyValuePair<DateTime, string>> History = new List<KeyValuePair<DateTime, string>>(16);
+        public History ScanHistory = null;
 
         public static App Instance { get; set; } = null;    // Used to access App from the different OS codes
-        public static int AppVersion { get; } = 21;         // Version of this app for the different OS codes
+        public static int AppVersion { get; } = 22;         // Version of this app for the different OS codes
 
         public static bool HasBackButton { get; private set; }
         public static OSInterface IOS { get; private set; }
@@ -48,13 +48,10 @@ namespace QR2Web
             else
             {
                 QRScanner = new Scanner();                      // initialize scanner class (ZXing scanner)
-
-                Parameters.LoadHistory(ref History);            // load scan results history
+                ScanHistory = new History();
 
                 if (Parameters.Options.UseLocation)
                     QRLocation.InitLocation();
-
-                if (!Parameters.Options.SaveHistory) History.Clear();   // clear history if no history should be used
 
                 QRPage.Initialize();
             }
@@ -105,8 +102,8 @@ namespace QR2Web
 
                 if (result != null)
                 {
-                    AddHistory(result.Text);
-                    OpenJSFunctionQRCode(result.Text);
+                    ScanHistory.Add(result.Text);
+                    InjectJSQRCode(result.Text);
                     if (Parameters.Options.UseLocation)
                     {
                         OpenJSFunctionLocation();
@@ -129,9 +126,9 @@ namespace QR2Web
         /// Execute the callback function in the webpage, passing the parsed QR code.
         /// </summary>
         /// <param name="scanCode">Code or text parsed from barcode</param>
-        public void OpenJSFunctionQRCode(string scanCode)
+        public void InjectJSQRCode(string scanCode)
         {
-            string jsString = QRScanner.GenerateJavascriptString(scanCode);
+            string jsString = QRScanner.InjectJavascriptScanCode(scanCode);
 
             QRPage.InjectJS(jsString);
         }
@@ -144,34 +141,6 @@ namespace QR2Web
         {
             string jsString = QRLocation.GenerateJavascriptString();
             QRPage.InjectJS(jsString);
-        }
-
-        /// <summary>
-        /// Add the QR-code to history. So it can be used later.
-        /// </summary>
-        /// <param name="value">The QR code or the parsed value (can be text)</param>
-        public void AddHistory(string value)
-        {
-            for (int i = 0; i < History.Count; i++)
-            {
-                if (History[i].Value == value)
-                {
-                    History.RemoveAt(i);
-                }
-            }
-            if (Parameters.Options.SaveHistory)
-            {
-                History.Insert(
-                        0,
-                        new KeyValuePair<DateTime, string>
-                        (
-                            DateTime.Now,
-                            value
-                        )
-                    );
-
-                Parameters.SaveHistory(ref History);
-            }
         }
 
         protected override void OnStart()

@@ -12,7 +12,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>false</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -114,6 +114,8 @@
     <None Include="QR2Web.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="about.png" />
+    <Content Include="help.png" />
     <Content Include="torch.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="numeric.png" />
@@ -146,6 +148,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>2.0.0.13</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugin.Geolocator">
       <Version>4.5.0.6</Version>
     </PackageReference>

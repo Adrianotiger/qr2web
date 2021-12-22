@@ -72,6 +72,9 @@ namespace QR2Web.UWP
             assembliesToInclude.Add(typeof(ZXing.Mobile.SoftwareBitmapLuminanceSource).GetTypeInfo().Assembly);
             assembliesToInclude.Add(typeof(ZXing.Mobile.ZXingScannerControl).GetTypeInfo().Assembly);
 
+            Rg.Plugins.Popup.Popup.Init();
+            assembliesToInclude.AddRange(Rg.Plugins.Popup.Popup.GetExtraAssemblies());
+
             Xamarin.Forms.Forms.Init(e, assembliesToInclude);
             //// End workaround, the original init is only 1 line:
 

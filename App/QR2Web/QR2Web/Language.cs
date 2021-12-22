@@ -115,8 +115,8 @@ namespace QR2Web
         /// </summary>
         static private void FillDictionary()
         {
-            AddText("AppTitle", new string[] { "QR to Web Inventory", "QR to Web Inventory", "QR to Web Inventory" });
-            AddText("AppTitleShort", new string[] { "QR2Web", "QR2Web", "QR2Web" });
+            AddText("AppTitle", new string[] { "QR to Web", "QR to Web", "QR to Web" });
+            AddText("AppTitleShort", new string[] { "QR 2 Web", "QR 2 Web", "QR 2 Web" });
             AddText("Settings", new string[] { "Settings", "Einstellungen", "Impostazioni" });
             AddText("Help", new string[] { "Help", "Hilfe", "Aiuto" });
             AddText("About", new string[] { "About", "Über", "Info" });
@@ -126,11 +126,14 @@ namespace QR2Web
             AddText("Yes", new string[] { "Yes", "Ja", "Sì" });
             AddText("No", new string[] { "No", "Nein", "No" });
             AddText("Torch", new string[] { "Torch", "Lampe", "Torcia" });
+            AddText("Scan", new string[] { "Scan", "Einscannen", "Scansiona" });
             AddText("ScannerText1", new string[] { "Scan with a distance of 20-30cm", "Abstand von 20-30cm halten", "Leggere da una distanza di 20-30cm" });
             AddText("ScannerText2", new string[] { "Light On/Off", "Licht Ein/Aus", "Luce On/Off" });
             AddText("NeedRestart", new string[] { "(* App must be restarted)", "(* App muss neu gestartet werden)", "(* necessita un riavvio dell'app)" });
             AddText("RefreshPage", new string[] { "Refresh page", "Seite aktualisieren", "Aggiorna pagina" });
+            AddText("Refresh", new string[] { "Refresh", "Aktualisieren", "Aggiorna" });
             AddText("HomePage", new string[] { "Return to home page", "Zurück zur home page", "Torna alla pagina principale" });
+            AddText("Home", new string[] { "Home page", "Start Seite", "Pagina principale" });
             AddText("TimeToScan", new string[] { "(XX seconds to scan..)", "(XX Sekunden um zu scannen...)", "(XX secondi per scannerizzare...)" });
 
             AddText("Option1_1", new string[] { "Home Page", "Home Page", "Home Page" });

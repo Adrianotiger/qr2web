@@ -67,6 +67,7 @@
     <AndroidSigningKeyPass>store123</AndroidSigningKeyPass>
     <AndroidLinkTool>r8</AndroidLinkTool>
     <MandroidI18n />
+    <AndroidSupportedAbis />
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Helpers\Settings.cs" />
@@ -117,6 +118,9 @@
     </PackageReference>
     <PackageReference Include="Plugin.CurrentActivity">
       <Version>2.1.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>2.0.0.13</Version>
     </PackageReference>
     <PackageReference Include="System.CodeDom">
       <Version>6.0.0</Version>
@@ -195,6 +199,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\Drawable\numeric.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\about.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\help.png">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="..\QR2Web\QR2Web.projitems" Label="Shared" Condition="Exists('..\QR2Web\QR2Web.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

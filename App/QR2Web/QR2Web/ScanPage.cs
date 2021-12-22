@@ -31,7 +31,7 @@ namespace QR2Web
             }
         }
 
-        public string GenerateJavascriptString(string scanCode)
+        public string InjectJavascriptScanCode(string scanCode)
         {
             string jscall = "";
             int Emulation = 0;

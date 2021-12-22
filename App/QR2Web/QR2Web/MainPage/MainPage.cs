@@ -7,36 +7,19 @@ using Xamarin.Forms;
 
 namespace QR2Web
 {
-    class QRMainPage : ContentPage
+    public class QRMainPage : ContentPage
     {
         private Buttons NavButtons;
-        private WebView WebPageWebView;
+        private HybridWebView WebPageWebView;
         private StackLayout TitleStack;
-        private bool firstPageLoaded = false;
 
         public QRMainPage()
         {
             NavButtons = new Buttons(this);
 
-            WebPageWebView = new WebView
+            WebPageWebView = new HybridWebView
             {
-                Source = Parameters.Options.HomePage,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                Margin = new Thickness(0),
-                BackgroundColor = Color.White,
-            };
-
-            WebPageWebView.Navigated += (s, e) =>
-            {
-                var url = e.Url;
-                firstPageLoaded = true;
-
-                Console.WriteLine(url);
-                if (url.StartsWith("http"))// http or https
-                {
-                    InjectJS("window.QR2WEB=1");
-                }
+                Source = Parameters.Options.HomePage
             };
 
             TitleStack = new StackLayout
@@ -51,7 +34,7 @@ namespace QR2Web
                 Children = {
                     new Label
                     {
-                        Text = "QR 2 Web",
+                        Text = Language.GetText("AppTitleShort"),
                         HorizontalOptions = LayoutOptions.StartAndExpand,
                         VerticalOptions = LayoutOptions.Fill,
                         VerticalTextAlignment = TextAlignment.Center,
@@ -79,32 +62,7 @@ namespace QR2Web
         public void Initialize()
         {
             NavButtons.InitButtons();
-
-            WebPageWebView.Navigating += async (sender, /*WebNavigatingEventArgs*/ e) =>
-            {
-                var url = e.Url;
-                // catch the pressed link. If link is a valid app protocol (qr2web, barcodereader, ...) start QR scanner
-                if (Scanner.IsAppURL(url))
-                {
-                    e.Cancel = true;
-                    App.StartScanFromWeb(url.ToString());
-                }
-                else if (url.StartsWith("googlechrome"))
-                {
-                    String url2 = url.Replace("googlechrome", "http");
-                    await Launcher.TryOpenAsync(url2);
-                    e.Cancel = true;
-                }
-                else if (!url.StartsWith("http"))
-                {
-                    App.IOS.OpenExternalUrl(url);
-                    e.Cancel = true;
-                }
-                else // http or https
-                {
-
-                }
-            };
+            WebPageWebView.Initialize();
 
             WebPageWebView.SizeChanged += (s, e) =>
             {
@@ -116,7 +74,7 @@ namespace QR2Web
 
         public bool IsLoaded()
         {
-            return firstPageLoaded;
+            return WebPageWebView.IsReady();
         }
 
         public bool Back()
@@ -150,20 +108,11 @@ namespace QR2Web
             });
         }
 
-        public void InjectJS(string js)
+        public void InjectJS(String javascript)
         {
-            Device.BeginInvokeOnMainThread(async() =>
+            Device.BeginInvokeOnMainThread(() =>
             {
-                try
-                {
-                    await WebPageWebView.EvaluateJavaScriptAsync(js);
-                    //WebPageWebView.Eval(js);
-                }
-                catch (Exception e)
-                {
-                    // BarcodeScanner not available
-                    Console.WriteLine(e);
-                }
+                WebPageWebView.InjectJS(javascript);
             });
         }
 

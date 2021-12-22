@@ -5,18 +5,23 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.Linq;
 using System.Threading.Tasks;
+using Rg.Plugins.Popup.Services;
+using Rg.Plugins.Popup.Extensions;
 
 namespace QR2Web
 {
     class Buttons
     {
-        private Button ScanButton;
-        private Button HistoryButton;
-        private Button MoreButton;
-        private Button HomeButton;
-        private Button RefreshButton;
-        private Button SettingsButton;
-        
+        public Button ScanButton = null;
+        public Button HistoryButton = null;
+        public Button MoreButton = null;
+        public Button HomeButton = null;
+        public Button RefreshButton = null;
+        public Button SettingsButton = null;
+        public Button AboutButton = null;
+        public Button HelpButton = null;
+
+        private bool mainPageButtons;
         private DateTime lastWindowUpdate;
 
         private QRMainPage BasePage;
@@ -26,61 +31,65 @@ namespace QR2Web
             BasePage = page;
         }
 
-        public void InitButtons()
+        private Button CreateButton(string filename)
         {
-            string[] icons = { "scanb.png", "scanh.png", "scanp.png", "scanr.png", "scanc.png", "scanm.png" };
+            return new Button
+            {
+                ImageSource = new FileImageSource { File = filename },
+                Opacity = mainPageButtons ? 0.0 : 1.0,
+                BackgroundColor = Color.Transparent,
+                WidthRequest = 64
+            };
+        }
+
+        public void InitButtons(bool fromMainPage = true)
+        {
+            mainPageButtons = fromMainPage;
+            string[] icons = { "scanb.png", "scanh.png", "scanp.png", "scanr.png", "scanc.png", "scanm.png", "help.png", "about.png" };
             int buttIndex = 0;
             // create top-bar buttons
-            ScanButton = new Button
-            {
-                ImageSource = new FileImageSource{File = icons[buttIndex++]},
-                Opacity = 0.0
-            };
+            ScanButton = CreateButton(icons[buttIndex++]);
             ScanButton.Clicked += ScanButton_Clicked;
 
-            HistoryButton = new Button
-            {
-                ImageSource = new FileImageSource { File = icons[buttIndex++] },
-                Opacity = 0.0
-            };
+            HistoryButton = CreateButton(icons[buttIndex++]);
             HistoryButton.Clicked += HistoryScan_Clicked;
 
-            HomeButton = new Button
-            {
-                ImageSource = new FileImageSource { File = icons[buttIndex++] },
-                Opacity = 0.0
-            };
+            HomeButton = CreateButton(icons[buttIndex++]);
             HomeButton.Clicked += HomeButton_Clicked;
 
-            RefreshButton = new Button
-            {
-                ImageSource = new FileImageSource { File = icons[buttIndex++] },
-                Opacity = 0.0
-            };
+            RefreshButton = CreateButton(icons[buttIndex++]);
             RefreshButton.Clicked += RefreshButton_Clicked;
 
-            SettingsButton = new Button
-            {
-                ImageSource = new FileImageSource { File = icons[buttIndex++] },
-                Opacity = 0.0
-            };
+            SettingsButton = CreateButton(icons[buttIndex++]);
             SettingsButton.Clicked += (sender, e) =>
             {
                 var optionsPage = new OptionsPage { BackgroundColor = Color.White };
                 App.Instance.NavigateTo(optionsPage);
             };
 
-            MoreButton = new Button
-            {
-                ImageSource = new FileImageSource { File = icons[buttIndex++] },
-                Opacity = 0.0
-            };
+            MoreButton = CreateButton(icons[buttIndex++]);
             MoreButton.Clicked += MoreScan_Clicked;
+
+            HelpButton = CreateButton(icons[buttIndex++]);
+            HelpButton.Clicked += HelpButton_Clicked;
+
+            AboutButton = CreateButton(icons[buttIndex++]);
+            AboutButton.Clicked += AboutButton_Clicked;
 
             /////////////////////////////
 
             // Don't show button if there is no QR-history 
             HistoryButton.IsVisible = Parameters.Options.SaveHistory;
+        }
+
+        private void AboutButton_Clicked(object sender, EventArgs e)
+        {
+            BasePage.SetSource("https://adrianotiger.github.io/qr2web/info.html?version=" + App.AppVersion.ToString() + "&os=" + Device.RuntimePlatform.ToString());
+        }
+
+        private void HelpButton_Clicked(object sender, EventArgs e)
+        {
+            BasePage.SetSource("https://adrianotiger.github.io/qr2web/help.html");
         }
 
         private void AniButton(Button b, int delay)
@@ -169,34 +178,8 @@ namespace QR2Web
         /// </remarks>
         private async void MoreScan_Clicked(object sender, EventArgs e)
         {
-            string[] buttons = { Language.GetText("RefreshPage"), Language.GetText("HomePage"), Language.GetText("Settings"), Language.GetText("Help"), Language.GetText("About") };
-
-            string result = await BasePage.DisplayActionSheet(Language.GetText("Options"), Language.GetText("Cancel"), null, buttons);
-
-            if (buttons.Contains(result))
-            {
-                if (result.CompareTo(Language.GetText("Settings")) == 0)
-                {
-                    App.Instance.NavigateTo(new OptionsPage());
-                }
-                else if (result.CompareTo(Language.GetText("RefreshPage")) == 0)
-                {
-                    BasePage.RefreshWebPage();
-                }
-                else if (result.CompareTo(Language.GetText("HomePage")) == 0)
-                {
-                    BasePage.GoToHomePage();
-                }
-                else if (result.CompareTo(Language.GetText("Help")) == 0)
-                {
-                    BasePage.SetSource("https://adrianotiger.github.io/qr2web/help.html");
-                }
-                else if (result.CompareTo(Language.GetText("About")) == 0)
-                {
-                    BasePage.SetSource("https://adrianotiger.github.io/qr2web/info.html?version=" + App.AppVersion.ToString() + "&os=" + Device.RuntimePlatform.ToString());
-                }
-
-            }
+            var menuPage = new MenuPage(BasePage);
+            await BasePage.Navigation.PushPopupAsync(menuPage);
         }
 
         /// <summary>
@@ -208,31 +191,9 @@ namespace QR2Web
         /// Helpfull if you was offline and hadn't access to the webpage.
         /// Time are displayed. If the history is older than 1 day, the day will be displayed.
         /// </remarks>
-        private async void HistoryScan_Clicked(object sender, EventArgs e)
+        private void HistoryScan_Clicked(object sender, EventArgs e)
         {
-            string[] buttons = new string[Math.Max(1, App.History.Count)];
-
-            if (App.History.Count == 0)
-            {
-                buttons[0] = "empty";
-            }
-
-            for (int i = 0; i < App.History.Count; i++)
-            {
-                if (App.History[i].Key.Day == DateTime.Now.Day)
-                    buttons[i] = App.History[i].Value + " (" + App.History[i].Key.ToString("H:mm:ss") + ")";
-                else if (App.History[i].Key.Day == DateTime.Now.AddDays(-1).Day)
-                    buttons[i] = App.History[i].Value + " (" + App.History[i].Key.ToString("d.MMM H:mm") + ")";
-                else
-                    buttons[i] = App.History[i].Value + " (" + App.History[i].Key.ToString("d.MMMM.yyyy") + ")";
-            }
-
-            string result = await BasePage.DisplayActionSheet(Language.GetText("History"), Language.GetText("Cancel"), null, buttons);
-
-            if (result.IndexOf("(") > 0)
-            {
-                App.Instance.OpenJSFunctionQRCode(result.Substring(0, result.IndexOf("(") - 1));
-            }
+            App.Instance.ScanHistory.ShowDialog(BasePage);
         }
 
     }

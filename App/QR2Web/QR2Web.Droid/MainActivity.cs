@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Plugin.CurrentActivity;
 using Android.Content;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using Xamarin.Essentials;
 
 namespace QR2Web.Droid
 {
@@ -145,6 +146,7 @@ namespace QR2Web.Droid
         {
             Xamarin.Essentials.Platform.Init(Application);
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
+            Rg.Plugins.Popup.Popup.Init(this);
         }
 
         public void InitOSSettings(Bundle bundle)
@@ -152,10 +154,20 @@ namespace QR2Web.Droid
 
         }
 
+        public override void OnBackPressed()
+        {
+            Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed);
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        public async void EnablePermissionLocation()
+        {
+            await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
         }
 
         public bool OpenExternalUrl(string url)
