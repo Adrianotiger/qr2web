@@ -35,7 +35,11 @@ namespace QR2Web
         {
             return new Button
             {
+                Scale = 0.8,
                 ImageSource = new FileImageSource { File = filename },
+                ContentLayout = new Button.ButtonContentLayout(Button.ButtonContentLayout.ImagePosition.Top, 10),
+                Padding = new Thickness(20, 0),
+                Margin = new Thickness(0),
                 Opacity = mainPageButtons ? 0.0 : 1.0,
                 BackgroundColor = Color.Transparent,
                 WidthRequest = 64
@@ -193,7 +197,7 @@ namespace QR2Web
         /// </remarks>
         private void HistoryScan_Clicked(object sender, EventArgs e)
         {
-            App.Instance.ScanHistory.ShowDialog(BasePage);
+            App.Instance.ScanHistory.ShowDialog(BasePage, !mainPageButtons);
         }
 
     }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="2.2" android:versionCode="27" package="ch.petrucci.qr2web_2">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="2.2.2" android:versionCode="29" package="ch.petrucci.qr2web_2">
+	<uses-sdk android:minSdkVersion="27" android:targetSdkVersion="31" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.FLASHLIGHT" />

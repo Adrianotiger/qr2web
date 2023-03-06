@@ -44,10 +44,12 @@ namespace QR2Web
                     Orientation = StackOrientation.Vertical,
                     VerticalOptions = LayoutOptions.CenterAndExpand,
                     HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    Spacing = 0,
+                    Padding = new Thickness(0),
                     Children =
                     {
                         butt,
-                        new Label { Text = text, TextColor  = Color.White, HorizontalTextAlignment = TextAlignment.Center, Margin = new Thickness(0) }
+                        new Label { Text = text, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), TextColor  = Color.White, HorizontalTextAlignment = TextAlignment.Center, Margin = new Thickness(0) }
                     }
                 }
                 , col, row

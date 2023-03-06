@@ -1,23 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Xamarin.Forms;
 using Frame = Windows.UI.Xaml.Controls.Frame;
+using Popup = Rg.Plugins.Popup.Popup;
 
 namespace QR2Web.UWP
 {
@@ -72,10 +62,11 @@ namespace QR2Web.UWP
             assembliesToInclude.Add(typeof(ZXing.Mobile.SoftwareBitmapLuminanceSource).GetTypeInfo().Assembly);
             assembliesToInclude.Add(typeof(ZXing.Mobile.ZXingScannerControl).GetTypeInfo().Assembly);
 
-            Rg.Plugins.Popup.Popup.Init();
-            assembliesToInclude.AddRange(Rg.Plugins.Popup.Popup.GetExtraAssemblies());
+            
+            Popup.Init();
+            assembliesToInclude.AddRange(Popup.GetExtraAssemblies());
 
-            Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+            Forms.Init(e, assembliesToInclude);
             //// End workaround, the original init is only 1 line:
 
             //Xamarin.Forms.Forms.Init(e);

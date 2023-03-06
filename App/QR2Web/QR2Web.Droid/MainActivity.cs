@@ -18,6 +18,7 @@ namespace QR2Web.Droid
     [Activity(Label = "QR2Web",
         Icon = "@drawable/icon",
         MainLauncher = false,
+        Exported = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
         LaunchMode = LaunchMode.SingleTask)]
     [IntentFilter(new[] { Intent.ActionView },

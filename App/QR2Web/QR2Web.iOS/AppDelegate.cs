@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Xamarin.Essentials;
+
 using Foundation;
 using ObjCRuntime;
 using UIKit;
@@ -13,7 +15,7 @@ namespace QR2Web.iOS
 	// User Interface of the application, as well as listening (and optionally responding) to 
 	// application events from iOS.
 	[Register("AppDelegate")]
-	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, OSInterface
 	{
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -26,7 +28,7 @@ namespace QR2Web.iOS
 		{
 			global::Xamarin.Forms.Forms.Init();
 
-			LoadApplication (new QR2Web.App ());
+			LoadApplication (new QR2Web.App (this, false));
 
 			InitExternalLibraries();
 			InitOSSettings();
@@ -66,6 +68,33 @@ namespace QR2Web.iOS
 				return UIInterfaceOrientationMask.Portrait;
 			else
 				return UIInterfaceOrientationMask.Portrait | UIInterfaceOrientationMask.Landscape;
+		}
+
+		public async void EnablePermissionLocation()
+		{
+			await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+		}
+
+		public bool OpenExternalUrl(string url)
+		{
+			bool success = true;
+			try
+			{
+				/*
+				Android.Net.Uri uri = Android.Net.Uri.Parse(url);
+				Intent intent = new Intent(Intent.ActionView)
+						.SetData(uri)
+						.SetFlags(ActivityFlags.NewTask);
+				StartActivity(intent);
+				*/
+				Launcher.OpenAsync(url);
+			}
+			catch (Exception ex)
+			{
+				//Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+				success = false;
+			}
+			return success;
 		}
 	}
 }

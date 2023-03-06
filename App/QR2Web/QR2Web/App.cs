@@ -11,6 +11,7 @@ namespace QR2Web
     {
         private Scanner QRScanner = null;
         private QRMainPage QRPage = null;
+        private bool isScanning = false;
 
         public History ScanHistory = null;
 
@@ -93,12 +94,15 @@ namespace QR2Web
         /// </summary>
         public void StartScan()
         {
+            if (isScanning) return;
+            isScanning = true;
             //////////////// TEST
             CustomScanPage customPage = new CustomScanPage();
 
             customPage.Disappearing += (s, e) =>
             {
                 ZXing.Result result = customPage.result;
+                isScanning = false;
 
                 if (result != null)
                 {

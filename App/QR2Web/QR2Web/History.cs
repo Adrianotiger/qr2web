@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Rg.Plugins.Popup.Extensions;
 using Xamarin.Forms;
 
@@ -46,10 +48,21 @@ namespace QR2Web
             }
         }
 
-        public async void ShowDialog(QRMainPage BasePage)
+        public async void ShowDialog(QRMainPage BasePage, bool closeBaseMenu)
         {
             var historyPage = new HistoryPage(ScanData);
-            await BasePage.Navigation.PushPopupAsync(historyPage);
+            if (closeBaseMenu)
+            {
+                await Task.Run(async () =>
+                {
+                    await Task.Delay(300);
+                    await BasePage.Navigation.PushPopupAsync(historyPage);
+                });
+            }
+            else
+            {
+                await BasePage.Navigation.PushPopupAsync(historyPage);
+            }
         }
     }
 
@@ -70,7 +83,7 @@ namespace QR2Web
 
             if (ScanData.Count == 0)
             {
-                content.Children.Add(new Label { Text = "[empty]", HorizontalTextAlignment = TextAlignment.Center });
+                content.Children.Add(new Label { Text = "[empty]", HorizontalTextAlignment = TextAlignment.Center, TextColor = Color.SkyBlue });
             }
 
             for (int i = 0; i < ScanData.Count; i++)

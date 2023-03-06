@@ -12,14 +12,14 @@ namespace QR2Web
 {
     public class CustomScanPage : ContentPage
     {
-        ZXingScannerView zxing;
+        ZXing.Net.Mobile.Forms.ZXingScannerView zxing;
         public ZXing.Result result { get; set; }
 
         public CustomScanPage() : base()
         {
             result = null;
 
-            zxing = new ZXingScannerView
+            zxing = new ZXing.Net.Mobile.Forms.ZXingScannerView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand
@@ -253,28 +253,29 @@ namespace QR2Web
             //options.TryHarder = true;
             //options.TryInverted = true;
             //options.AutoRotate = true;
-            options.PossibleFormats = new List<ZXing.BarcodeFormat>
-            {
-                ZXing.BarcodeFormat.QR_CODE
-            };
+            var formats = new List<ZXing.BarcodeFormat>();
+            formats.Add(ZXing.BarcodeFormat.QR_CODE);
+
             if (Parameters.Options.AcceptBarcode_Code)
             {
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.CODE_39);
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.CODE_93);
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.CODE_128);
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.CODABAR);
+                formats.Add(ZXing.BarcodeFormat.CODE_39);
+                formats.Add(ZXing.BarcodeFormat.CODE_93);
+                formats.Add(ZXing.BarcodeFormat.CODE_128);
+                formats.Add(ZXing.BarcodeFormat.CODABAR);
             }
             if (Parameters.Options.AcceptBarcode_Ean)
             {
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.EAN_8);
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.EAN_13);
+                formats.Add(ZXing.BarcodeFormat.EAN_8);
+                formats.Add(ZXing.BarcodeFormat.EAN_13);
             }
             if (Parameters.Options.AcceptBarcode_Upc)
             {
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.UPC_A);
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.UPC_E);
-                options.PossibleFormats.Append(ZXing.BarcodeFormat.UPC_EAN_EXTENSION);
+                formats.Add(ZXing.BarcodeFormat.UPC_A);
+                formats.Add(ZXing.BarcodeFormat.UPC_E);
+                formats.Add(ZXing.BarcodeFormat.UPC_EAN_EXTENSION);
             }
+
+            options.PossibleFormats = new List<ZXing.BarcodeFormat>(formats);
 
             // solve camera resolution bug (up to ZXing 3.1.0 beta2)
             options.CameraResolutionSelector = new CameraResolutionSelectorDelegate((List<CameraResolution> availableResolutions) =>
@@ -305,9 +306,9 @@ namespace QR2Web
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
-
             zxing.IsScanning = true;
+
+            base.OnAppearing();
 
         }
 
