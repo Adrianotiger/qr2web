@@ -12,14 +12,14 @@ namespace QR2Web
 {
     public class CustomScanPage : ContentPage
     {
-        ZXing.Net.Mobile.Forms.ZXingScannerView zxing;
-        public ZXing.Result result { get; set; }
+        readonly private ZXing.Net.Mobile.Forms.ZXingScannerView Zxing;
+        public ZXing.Result Result { get; set; }
 
         public CustomScanPage() : base()
         {
-            result = null;
+            Result = null;
 
-            zxing = new ZXing.Net.Mobile.Forms.ZXingScannerView
+            Zxing = new ZXing.Net.Mobile.Forms.ZXingScannerView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand
@@ -27,7 +27,7 @@ namespace QR2Web
 
             SetScanOptions();
 
-            zxing.OnScanResult += Zxing_OnScanResult;
+            Zxing.OnScanResult += Zxing_OnScanResult;
 
             var inText = new Label
             {
@@ -53,11 +53,11 @@ namespace QR2Web
                     }
                     else if((s as Button).Text == "⬅")
                     {
-                        if (inText.Text.Length > 0) inText.Text = inText.Text.Substring(0, inText.Text.Length - 1);
+                        if (inText.Text.Length > 0) inText.Text = inText.Text[..^1];
                     }
                     else
                     {
-                        zxing.RaiseScanResult(new ZXing.Result(inText.Text, Encoding.ASCII.GetBytes(inText.Text), null, ZXing.BarcodeFormat.QR_CODE));
+                        Zxing.RaiseScanResult(new ZXing.Result(inText.Text, Encoding.ASCII.GetBytes(inText.Text), null, ZXing.BarcodeFormat.QR_CODE));
                     }
                 };
             }
@@ -88,7 +88,7 @@ namespace QR2Web
             };
             torch.Clicked += delegate
             {
-                zxing.ToggleTorch();
+                Zxing.ToggleTorch();
             };
 
             var keyboard = new ImageButton
@@ -114,7 +114,7 @@ namespace QR2Web
             };
             abort.Clicked += delegate
             {
-                zxing.RaiseScanResult(null);
+                Zxing.RaiseScanResult(null);
             };
 
             var customOverlayTop = new StackLayout
@@ -226,7 +226,7 @@ namespace QR2Web
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
             };
-            grid.Children.Add(zxing);
+            grid.Children.Add(Zxing);
             grid.Children.Add(customOverlay);
 
             // The root page of your application
@@ -238,9 +238,9 @@ namespace QR2Web
             Device.BeginInvokeOnMainThread(() =>
             {
                 // Stop analysis until we navigate away so we don't keep reading barcodes
-                zxing.IsAnalyzing = false;
+                Zxing.IsAnalyzing = false;
 
-                result = result2;
+                Result = result2;
 
                 App.Instance.CloseScan();
                 //Navigation.PopModalAsync();
@@ -253,8 +253,10 @@ namespace QR2Web
             //options.TryHarder = true;
             //options.TryInverted = true;
             //options.AutoRotate = true;
-            var formats = new List<ZXing.BarcodeFormat>();
-            formats.Add(ZXing.BarcodeFormat.QR_CODE);
+            var formats = new List<ZXing.BarcodeFormat>
+            {
+                ZXing.BarcodeFormat.QR_CODE
+            };
 
             if (Parameters.Options.AcceptBarcode_Code)
             {
@@ -299,14 +301,14 @@ namespace QR2Web
                 return result;
             });
 
-            zxing.Options = options;
+            Zxing.Options = options;
 
 
         }
 
         protected override void OnAppearing()
         {
-            zxing.IsScanning = true;
+            Zxing.IsScanning = true;
 
             base.OnAppearing();
 
@@ -314,7 +316,7 @@ namespace QR2Web
 
         protected override void OnDisappearing()
         {
-            zxing.IsScanning = false;
+            Zxing.IsScanning = false;
 
             base.OnDisappearing();
         }

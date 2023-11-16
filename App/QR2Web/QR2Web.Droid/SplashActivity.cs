@@ -2,11 +2,17 @@
 using Android.Content;
 using Android.OS;
 using Android.Util;
+
 using AndroidX.AppCompat.App;
+using System.Threading.Tasks;
 
 namespace QR2Web.Droid
 {
-    [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(
+        Theme = "@style/MyTheme.Splash", 
+        MainLauncher = true, 
+        LaunchMode = Android.Content.PM.LaunchMode.SingleTop,
+        NoHistory = false)]
     public class SplashActivity : AppCompatActivity
     {
         static readonly string TAG = "X:" + typeof(SplashActivity).Name;
@@ -29,6 +35,5 @@ namespace QR2Web.Droid
             base.OnStart();
         }
 
-        public override void OnBackPressed() { }
     }
 }

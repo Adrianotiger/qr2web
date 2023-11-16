@@ -24,7 +24,7 @@ namespace QR2Web
         private bool mainPageButtons;
         private DateTime lastWindowUpdate;
 
-        private QRMainPage BasePage;
+        private readonly QRMainPage BasePage;
 
         public Buttons(QRMainPage page)
         {
@@ -67,7 +67,7 @@ namespace QR2Web
             SettingsButton = CreateButton(icons[buttIndex++]);
             SettingsButton.Clicked += (sender, e) =>
             {
-                var optionsPage = new OptionsPage { BackgroundColor = Color.White };
+                var optionsPage = new OptionsPage { };
                 App.Instance.NavigateTo(optionsPage);
             };
 

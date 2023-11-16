@@ -55,8 +55,7 @@ namespace QR2Web
                     QRLocation.InitLocation();
 
                 QRPage.Initialize();
-            }
-            
+            }   
         }
 
         public bool IsMainPageReady()
@@ -74,8 +73,19 @@ namespace QR2Web
             (MainPage as LauncherPage).AddPage(p);
         }
 
+        static public bool InvokeBack()
+        {
+            return Instance.GoBack();
+        }
+
         public bool GoBack()
         {
+            var n = (MainPage as LauncherPage).Navigation;
+            if (n.NavigationStack[n.NavigationStack.Count - 1].GetType() == typeof(OptionsPage))
+            {
+                (n.NavigationStack[n.NavigationStack.Count - 1] as OptionsPage).GoBack();
+                return true;
+            }
             if (QRPage.Back()) return true;
             return false;
         }
@@ -87,6 +97,20 @@ namespace QR2Web
             {
                 await n.PopAsync();
             }
+        }
+
+        public async void ShowDialog(string message, Button b1, Button b2)
+        {
+            var dialog = new DialogPage(message, b1, b2);
+            if(b1 != null)
+            {
+                b1.Clicked += (s, e) => { Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync(false); };
+            }
+            if (b2 != null)
+            {
+                b2.Clicked += (s, e) => { Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync(true); };
+            }
+            await Rg.Plugins.Popup.Services.PopupNavigation.Instance.PushAsync(dialog);
         }
 
         /// <summary>
@@ -101,7 +125,7 @@ namespace QR2Web
 
             customPage.Disappearing += (s, e) =>
             {
-                ZXing.Result result = customPage.result;
+                ZXing.Result result = customPage.Result;
                 isScanning = false;
 
                 if (result != null)
@@ -178,7 +202,7 @@ namespace QR2Web
             // Check Mocha protocols
             if (url.StartsWith("mochabarcode:"))
             {
-                urlWithoutProtocol = url.Substring("mochabarcode:".Length).TrimStart('/');
+                urlWithoutProtocol = url["mochabarcode:".Length..].TrimStart('/');
                 if (urlWithoutProtocol.StartsWith("CONFIG", StringComparison.CurrentCultureIgnoreCase))
                 {
                     //mochabarcode://CONFIG=http://mochasoft.com/test1.htm&autolock=1&function=1&field=1&
@@ -210,7 +234,7 @@ namespace QR2Web
                 }
                 else if (urlWithoutProtocol.StartsWith("CALLBACK=", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    Parameters.TemporaryOptions.SetLookup("", urlWithoutProtocol.Substring("CALLBACK=".Length), Parameters.EmulationTypes.MOCHASOFT);
+                    Parameters.TemporaryOptions.SetLookup("", urlWithoutProtocol["CALLBACK=".Length..], Parameters.EmulationTypes.MOCHASOFT);
                     Instance.StartScan();
                 }
                 else
@@ -223,7 +247,7 @@ namespace QR2Web
             // check pic 2 shop pro protocol
             else if (url.StartsWith("p2spro"))
             {
-                urlWithoutProtocol = url.Substring("p2spro:".Length).TrimStart('/');
+                urlWithoutProtocol = url["p2spro:".Length..].TrimStart('/');
 
                 if (urlWithoutProtocol.StartsWith("configure?", StringComparison.CurrentCultureIgnoreCase)
                     || urlWithoutProtocol.StartsWith("configure/?", StringComparison.CurrentCultureIgnoreCase))
@@ -233,11 +257,10 @@ namespace QR2Web
                     //& autorotate = True | False
                     //& highres = True | False
                     //& settings = True | False
-                    string[] sParams = urlWithoutProtocol.Substring(
+                    string[] sParams = urlWithoutProtocol[
                             (urlWithoutProtocol.StartsWith("configure?", StringComparison.CurrentCultureIgnoreCase) ?
                             "configure?".Length :
-                            "configure/?".Length)
-                        ).Remove(' ').Split('&');
+                            "configure/?".Length)..].Remove(' ').Split('&');
                     foreach (string sParam in sParams)
                     {
                         if (sParam.IndexOf('=') > 0)
@@ -272,11 +295,11 @@ namespace QR2Web
                 {
                     if (urlWithoutProtocol.Contains("callback="))
                     {
-                        string callbackCommand = url.Substring(url.IndexOf("callback=", StringComparison.CurrentCultureIgnoreCase) + "callback=".Length);
-                        if (callbackCommand.IndexOf('&') > 0) callbackCommand = callbackCommand.Substring(0, callbackCommand.IndexOf('&'));
+                        string callbackCommand = url[(url.IndexOf("callback=", StringComparison.CurrentCultureIgnoreCase) + "callback=".Length)..];
+                        if (callbackCommand.IndexOf('&') > 0) callbackCommand = callbackCommand[..callbackCommand.IndexOf('&')];
                         if (callbackCommand.StartsWith("javascript:", StringComparison.CurrentCultureIgnoreCase))
                         {
-                            Parameters.TemporaryOptions.SetLookup(callbackCommand.Substring("javascript:".Length), "", Parameters.EmulationTypes.PIC2SHOP);
+                            Parameters.TemporaryOptions.SetLookup(callbackCommand["javascript:".Length..], "", Parameters.EmulationTypes.PIC2SHOP);
                         }
                         else
                         {
@@ -293,13 +316,13 @@ namespace QR2Web
             // check qr to Web protocol
             else if (url.StartsWith("qr2web"))
             {
-                urlWithoutProtocol = url.Substring("qr2web:".Length).TrimStart('/');
+                urlWithoutProtocol = url["qr2web:".Length..].TrimStart('/');
 
                 if (urlWithoutProtocol.ToLower().StartsWith("parameters"))
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        SaveNewParameters(urlWithoutProtocol.Substring("parameters".Length).TrimStart('/'));
+                        SaveNewParameters(urlWithoutProtocol["parameters".Length..].TrimStart('/'));
                     });
                 }
                 else if (urlWithoutProtocol.ToLower().StartsWith("torch"))
@@ -315,8 +338,7 @@ namespace QR2Web
                                 {
                                     await Flashlight.TurnOnAsync();
                                 });
-                                int timeout = 2000;
-                                int.TryParse(time[1], out timeout);
+                                int.TryParse(time[1], out int timeout);
                                 if (timeout < 1000) timeout = 1000;
                                 else if (timeout > 30000) timeout = 30000;
                                 await Task.Delay(timeout);
@@ -387,14 +409,12 @@ namespace QR2Web
             }
             if (dicQueryString.ContainsKey("portrait"))
             {
-                bool val = true;
-                bool.TryParse(dicQueryString["portrait"], out val);
+                bool.TryParse(dicQueryString["portrait"], out bool val);
                 Parameters.Options.LockPortrait = val;
             }
             if (dicQueryString.ContainsKey("gps"))
             {
-                bool val = true;
-                bool.TryParse(dicQueryString["gps"], out val);
+                bool.TryParse(dicQueryString["gps"], out bool val);
                 Parameters.Options.UseLocation = val;
             }
             if (dicQueryString.ContainsKey("language"))

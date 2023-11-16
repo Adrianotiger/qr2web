@@ -8,7 +8,7 @@ namespace QR2Web
 {
     public class MenuPage : Rg.Plugins.Popup.Pages.PopupPage
     {
-        private Buttons NavButtons;
+        private readonly Buttons NavButtons;
 
         public MenuPage(QRMainPage mainPage)
         {

@@ -1,5 +1,6 @@
-﻿using Plugin.Settings;
-using Plugin.Settings.Abstractions;
+﻿//using Plugin.Settings;
+//using Plugin.Settings.Abstractions;
+using Xamarin.Essentials;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -44,56 +45,56 @@ namespace QR2Web
 
             public static string HomePage                       // start page
             {
-                get => CrossSettings.Current.GetValueOrDefault(HomePageKey, "https://adrianotiger.github.io/qr2web/scan.html");
-                set { CrossSettings.Current.AddOrUpdateValue(HomePageKey, value); }
+                get => Preferences.Get(HomePageKey, "https://adrianotiger.github.io/qr2web/scan.html");
+                set { Preferences.Set(HomePageKey, value); }
             }
 
             public static int Emulation                         // emulation used after parsing a code
             {
-                get { return CrossSettings.Current.GetValueOrDefault(EmulationKey, EmulationTypes.NORMAL); }
-                set { CrossSettings.Current.AddOrUpdateValue(EmulationKey, value); }
+                get { return Preferences.Get(EmulationKey, EmulationTypes.NORMAL); }
+                set { Preferences.Set(EmulationKey, value); }
             }
 
             public static bool AcceptBarcode_Code               // if Code (39, 93 and 128) should be parse by the scanner
             {
-                get { return CrossSettings.Current.GetValueOrDefault(AcceptCodeKey, false); }
-                set { CrossSettings.Current.AddOrUpdateValue(AcceptCodeKey, value); }
+                get { return Preferences.Get(AcceptCodeKey, false); }
+                set { Preferences.Set(AcceptCodeKey, value); }
             }
 
             public static bool AcceptBarcode_Ean                // if Ean (8, 13) should be parse by the scanner
             {
-                get { return CrossSettings.Current.GetValueOrDefault(AcceptEANKey, false); }
-                set { CrossSettings.Current.AddOrUpdateValue(AcceptEANKey, value); }
+                get { return Preferences.Get(AcceptEANKey, false); }
+                set { Preferences.Set(AcceptEANKey, value); }
             }
 
             public static bool AcceptBarcode_Upc                // if UPC (A, E, EAN) should be parse by the scanner
             {
-                get { return CrossSettings.Current.GetValueOrDefault(AcceptUPCKey, false); }
-                set { CrossSettings.Current.AddOrUpdateValue(AcceptUPCKey, value); }
+                get { return Preferences.Get(AcceptUPCKey, false); }
+                set { Preferences.Set(AcceptUPCKey, value); }
             }
 
             public static bool LockPortrait                     // lock app in portrait mode
             {
-                get { return CrossSettings.Current.GetValueOrDefault(LockPortraitKey, true); }
-                set { CrossSettings.Current.AddOrUpdateValue(LockPortraitKey, value); }
+                get { return Preferences.Get(LockPortraitKey, true); }
+                set { Preferences.Set(LockPortraitKey, value); }
             }
 
             public static bool SaveHistory                      // save scanned codes in a history
             {
-                get { return CrossSettings.Current.GetValueOrDefault(SaveHistoryKey, true); }
-                set { CrossSettings.Current.AddOrUpdateValue(SaveHistoryKey, value); }
+                get { return Preferences.Get(SaveHistoryKey, true); }
+                set { Preferences.Set(SaveHistoryKey, value); }
             }
 
             public static bool UseLocation                      // if the location should be forwarded to webpage
             {
-                get { return CrossSettings.Current.GetValueOrDefault(UseLocationyKey, false); }
-                set { CrossSettings.Current.AddOrUpdateValue(UseLocationyKey, value); }
+                get { return Preferences.Get(UseLocationyKey, false); }
+                set { Preferences.Set(UseLocationyKey, value); }
             }
 
             public static int LanguageIndex                     // language used for this app
             {
-                get { return CrossSettings.Current.GetValueOrDefault(LanguageKey, 0); }
-                set { CrossSettings.Current.AddOrUpdateValue(LanguageKey, value); }
+                get { return Preferences.Get(LanguageKey, 0); }
+                set { Preferences.Set(LanguageKey, value); }
             }
         }
 
@@ -134,8 +135,8 @@ namespace QR2Web
 
         private static string History                     // code history as single string (to save it as parameter)
         {
-            get { return CrossSettings.Current.GetValueOrDefault("history", ""); }
-            set { CrossSettings.Current.AddOrUpdateValue("history", value); }
+            get { return Preferences.Get("history", ""); }
+            set { Preferences.Set("history", value); }
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace QR2Web
@@ -12,15 +13,15 @@ namespace QR2Web
     {
         private bool saveSettings = false;                          // if settings should be saved once the page is closed
 
-        private Entry webPageValue;                                 // home page option
-        private Picker emulationPicker;                             // emulation option
-        private Switch[] acceptedCodesSwitch = new Switch[4];       // accepted codes option
-        private Label[] acceptedCodesTexts = new Label[4];          // texts for the accepted codes
-        private Label[] acceptedCodesDesc = new Label[4];          // texts for the accepted codes
-        private Switch sendLocationSwitch;                          // location activation option
-        private Switch lockPortraitSwitch;                          // lock portrait mode option
-        private Switch saveHistorySwitch;                           // save history option
-        private Picker languagePicker;                              // language option
+        private readonly Entry webPageValue;                                 // home page option
+        private readonly Picker emulationPicker;                             // emulation option
+        private readonly Switch[] acceptedCodesSwitch = new Switch[4];       // accepted codes option
+        private readonly Label[] acceptedCodesTexts = new Label[4];          // texts for the accepted codes
+        private readonly Label[] acceptedCodesDesc = new Label[4];          // texts for the accepted codes
+        private readonly Switch sendLocationSwitch;                          // location activation option
+        private readonly Switch lockPortraitSwitch;                          // lock portrait mode option
+        private readonly Switch saveHistorySwitch;                           // save history option
+        private readonly Picker languagePicker;                              // language option
 
         /// <summary>
         /// Constructor. Initialize the page view and the components.
@@ -88,9 +89,11 @@ namespace QR2Web
 
             Label NeedRestartText = new Label { Text = "--------------------------\n" + Language.GetText("NeedRestart") };
 
-            StackLayout backbuttonLayout = new StackLayout();
-            backbuttonLayout.Orientation = StackOrientation.Horizontal;
-            backbuttonLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
+            StackLayout backbuttonLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
 
             Button backbuttonButton = new Button
             {
@@ -122,6 +125,7 @@ namespace QR2Web
 
             var scrollView = new StackLayout
             {
+                
                 Padding = new Thickness(10),
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 Children =
@@ -210,7 +214,12 @@ namespace QR2Web
             };
 
             Content = new ScrollView { Content = scrollView };
+            NavigationPage.SetHasBackButton(this, false);
+        }
 
+        public bool GoBack()
+        {
+            return OnBackButtonPressed();
         }
 
         /// <summary>
