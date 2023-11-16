@@ -36,6 +36,7 @@ namespace QR2Web
             private const string AcceptCodeKey = "opt_accept_code";
             private const string AcceptEANKey = "opt_accept_ean";
             private const string AcceptUPCKey = "opt_accept_upc";
+            private const string Accept1dKey = "opt_accept_1d";
             private const string LockPortraitKey = "opt_portrait";
             private const string SaveHistoryKey = "opt_history";
             private const string UseLocationyKey = "opt_location";
@@ -71,6 +72,12 @@ namespace QR2Web
             {
                 get { return Preferences.Get(AcceptUPCKey, false); }
                 set { Preferences.Set(AcceptUPCKey, value); }
+            }
+
+            public static bool AcceptBarcode_1d                // All others 1d barcodes should be parse by the scanner
+            {
+                get { return Preferences.Get(Accept1dKey, false); }
+                set { Preferences.Set(Accept1dKey, value); }
             }
 
             public static bool LockPortrait                     // lock app in portrait mode

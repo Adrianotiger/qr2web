@@ -276,6 +276,12 @@ namespace QR2Web
                 formats.Add(ZXing.BarcodeFormat.UPC_E);
                 formats.Add(ZXing.BarcodeFormat.UPC_EAN_EXTENSION);
             }
+            if (Parameters.Options.AcceptBarcode_1d)
+            {
+                formats.Add(ZXing.BarcodeFormat.ITF);
+                formats.Add(ZXing.BarcodeFormat.RSS_14);
+                formats.Add(ZXing.BarcodeFormat.RSS_EXPANDED);
+            }
 
             options.PossibleFormats = new List<ZXing.BarcodeFormat>(formats);
 

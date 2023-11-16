@@ -15,9 +15,9 @@ namespace QR2Web
 
         private readonly Entry webPageValue;                                 // home page option
         private readonly Picker emulationPicker;                             // emulation option
-        private readonly Switch[] acceptedCodesSwitch = new Switch[4];       // accepted codes option
-        private readonly Label[] acceptedCodesTexts = new Label[4];          // texts for the accepted codes
-        private readonly Label[] acceptedCodesDesc = new Label[4];          // texts for the accepted codes
+        private readonly Switch[] acceptedCodesSwitch = new Switch[5];       // accepted codes option
+        private readonly Label[] acceptedCodesTexts = new Label[5];          // texts for the accepted codes
+        private readonly Label[] acceptedCodesDesc = new Label[5];          // texts for the accepted codes
         private readonly Switch sendLocationSwitch;                          // location activation option
         private readonly Switch lockPortraitSwitch;                          // lock portrait mode option
         private readonly Switch saveHistorySwitch;                           // save history option
@@ -53,8 +53,11 @@ namespace QR2Web
             acceptedCodesTexts[3] = new Label { Text = "UPC", WidthRequest = 100, VerticalTextAlignment = TextAlignment.Center };
             acceptedCodesSwitch[3] = new Switch { IsToggled = Parameters.Options.AcceptBarcode_Upc, IsEnabled = true };
             acceptedCodesDesc[3] = new Label { Text = "Upc-A/E/EAN", HorizontalTextAlignment = TextAlignment.End };
+            acceptedCodesTexts[4] = new Label { Text = "More 1d", WidthRequest = 100, VerticalTextAlignment = TextAlignment.Center };
+            acceptedCodesSwitch[4] = new Switch { IsToggled = Parameters.Options.AcceptBarcode_1d, IsEnabled = true };
+            acceptedCodesDesc[4] = new Label { Text = "ITF/RSS", HorizontalTextAlignment = TextAlignment.End };
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 acceptedCodesSwitch[i].Toggled += (s, e) => { saveSettings = true; };
             }
@@ -172,6 +175,16 @@ namespace QR2Web
                             acceptedCodesDesc[3]
                         }
                     },
+                    new StackLayout
+                    {
+                        Orientation = StackOrientation.Horizontal,
+                        Children =
+                        {
+                            acceptedCodesTexts[4],
+                            acceptedCodesSwitch[4],
+                            acceptedCodesDesc[4]
+                        }
+                    },
                     webPageText,
                     webPageValue,
                     new StackLayout
@@ -244,6 +257,7 @@ namespace QR2Web
                 Parameters.Options.AcceptBarcode_Code = acceptedCodesSwitch[1].IsToggled;
                 Parameters.Options.AcceptBarcode_Ean = acceptedCodesSwitch[2].IsToggled;
                 Parameters.Options.AcceptBarcode_Upc = acceptedCodesSwitch[3].IsToggled;
+                Parameters.Options.AcceptBarcode_1d = acceptedCodesSwitch[4].IsToggled;
                 Parameters.Options.LockPortrait = lockPortraitSwitch.IsToggled;
                 Parameters.Options.SaveHistory = saveHistorySwitch.IsToggled;
                 Parameters.Options.LanguageIndex = languagePicker.SelectedIndex;
