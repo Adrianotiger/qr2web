@@ -19,17 +19,15 @@ title: QR2Web with GPS
         }
         scanResult.innerHTML += parseInt(mapData.latitude) + "/" + parseInt(mapData.longitude);
         if(typeof mapData.longitude == 'undefined' || mapData.longitude == '0') {scanResult.innerHTML += " - no pos"; return;}
-        L.mapbox.accessToken = "pk.eyJ1IjoiYWRyaWFub3RpZ2VyIiwiYSI6ImNreGV4d2w0MjF3bDAzMmt0dXppMDA4dmQifQ.foIvIrYgCAppnBfMhGMw9Q";
-        var mapboxTiles = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + L.mapbox.accessToken, {
-            attribution: '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            tileSize: 512,
-            zoomOffset: -1
+
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'streets-v12',
+            center: [parseFloat(mapData.latitude), parseFloat(mapData.longitude)],
+            zoom: 7
         });
+
         scanResult.innerHTML += ")";
-        var map = L.map('map')
-                    .addLayer(mapboxTiles)
-                    .setView([parseFloat(mapData.latitude), parseFloat(mapData.longitude)], 10);
-        scanResult.innerHTML += ".";
     }
 </script>
 <div class="blurb">
