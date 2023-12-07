@@ -49,11 +49,11 @@ input {
           var link = (document.getElementById("appver").value==2 ? createForVer2(inps) : createForVer3(inps)); 
           document.getElementById("link").innerHTML = "<hr><a href='" + link + "'>" + link + "</a>";
       }
-      function createForVer2()
+      function createForVer2(inps)
       {
         return "qr2web:/parameters/webpage=" + inps["webpage"].value + "&portrait=" + inps["portrait"].value + "&language=" + inps["language"].value;
       }
-      function createForVer3()
+      function createForVer3(inps)
       {
         return "qr2web:/parameters/homepage=" + encodeURIComponent(["webpage"].value) + "&forceportrait=" + inps["portrait"].value + "&language=" + inps["language"].value;
       }
