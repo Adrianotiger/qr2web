@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="2.3.1" android:versionCode="32" package="ch.petrucci.qr2web_2">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" android:versionName="2.3.2" android:versionCode="34" package="ch.petrucci.qr2web_2">
 	<uses-sdk android:minSdkVersion="27" android:targetSdkVersion="33" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.FLASHLIGHT" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<application android:label="QR2Web" android:icon="@drawable/QR" android:enableOnBackInvokedCallback="true" android:persistent="true">
+	<application android:label="QR2Web" android:icon="@drawable/QR" android:persistent="true">
 		<activity android:icon="@drawable/QR" android:label="QR2Web" android:name="MainActivity">
 			<!--
 			<intent-filter>

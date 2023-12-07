@@ -56,7 +56,6 @@ namespace QR2Web.Droid
             base.Dispose(disposing);
         }
 
-
         public void SaveView(Bundle bundle)
         {
             var res = Control.SaveState(bundle);
@@ -119,7 +118,6 @@ namespace QR2Web.Droid
             _hybridRenderer = hybridRenderer;
             new WebViewRenderer(_hybridRenderer.Context);
         }
-
 
         public override bool OnCreateWindow(Android.Webkit.WebView view, bool isDialog, bool isUserGesture, Android.OS.Message resultMsg)
         {

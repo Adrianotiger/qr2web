@@ -15,6 +15,7 @@ using Android.Window;
 using AndroidX.AppCompat.App;
 using Xamarin.Forms.Platform.Android;
 using Android.Bluetooth;
+using AndroidX.Activity;
 //using Xamarin.Forms;
 
 namespace QR2Web.Droid
@@ -62,7 +63,7 @@ namespace QR2Web.Droid
 
             Console.WriteLine("[QR2WEB Task] - CREATE " + bundle != null ? " WITH BUNDLE" : ".");
 
-            ShowFullScreen();
+            //ShowFullScreen();
 
             Xamarin.Forms.Forms.Init(this, bundle);
 
@@ -82,6 +83,8 @@ namespace QR2Web.Droid
             v.ViewTreeObserver.GlobalLayout += ViewTreeObserver_GlobalLayout;
             Xamarin.Essentials.Platform.ActivityStateChanged += Platform_ActivityStateChanged;
             BackPressed += MainActivity_BackPressed;
+
+            //OnBackPressedDispatcher.AddCallback(new CustomOnBackPressed(true));
 
             if (_myWebView != null && bundle != null)
             {
@@ -116,7 +119,6 @@ namespace QR2Web.Droid
             }
         }
 
-        
         protected override void OnPause()
         {
             Console.WriteLine("[QR2WEB Task] - PAUSE");
@@ -300,6 +302,20 @@ namespace QR2Web.Droid
                 success = false;
             }
             return success;
+        }
+    }
+
+    public class CustomOnBackPressed : OnBackPressedCallback
+    {
+        public CustomOnBackPressed(bool enabled) : base(enabled)
+        {
+
+        }
+
+        public override void HandleOnBackPressed()
+        {
+            int k = 0;
+            //code that handles back button pressed
         }
     }
 }

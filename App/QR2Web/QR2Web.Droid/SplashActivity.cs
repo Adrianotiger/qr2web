@@ -12,7 +12,7 @@ namespace QR2Web.Droid
         Theme = "@style/MyTheme.Splash", 
         MainLauncher = true, 
         LaunchMode = Android.Content.PM.LaunchMode.SingleTop,
-        NoHistory = false)]
+        NoHistory = true)]
     public class SplashActivity : AppCompatActivity
     {
         static readonly string TAG = "X:" + typeof(SplashActivity).Name;
