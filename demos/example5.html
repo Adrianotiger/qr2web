@@ -10,7 +10,7 @@ title: QR2Web with GPS
     function onQR2WebLocation(json) {
         let mapData;
         const scanResult = document.getElementById("scanResult");
-        scanResult += " (";
+        scanResult.innerHTML += " (";
         try {   
             mapData = JSON.parse(json);
         }
