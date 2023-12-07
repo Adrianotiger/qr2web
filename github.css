@@ -105,6 +105,18 @@ h3
   text-shadow: 1px 1px 3px #000;
   font-weight: bold;
 }
+input[type="button"]
+{
+  background: #d1de59;
+  background-image: linear-gradient(to bottom, #d1de59, #ab7344);
+  border-radius: 14px;
+  box-shadow: 3px 4px 8px #666666;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
 .btn 
 {
   background: #d1de59;
