@@ -24,8 +24,8 @@ title: QR2Web with GPS
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v12',
-            center: [parseFloat(mapData.latitude), parseFloat(mapData.longitude)],
-            zoom: 7
+            center: [parseFloat(mapData.longitude), parseFloat(mapData.latitude)],
+            zoom: 4
         });
 
         scanResult.innerHTML += ")";
