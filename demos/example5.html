@@ -20,6 +20,7 @@ title: QR2Web with GPS
         scanResult.innerHTML += parseInt(mapData.latitude) + "/" + parseInt(mapData.longitude);
         if(typeof mapData.longitude == 'undefined' || mapData.longitude == '0') {scanResult.innerHTML += " - no pos"; return;}
 
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYWRyaWFub3RpZ2VyIiwiYSI6ImNreGV4d2w0MjF3bDAzMmt0dXppMDA4dmQifQ.foIvIrYgCAppnBfMhGMw9Q';
         const map = new mapboxgl.Map({
             container: 'map',
             style: 'streets-v12',
