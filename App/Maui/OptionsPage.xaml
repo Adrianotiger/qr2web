@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:strings="clr-namespace:qr2web.Resources.Strings"
+             x:Class="qr2web.OptionsPage"
+             Background="{AppThemeBinding Light=AliceBlue, Dark=Black}"
+             Shell.FlyoutBehavior="Disabled"
+             Title="OptionsPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label 
+                Text="{Static strings:AppResources.OptionsPageTitle}"
+                FontSize="Large"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+            <Label
+                Text="{Static strings:AppResources.OptionsPageAcceptedBarcodes}"
+                FontSize="Medium"
+                />
+            <Grid ColumnDefinitions="*,4*" RowDefinitions="*,*,*,*,*" Padding="20,0,0,0">
+                <Label Text="QR" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" />
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="1">
+                    <Switch x:Name="barCodeTypeQr" IsToggled="True" IsEnabled="False" />
+                    <Label Text="QR-Codes" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+                <Label Text="CODE" Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center" />
+                <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
+                    <Switch x:Name="barCodeTypeCode"/>
+                    <Label Text="Code-39/93/128/bar" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+                <Label Text="EAN" Grid.Row="2" Grid.Column="0" VerticalTextAlignment="Center" />
+                <HorizontalStackLayout Grid.Row="2" Grid.Column="2">
+                    <Switch x:Name="barCodeTypeEan"/>
+                    <Label Text="Ean 8/13" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+                <Label Text="UPC" Grid.Row="3" Grid.Column="0" VerticalTextAlignment="Center" />
+                <HorizontalStackLayout Grid.Row="3" Grid.Column="2">
+                    <Switch x:Name="barCodeTypeUpc"/>
+                    <Label Text="Upc-A/E/EAN" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+                <Label Text="{Static strings:AppResources.OptionsPageAcceptedOther1d}" Grid.Row="4" Grid.Column="0" VerticalTextAlignment="Center" />
+                <HorizontalStackLayout Grid.Row="4" Grid.Column="2">
+                    <Switch x:Name="barCodeTypeOther1d"/>
+                    <Label Text="ITF/RSS" VerticalTextAlignment="Center" />
+                </HorizontalStackLayout>
+            </Grid>
+            <Label
+                Text="{Static strings:AppResources.OptionsPageHomePage}"
+                FontSize="Medium"
+                />
+            <Entry Placeholder="https://adrianotiger.github.io/qr2web/" x:Name="homePage" Margin="20,0,0,0">
+            </Entry>
+            <Label
+                Text="{Static strings:AppResources.OptionsPageAppOptions}"
+                FontSize="Medium"
+                />
+            <VerticalStackLayout Padding="30,10,0,0">
+                <Grid>
+                    <Label Text="{Static strings:AppResources.OptionsPageForcePortrait}" VerticalTextAlignment="Center" />
+                    <Switch x:Name="forcePortrait" HorizontalOptions="End" />
+                </Grid>
+                <Grid>
+                    <Label Text="{Static strings:AppResources.OptionsPageShowScanButton}" VerticalTextAlignment="Center" />
+                    <Switch x:Name="showScan" HorizontalOptions="End" />
+                </Grid>
+                <Grid>
+                    <Label Text="{Static strings:AppResources.OptionsPageForceBackgroundActivity}" VerticalTextAlignment="Center" />
+                    <Switch x:Name="forceBackground" HorizontalOptions="End" />
+                </Grid>
+                <Grid>
+                    <Label Text="{Static strings:AppResources.OptionsPageAlloweExternalLinks}" VerticalTextAlignment="Center" />
+                    <Switch x:Name="allowExternal" HorizontalOptions="End" />
+                </Grid>
+                <Grid>
+                    <Label Text="{Static strings:AppResources.OptionsPageLanguage}" VerticalTextAlignment="Center" />
+                    <Picker x:Name="language" HorizontalOptions="End" MinimumWidthRequest="150">
+                        <Picker.Items>
+
+                        </Picker.Items>
+                    </Picker>
+                </Grid>
+            </VerticalStackLayout>
+            <Label
+                Text="{Static strings:AppResources.OptionsPageScanOptions}"
+                FontSize="Medium"
+                />
+            <VerticalStackLayout Padding="30,10,0,0">
+                <Grid>
+                    <Label Text="{Static strings:AppResources.OptionsPageForwardLocation}" VerticalTextAlignment="Center" />
+                    <Switch x:Name="forwardLocation" HorizontalOptions="End" />
+                </Grid>
+                <Grid>
+                    <Label Text="{Static strings:AppResources.OptionsPageUseHistory}" VerticalTextAlignment="Center" />
+                    <Switch x:Name="useHistory" HorizontalOptions="End" />
+                </Grid>
+                <Grid>
+                    <Label Text="{Static strings:AppResources.OptionsPageScanKeyboard}" VerticalTextAlignment="Center" />
+                    <Picker x:Name="keyboardType" HorizontalOptions="End" MinimumWidthRequest="150">
+                        <Picker.Items>
+                            
+                        </Picker.Items>
+                    </Picker>
+                </Grid>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

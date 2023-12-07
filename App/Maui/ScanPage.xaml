@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:strings="clr-namespace:qr2web.Resources.Strings"
+             
+             x:Class="qr2web.ScanPage"
+             Shell.FlyoutBehavior="Disabled"
+             Title="ScanPage">
+    <Grid x:Name="mainGrid">
+        <Grid RowDefinitions="4*,2*" ColumnDefinitions="*,5*,*" VerticalOptions="Fill" HorizontalOptions="Fill">
+            <Rectangle Grid.Column="1" Grid.Row="0" Grid.RowSpan="1" Stroke="Red" VerticalOptions="Center" HorizontalOptions="Center" StrokeThickness="3" Aspect="Uniform" RadiusX="10" RadiusY="10"></Rectangle>
+            <Grid Grid.Column="1" Grid.Row="0" RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*,*" VerticalOptions="Fill" Padding="10,0,10,10" IsVisible="False" x:Name="keyboardOverlay">
+                <Entry Text="" Placeholder="123456" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalTextAlignment="Center" BackgroundColor="White" Opacity="0.8" TextColor="Black" Margin="10" FontSize="Large" x:Name="entryText">
+                </Entry>
+                <Button Text="1" Grid.Row="1" Grid.Column="0" Margin="5" Clicked="KeyPressed" />
+                <Button Text="2" Grid.Row="1" Grid.Column="1" Margin="5" Clicked="KeyPressed" />
+                <Button Text="3" Grid.Row="1" Grid.Column="2" Margin="5" Clicked="KeyPressed" />
+                <Button Text="4" Grid.Row="2" Grid.Column="0" Margin="5" Clicked="KeyPressed" />
+                <Button Text="5" Grid.Row="2" Grid.Column="1" Margin="5" Clicked="KeyPressed" />
+                <Button Text="6" Grid.Row="2" Grid.Column="2" Margin="5" Clicked="KeyPressed" />
+                <Button Text="7" Grid.Row="3" Grid.Column="0" Margin="5" Clicked="KeyPressed" />
+                <Button Text="8" Grid.Row="3" Grid.Column="1" Margin="5" Clicked="KeyPressed" />
+                <Button Text="9" Grid.Row="3" Grid.Column="2" Margin="5" Clicked="KeyPressed" />
+                <Button Text="🔙" Grid.Row="4" Grid.Column="0" Margin="5" FontSize="Large" BackgroundColor="Transparent" Clicked="KeyPressed_Back" />
+                <Button Text="0" Grid.Row="4" Grid.Column="1" Margin="5" Clicked="KeyPressed" />
+                <Button Text="✅" Grid.Row="4" Grid.Column="2" Margin="5" FontSize="Large" BackgroundColor="Transparent" Clicked="KeyPressed_Enter" />
+            </Grid>
+            <ListView Grid.Column="1" Grid.Row="0" MinimumHeightRequest="80" BindingContext="{Binding qr2web}" IsVisible="False" ItemsSource="{Binding HistoryData}" x:Name="historyOverlay" BackgroundColor="White" Margin="0,30,0,0" VerticalOptions="End" ItemSelected="HistoryOverlay_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid ColumnDefinitions="*,3*,2*">
+                                <Frame HorizontalOptions="Fill" Grid.ColumnSpan="3" Background="Black" MinimumHeightRequest="40" />
+                                <Label Text="{Binding Type}" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White" />
+                                <Label Text="{Binding Scan}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Start" TextColor="White" />
+                                <Label Text="{Binding Date}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" TextColor="White" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid ColumnDefinitions="*,*,*,*,*" RowDefinitions="2*,*" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
+                <ImageButton Grid.Column="0" Grid.Row="0" Source="numeric.png" Aspect="AspectFit" Padding="20" x:Name="keyboardButton" Clicked="KeyButton_Clicked"></ImageButton>
+                <ImageButton Grid.Column="2" Grid.Row="0" Source="history.png" Aspect="AspectFit" Padding="20" x:Name="historyButton" Clicked="HistoryButton_Clicked"></ImageButton>
+                <ImageButton Grid.Column="4" Grid.Row="0" Source="torch.png" Aspect="AspectFit" Padding="20" x:Name="flashButton" Clicked="TorchButton_Clicked"></ImageButton>
+                <Button Text="{Static strings:AppResources.ScanPageCancel}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" Clicked="CancelButton_Clicked" HorizontalOptions="Fill" Padding="10" />
+            </Grid>
+        </Grid>
+
+        <Label Text="{Static strings:AppResources.ScanPageStartCamera}" Opacity="0.5" x:Name="parsedText" VerticalOptions="Start" HorizontalOptions="Center" Padding="10" />
+    </Grid>
+</ContentPage>

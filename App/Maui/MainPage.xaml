@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Shell.NavBarIsVisible="True"
+             Shell.NavBarHasShadow="True"
+             x:Class="qr2web.MainPage">
+    <Grid>
+        <WebView 
+            Navigated="WebView_Navigated"
+            Navigating="WebView_Navigating"
+            x:Name="webView">
+            <WebView.Source>
+                <HtmlWebViewSource>
+                    <HtmlWebViewSource.Html>
+                        <![CDATA[
+                        <html>
+                        <body style='background-color:black;color:white;'>
+                        <h1>Qr2Web</h1>
+                        <p>Loading...</p>
+                        </body>
+                        </html>
+                        ]]>
+                    </HtmlWebViewSource.Html>
+                </HtmlWebViewSource>
+            </WebView.Source>
+        </WebView>
+        <ProgressBar VerticalOptions="Start" Progress="0" IsVisible="False" x:Name="progressBar" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="qr2web.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:qr2web"
+    xmlns:strings="clr-namespace:qr2web.Resources.Strings"
+    Shell.FlyoutBehavior="Flyout"
+    FlyoutBackgroundColor="{AppThemeBinding Light=LightSteelBlue, Dark=SteelBlue}"
+    Shell.BackgroundColor="{AppThemeBinding Light=LightSteelBlue, Dark=Black}"
+    Navigated="Shell_Navigated"
+    Title="QR2Web">
+
+    <Shell.TitleView>
+        <Grid ColumnDefinitions="auto,*,auto" Background="{AppThemeBinding Light=LightSteelBlue, Dark=Black}">
+            <Label Text="QR2Web" FontSize="Medium" VerticalTextAlignment="Center" Padding="20,0" TextColor="{AppThemeBinding Light=DarkBlue, Dark=LightSteelBlue}"></Label>
+            <HorizontalStackLayout Grid.Column="2" VerticalOptions="Center" Padding="20,0" x:Name="scanIcon" IsVisible="False">
+                <ImageButton Source="scanqr.png" Aspect="AspectFit" BackgroundColor="Transparent" Clicked="ScanButton_Clicked" />
+            </HorizontalStackLayout>
+        </Grid>
+    </Shell.TitleView>
+
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="128" HorizontalOptions="FillAndExpand" Background="Black">
+            <Image Source="logo128.png" HorizontalOptions="End" />
+            <Label Text="QR2Web" TextColor="LightSteelBlue" VerticalOptions="Center" FontSize="Large" />
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <ShellContent Title="App" ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage">
+    </ShellContent>
+    
+    <!--
+    <FlyoutItem Title="Home Page" FlyoutIcon="scanp.png" IsVisible="False">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+    </FlyoutItem>
+    -->
+
+    <MenuItem Text="{Static strings:AppResources.MenuHome}" IconImageSource="scanp.png" Clicked="Home_Clicked" />
+
+    <MenuItem Text="{Static strings:AppResources.MenuRefresh}" IconImageSource="scanr.png" Clicked="Refresh_Clicked" />
+
+    <MenuItem Text="{Static strings:AppResources.MenuOptions}" IconImageSource="scanc.png" Clicked="Options_Clicked" />
+
+    <MenuItem Text="{Static strings:AppResources.MenuHelp}" IconImageSource="help.png" Clicked="Help_Clicked" />
+
+    <MenuItem Text="{Static strings:AppResources.MenuAbout}" IconImageSource="about.png" Clicked="About_Clicked" />
+
+    <Shell.FlyoutFooter>
+        <VerticalStackLayout Padding="10">
+            <Label Text="GitHub Project" />
+            <Label Text="© Adriano Petrucci - 2023" />
+        </VerticalStackLayout>
+    </Shell.FlyoutFooter>
+    
+</Shell>
