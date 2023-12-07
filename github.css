@@ -100,6 +100,7 @@ h3
   background: linear-gradient(to bottom, transparent, #cc0, #fff, #fff, #cc0,transparent);
   border-radius: 3vw;
   margin: 3vh;
+  padding: 3vh;
   color: #00d;
   text-shadow: 1px 1px 3px #000;
   font-weight: bold;
