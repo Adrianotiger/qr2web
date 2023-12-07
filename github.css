@@ -72,6 +72,11 @@ img.nav
   vertical-align:middle;
   filter: drop-shadow(1px 1px 3px #264264);
 }
+h1
+{
+  font-size: 160%;
+  margin: 1vh;
+}
 a
 {
   color:white;
@@ -82,10 +87,12 @@ a
 }
 h2
 {
+  font-size: 140%;
   margin:0 auto;
 }
 h3
 {
+  font-size: 120%;
   margin:5px;
 }
 .btn 
