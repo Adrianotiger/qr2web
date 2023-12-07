@@ -23,7 +23,7 @@ footer
 }  
 div.blurb
 {
-  background: radial-gradient(ellipse at center, rgba(0,0,50,0.9) 0%,rgba(0,0,50,0.1) 100%); 
+  background: radial-gradient(ellipse at center, rgba(0,0,50,0.8) 0%, rgba(0,0,50,0.4) 100%); 
   border-style:ridge;
   border-width:4px;
   border-radius:20px;
@@ -56,7 +56,7 @@ div.blurb
     height:100%;
     margin:0 auto;
     text-align:center;
-    font-size:4vmin;
+    font-size:3vmin;
   }
 }
 td.nav
