@@ -29,6 +29,10 @@ input {
               <td><input type="radio" name="portrait" value="true" checked />YES - <input type="radio" name="portrait" value="false" />NO</td>
           </tr>
           <tr>
+              <td>Show scan button:</td>
+              <td><input type="radio" name="scanbutton" value="true" checked />YES - <input type="radio" name="scanbutton" value="false" />NO</td>
+          </tr>
+          <tr>
               <td>Language:</td>
               <td><input type="radio" name="language" value="en" checked />English - <input type="radio" name="language" value="de" />Deutsch - <input type="radio" name="language" value="it" />Italiano</td>
           </tr>
@@ -41,7 +45,7 @@ input {
   <div id="link" style="width: 80vmin;overflow-wrap: break-word;white-space: normal;margin: 0 auto;"></div>
   <br><hr style='width:80vmin;'>
   Or pack it in a QR code:<br>
-  <img style="width:75vmin;max-width:400px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIBAMAAABfdrOtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAGUExURf///wAAAFXC034AAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKHSURBVHja7ZZrbgMxCITNDez7X7ZqapkZYNOnVLYdfqwSFvgsZTJmKBSKRmErxMTsLnpkd8JOWXqEEKQ5BHWwISN207jXLi8jZj1XkKYQFxPqZJ73LhYUYfHwQYLcGrJJZ/RCdWFiCPInIHQ9cNmEvvEtdQny6xAPnz8ojBsN7g7C1XMF+SyE4xuQEO9BwgMh+1GVCfIzkCoSzntQQqvw+4+HIL8LIavH8kIloSxUwMslSHvIOIrBG3yw3yf+jM3hc5abIM0gxrKyt9HGsklnQR3ZEZuPvFwkBGkESaQgt9SDJ3D+ac8hSF/IIc3jKAYSIvQ5ATVgXKhLkD6QEW8LQ3vAbJrpaFTlhcQEaQYh8y8E8nhgt6O9DBM4QZCvQ6rfmS/69MPP4kbw0YK0hxAJy3ci+cCAP/iK98SqXF6QppD0DmWzjq3wPjDRbLhsVH4vSD8IOopFdS2WDdoKCguz49JWBGkGCaQ0OHSflwOliQoV5B6QSjbsLcFAwkxOWH2pCNIK4huA3wBJTGggWzZhs1i1YgXpDEm4xWtCsWpYVNrVWQT5AmRw8aR/f7Z6PFzYAZMFCHIHyFXH45F2OT8G9rFCBWkNMX43I3WA32NQy+kLdiRIfwj2euKpnxzMGvw1nUqQppARFRXQIcHXTq0uQe4Awa2A5LQ7/PNpoPukEJYJ0htSBXZviBXjQu05wSjtSJBeENr5oBxeFZvFhIpwFkcL8oOQXeJ/2pBNwA/88PhVkC4Q1FG+oZNznyv9SQhyV8hOoJiollVp3HK5SAjSG4JWEVS0DzFxNOJWcQhBmkKwJCwSE7KGJJ45o/uYIO0hpXqCgGbcJmato0t1CdIMolAo/kWM8QISGUEBCW0fmwAAAABJRU5ErkJggg==" />
+  <img style="width:70vmin;max-width:400px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADUAAAA1CAYAAADh5qNwAAAAAXNSR0IArs4c6QAAA6JJREFUaEPtmdtyqlAQRMP/fzQpKLc1Nr16hvLJxPOSE0X2XPqG2fZ933/+2L/t29SHbPR/bGrbNtxHpd9x3fF7/Vk/WN87Xl/X1f+7s+hz07rO+yun6uG1SH1dm9JJaBPU8CpWB5SGkuqKTdXJuANp4l0x2sRxH7fxycb0mtUsbmra1CpKp1eLXe+tIurvHRqoaX395T4Ev9SUFlyLVd4RQWk7z2kXbhN3b2+KOEJc6SBai8ViHo24PDDlOnJqOt1EbqeO716f6orw6/zVwdLBcQmJco4soF6n19xNciOhUGJrY8SD2phKuhsebff2fbrsR/7k1G6iclXStVgn40kp8T3XVOf+RPQkLk6aO9V0CUZRYUXFSfqkAIKgqhxxlLhJHLwDQRtoU3RR2JGiJSg6SBOUVjNpaxeEdOab4kpqSGHhIE1QStc6Ll/OSkJBOc0RnA6bJBMHWdpmF7XO2tKm1gTIN5LnOBuguKNQree69/Qx5K1N6WE6NcW2qluyB5J6Hexb8COxSCY6zWeTVEEeRsr80mz3kOig18UYNxAVBS0uSXZKMCOfqhKqscUd7Iz4jod1gpAgP370oIkRXxL5E+fUd8jXyLwpjYzUrzNKx6POk7qG3HZU9hMarKRXvDtiTty/8yfi1ETOkyLaTbmJUERRv0jDcEKRIEeFO54rRDH7dR5E5pqKd/wgsnfcjp9Lkt5NxeHauf00bq1NXyb/+OLUGa/7TPu1M0USZ6AOMiQamiCqldQtuUDt+PjSMD0k1gloYcqdesOU6t11Dsbd/XUALadcA+lgmipJvTamkEp50eXDcaJQkroPdtekfKc8SDHIQS354FlXepyva07cIvhRwG3hU4RhGqMipyaFuECbVC9JeeLjeq8TlZZTTjZdvqPMR4lAuefOUVg6vrprxk053KYc6ATAJQ4VncTNu1x7bnb6ZaaDnINH4kCHgu5+auIoYMmnSMrr653KVbjQ5hTKDsJ6plNF3FQyWpqMbiAVleBnPQf+Bp1qaWPShYTyxzDXEMk/Ed/xsULRPSUQ384zyKdIhldhmvNSgnDwqrB199JG0/Wt+pFP6U0psjjeTJ50SYiS4o6FwhG/86mpBxHMplZB2xtvSjE7gQuF0TSoVGiCdORh9wcClU4HQ9eMk1xSVhKjNCSnoiNJn0h1EoGJqBAinBFTPSP4OeWrk69TIpd3QtJxqjPyieJaSaeGPun12+b7Cc19m/qELR01/gKt5Na8hjLoyAAAAABJRU5ErkJggg==" />
   <script>
       function createLink()
       {
@@ -55,7 +59,7 @@ input {
       }
       function createForVer3(inps)
       {
-        return "qr2web:/parameters/homepage=" + encodeURIComponent(inps["webpage"].value) + "&forceportrait=" + inps["portrait"].value + "&language=" + inps["language"].value;
+        return "qr2web:/parameters/homepage=" + encodeURIComponent(inps["webpage"].value) + "&forceportrait=" + inps["portrait"].value + "&language=" + inps["language"].value + "&showscanbutton=" + inps["scanbutton"].value;
       }
   </script>
 </div>
