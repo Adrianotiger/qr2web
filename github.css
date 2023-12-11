@@ -45,7 +45,6 @@ div.blurb
     height:100%;
     margin:0 auto;
     text-align:center;
-    font-size:4vmin;
   }
 }
 @media all and (orientation:portrait)
@@ -56,7 +55,6 @@ div.blurb
     height:100%;
     margin:0 auto;
     text-align:center;
-    font-size:3vmin;
   }
 }
 td.nav
