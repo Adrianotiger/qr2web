@@ -4,26 +4,26 @@
              Shell.NavBarIsVisible="True"
              Shell.NavBarHasShadow="True"
              x:Class="qr2web.MainPage">
-    <Grid>
+    <Grid VerticalOptions="Fill">
         <WebView 
-            Navigated="WebView_Navigated"
-            Navigating="WebView_Navigating"
-            x:Name="webView">
+                Navigated="WebView_Navigated"
+                Navigating="WebView_Navigating"
+                x:Name="webView">
             <WebView.Source>
                 <HtmlWebViewSource>
                     <HtmlWebViewSource.Html>
                         <![CDATA[
-                        <html>
-                        <body style='background-color:black;color:white;'>
-                        <h1>Qr2Web</h1>
-                        <p>Loading...</p>
-                        </body>
-                        </html>
-                        ]]>
+                            <html>
+                            <body style='background-color:black;color:white;'>
+                            <h1>Qr2Web</h1>
+                            <p>Loading...</p>
+                            </body>
+                            </html>
+                            ]]>
                     </HtmlWebViewSource.Html>
                 </HtmlWebViewSource>
             </WebView.Source>
         </WebView>
-        <ProgressBar VerticalOptions="Start" Progress="0" IsVisible="False" x:Name="progressBar" />
+    <ProgressBar VerticalOptions="Start" HeightRequest="1" HorizontalOptions="Fill" Margin="3,0" Progress="0" IsVisible="False" x:Name="progressBar" />
     </Grid>
 </ContentPage>

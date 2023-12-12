@@ -27,7 +27,7 @@
         </Grid>
     </Shell.FlyoutHeader>
 
-    <ShellContent Title="App" ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage">
+    <ShellContent Title="App" ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" IsEnabled="False">
     </ShellContent>
     
     <!--
@@ -38,7 +38,7 @@
     </FlyoutItem>
     -->
 
-    <MenuItem Text="{Static strings:AppResources.MenuHome}" IconImageSource="scanp.png" Clicked="Home_Clicked" />
+    <MenuItem  Text="{Static strings:AppResources.MenuHome}" IconImageSource="scanp.png" Clicked="Home_Clicked" />
 
     <MenuItem Text="{Static strings:AppResources.MenuRefresh}" IconImageSource="scanr.png" Clicked="Refresh_Clicked" />
 
@@ -47,6 +47,16 @@
     <MenuItem Text="{Static strings:AppResources.MenuHelp}" IconImageSource="help.png" Clicked="Help_Clicked" />
 
     <MenuItem Text="{Static strings:AppResources.MenuAbout}" IconImageSource="about.png" Clicked="About_Clicked" />
+
+    <MenuItem IsEnabled="False">
+        <Shell.MenuItemTemplate>
+            <DataTemplate>
+                <Label HeightRequest="1" BackgroundColor="Black" WidthRequest="200" HorizontalOptions="Fill" IsEnabled="False" />
+            </DataTemplate>
+        </Shell.MenuItemTemplate>
+    </MenuItem>
+
+    <MenuItem Text="{Static strings:AppResources.MenuExit}" IconImageSource="exit.png" Clicked="Exit_Clicked" />
 
     <Shell.FlyoutFooter>
         <VerticalStackLayout Padding="10">

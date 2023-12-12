@@ -1,6 +1,4 @@
-using Microsoft.VisualBasic.FileIO;
 using qr2web.Resources.Strings;
-using System.Collections.ObjectModel;
 using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
 
@@ -108,6 +106,15 @@ public partial class ScanPage : ContentPage
                             entryText.Keyboard = Keyboard.Plain;
                             break;
                     }
+                    entryText.Completed += (s, e) =>
+                    {
+                        MainThread.BeginInvokeOnMainThread(() =>
+                        {
+                            Options.AddHistoryScan(new HistoryData { Type = Options.BarcodeType.Keyboard, Date = DateTime.Now, Scan = entryText.Text });
+                            App.InsertCode(entryText.Text);
+                        });
+                    };
+
                 }
                 else
                 {

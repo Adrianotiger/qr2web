@@ -21,16 +21,17 @@ namespace Maui
         HardwareAccelerated = true,
         NoHistory = false,
         ClearTaskOnLaunch = false,
-        ExcludeFromRecents = true,
         LaunchMode = LaunchMode.SingleTop,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation /*| ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density*/)]
     public class MainActivity : MauiAppCompatActivity
     {
         Intent? serviceIntent = null;
+        static MainActivity Instance;
 
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            Instance = this;
         }
 
         protected override void OnResume()
@@ -59,12 +60,14 @@ namespace Maui
                 {
                     if (MainPage.MyWebView?.Handler?.PlatformView is not Android.Webkit.WebView webView)
                     {
-                        await Task.Delay(500);
+                        await Task.Delay(200);
                     }
                     else
                     {
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
+                            Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
+
                             webView.Settings.SetSupportMultipleWindows(true);
                             webView.Settings.JavaScriptCanOpenWindowsAutomatically = true;
                             webView.SetWebChromeClient(new MyWebChromeClient());
@@ -96,6 +99,15 @@ namespace Maui
             }
             base.OnDestroy();
         }
+
+        public static void OpenExternalLink(string url)
+        {
+            Android.Net.Uri uri = Android.Net.Uri.Parse(url);
+            Intent intent = new Intent(Intent.ActionView)
+                    .SetData(uri)
+                    .SetFlags(ActivityFlags.NewTask);
+            Instance.StartActivity(intent);
+        }
     }
 
     public class MyWebChromeClient : WebChromeClient
@@ -119,6 +131,11 @@ namespace Maui
 
     public class MyWebViewClient : WebViewClient
     {
+        public override WebResourceResponse? ShouldInterceptRequest(Android.Webkit.WebView? view, IWebResourceRequest? request)
+        {
+            return base.ShouldInterceptRequest(view, request);
+        }
+
         public override bool ShouldOverrideUrlLoading(Android.Webkit.WebView? view, IWebResourceRequest? request)
         {
             var url = request?.Url?.ToString();

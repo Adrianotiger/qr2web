@@ -1,11 +1,6 @@
-﻿
-using banditoth.MAUI.PreferencesExtension;
-using Microsoft.Maui.Controls.Compatibility;
+﻿using banditoth.MAUI.PreferencesExtension;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Runtime.Intrinsics.X86;
 
 namespace qr2web
 {
@@ -109,8 +104,11 @@ namespace qr2web
 
                 UpdateAppCulture();
                 
-
                 History = PreferencesExtension.GetObject("history", History);
+
+                // protected options
+                ShowFullscreen = Preferences.Get(ProtectedOptions[nameof(ShowFullscreen)], ShowFullscreen);
+                ConfigurationFile = Preferences.Get(ProtectedOptions[nameof(ConfigurationFile)], ConfigurationFile);
             }
             catch
             {
@@ -125,7 +123,7 @@ namespace qr2web
                 try
                 {
                     CultureInfo newCulture = new(Language);
-                    CultureInfo.DefaultThreadCurrentCulture = newCulture;
+                    CultureInfo.CurrentUICulture = newCulture;
                 }
                 catch
                 {
@@ -226,7 +224,7 @@ namespace qr2web
                 error = "No valid parameters";
                 return false;
             }
-            
+
             foreach (var item in list)
             {
                 bool paramExists = true;
@@ -238,7 +236,7 @@ namespace qr2web
                 }
                 if (!AllOptions.ContainsValue("option_" + pair[0].ToLower()))
                 {
-                    if (!ProtectedOptions.ContainsKey("option_" + pair[0].ToLower()))
+                    if (!ProtectedOptions.ContainsValue("option_" + pair[0].ToLower()))
                     {
                         paramExists = false;
                         error += "Parameter '" + pair[0] + "' not found.\n";
@@ -255,20 +253,52 @@ namespace qr2web
 
         public static bool UpdateNewParams(string param, out string error)
         {
-            if(!CheckStringParam(param, out error, out Dictionary<string, string> keyValuePairs))
+            Dictionary<string, string> MyOptions = [];
+            AllOptions.ToList().ForEach(kvp => MyOptions.Add(kvp.Key, kvp.Value));
+            ProtectedOptions.ToList().ForEach(kvp=> MyOptions.Add(kvp.Key, kvp.Value));
+
+            if (!CheckStringParam(param, out error, out Dictionary<string, string> keyValuePairs))
             {
                 return false;
             }
             keyValuePairs.ToList().ForEach(kvp =>
             {
-                PropertyInfo? pi = typeof(Options).GetProperty(kvp.Key);
-                if(pi != null)
+                string pval = MyOptions.FirstOrDefault(x => x.Value == kvp.Key).Key;
+                if (pval != null)
                 {
-                    if(pi.PropertyType == typeof(string)) 
-                    { 
-                    }
-                    else if(pi.PropertyType == typeof(bool)) 
-                    { 
+                    PropertyInfo? pi = typeof(Options).GetProperty(pval, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+                    if (pi != null)
+                    {
+                        if (pi.PropertyType == typeof(string))
+                        {
+                            switch(pval)
+                            {
+                                case "HomePage": 
+                                    SaveHomePage(kvp.Value); 
+                                    break;
+                                case "ConfigurationFile":
+                                    SaveParam(pi.Name, kvp.Value.ToString());
+                                    break;
+                                case "Language":
+                                    SetLanguage(kvp.Value);
+                                    break;
+                                case "Keyboard":
+                                    SetKeyboardType(kvp.Value);
+                                    break;
+                                case "BarCodes":
+                                    Barcodes.ToList().ForEach(pair =>  ActivateBarcode(pair.Key, kvp.Value.Contains(pair.Key.ToString(), StringComparison.CurrentCultureIgnoreCase)) );
+                                    break;
+                            }
+                            
+                        }
+                        else if (pi.PropertyType == typeof(bool))
+                        {
+                            bool newValue = false;
+                            if (String.Compare(kvp.Value, "true", StringComparison.OrdinalIgnoreCase) == 0 ||
+                                kvp.Value == "1")
+                                newValue = true;
+                            SaveParam(pi.Name, newValue);
+                        }
                     }
                 }
             });
@@ -277,23 +307,29 @@ namespace qr2web
 
         private static void SaveParam(string paramName, bool newValue)
         {
-            PropertyInfo? pi = typeof(Options).GetProperty(paramName);
+            PropertyInfo? pi = typeof(Options).GetProperty(paramName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
             if (pi != null && newValue != (bool?)pi.GetValue(true))
             {
                 bool bVal = newValue;
                 pi.SetValue(bVal, newValue);
-                Preferences.Set(AllOptions[paramName], newValue);
+                if(AllOptions.TryGetValue(paramName, out string? value1))
+                    Preferences.Set(value1, newValue);
+                else if (ProtectedOptions.TryGetValue(paramName, out string? value2))
+                    Preferences.Set(value2, newValue);
             }
         }
 
         private static void SaveParam(string paramName, string newValue)
         {
-            PropertyInfo? pi = typeof(Options).GetProperty(paramName);
+            PropertyInfo? pi = typeof(Options).GetProperty(paramName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
             if (pi != null && newValue != (string?)pi.GetValue("-"))
             {
                 string sVal = newValue;
                 pi.SetValue(sVal, newValue);
-                Preferences.Set(AllOptions[paramName], newValue);
+                if (AllOptions.TryGetValue(paramName, out string? value1))
+                    Preferences.Set(value1, newValue);
+                else if (ProtectedOptions.TryGetValue(paramName, out string? value2))
+                    Preferences.Set(value2, newValue);
             }
         }
 

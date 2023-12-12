@@ -132,6 +132,9 @@
   <data name="MenuAbout" xml:space="preserve">
     <value>Info</value>
   </data>
+  <data name="MenuExit" xml:space="preserve">
+    <value>Esci</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>Aiuto</value>
   </data>

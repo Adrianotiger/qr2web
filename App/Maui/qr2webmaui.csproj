@@ -44,45 +44,94 @@
 		<PackageProjectUrl>https://github.com/Adrianotiger/qr2web/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Adrianotiger/qr2web/</RepositoryUrl>
 		<RepositoryType>github</RepositoryType>
+		<GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+		<AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+		<AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+		<AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+		<AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+		<GenerateTestArtifacts>True</GenerateTestArtifacts>
+		<GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+		<HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+		<IncludeSymbols>False</IncludeSymbols>
+		<Platforms>AnyCPU;x64</Platforms>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
 	  <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-	  <ApplicationDisplayVersion>3.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>36</ApplicationVersion>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|x64'">
+	  <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
 	  <AndroidKeyStore>False</AndroidKeyStore>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
 	  <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-	  <ApplicationDisplayVersion>3.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>36</ApplicationVersion>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|x64'">
+	  <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationId>6469Adriano.QR2WebInventory</ApplicationId>
-	  <ApplicationDisplayVersion>3.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>36</ApplicationVersion>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|x64'">
+	  <ApplicationId>6469Adriano.QR2WebInventory</ApplicationId>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
 	  <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-	  <ApplicationDisplayVersion>3.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>36</ApplicationVersion>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
+	  <AndroidLinkTool>r8</AndroidLinkTool>
+	  <AndroidKeyStore>False</AndroidKeyStore>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|x64'">
+	  <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
 	  <AndroidLinkTool>r8</AndroidLinkTool>
 	  <AndroidKeyStore>False</AndroidKeyStore>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
 	  <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-	  <ApplicationDisplayVersion>3.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>36</ApplicationVersion>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|x64'">
+	  <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
 	  <ApplicationId>6469Adriano.QR2WebInventory</ApplicationId>
-	  <ApplicationDisplayVersion>3.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>36</ApplicationVersion>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|x64'">
+	  <ApplicationId>6469Adriano.QR2WebInventory</ApplicationId>
+	  <ApplicationDisplayVersion>3.1</ApplicationDisplayVersion>
+	  <ApplicationVersion>39</ApplicationVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

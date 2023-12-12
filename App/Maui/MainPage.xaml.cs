@@ -1,12 +1,13 @@
 ﻿
 using CommunityToolkit.Maui.Alerts;
 using qr2web.Resources.Strings;
+using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
 
 namespace qr2web
 {
     public partial class MainPage : ContentPage, IQueryAttributable
     {
-        public static WebView? MyWebView { get; private set; } = null;
+        public static Microsoft.Maui.Controls.WebView? MyWebView { get; private set; } = null;
         private readonly List<string> InterceptSchemes = [];
 
         public MainPage()
@@ -17,10 +18,8 @@ namespace qr2web
             InterceptSchemes.Add("qr2web:/parameters/");
             InterceptSchemes.Add("qr2web:/scan");
 
-            Options.InitOptions();
-
             webView.Source = Options.HomePage;
-            
+
             MyWebView = webView;
 
             var args = Environment.GetCommandLineArgs();
@@ -29,6 +28,27 @@ namespace qr2web
             {
                 ExecuteScheme(args[1]);
             }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (App.Current != null)
+            {
+                var myAndroidApp = App.Current.On<Microsoft.Maui.Controls.PlatformConfiguration.Android>();
+                myAndroidApp.UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
+
+                if (Options.ShowFullscreen)
+                {
+                    Shell.SetNavBarIsVisible(this, false);
+                }
+            }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
         }
 
         protected override bool OnBackButtonPressed()
@@ -51,6 +71,11 @@ namespace qr2web
 
         public void InsertBarcode(string code)
         {
+            if(code.StartsWith("qr2web:/")) // intercept code
+            {
+                if(ExecuteScheme(code)) return;
+            }
+
             var jscall = "window.setTimeout(function() {";
             jscall += "try {";
             jscall += "   if (\"function\" === typeof onQR2WebCodeScan){";
@@ -62,8 +87,8 @@ namespace qr2web
 
             if(Options.ForwardLocation)
             {
-                double latitude = (AppShell.MyLocation?.Latitude != null) ? AppShell.MyLocation.Latitude : 47.5;
-                double longitude = (AppShell.MyLocation?.Longitude != null) ? AppShell.MyLocation.Longitude : 9.5;
+                double latitude = (AppShell.MyLocation?.Latitude != null) ? AppShell.MyLocation.Latitude : 0.0;
+                double longitude = (AppShell.MyLocation?.Longitude != null) ? AppShell.MyLocation.Longitude : 0.0;
                 jscall = "window.setTimeout(function() {";
                 jscall += "try {";
                 jscall += "   if (\"function\" === typeof onQR2WebLocation){";
@@ -131,7 +156,7 @@ namespace qr2web
             {
                 progressBar.Progress = 0.0;
                 progressBar.IsVisible = true;
-                progressBar.ProgressTo(0.8, 5000, Easing.Linear);
+                progressBar.ProgressTo(0.9, 5000, Easing.Linear);
             }
         }
 
@@ -243,27 +268,43 @@ namespace qr2web
             {
                 await Task.Delay(100);
 
-                string extUrl = url;
-                if (extUrl.Length > 32) extUrl = string.Concat(extUrl.AsSpan(0, 30), "...");
+                string extUrl = "";
+                if (url.Length > 32) extUrl = string.Concat(url.AsSpan(0, 30), "...");
+                else extUrl = url;
+
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
-                    if (Application.Current != null && Application.Current.MainPage != null)
+                    if (Microsoft.Maui.Controls.Application.Current != null && Microsoft.Maui.Controls.Application.Current.MainPage != null)
                     {
-                        if (url.StartsWith("http"))
+                        try
                         {
-                            if (!Options.ExternalLinks)
+                            if (url.StartsWith("http"))
                             {
-                                var toast = Toast.Make(AppResources.ExternalLinkNotAllowed, CommunityToolkit.Maui.Core.ToastDuration.Short);
-                                await toast.Show();
+                                if (!Options.ExternalLinks)
+                                {
+                                    var toast = Toast.Make(AppResources.ExternalLinkNotAllowed, CommunityToolkit.Maui.Core.ToastDuration.Short);
+                                    await toast.Show();
+                                }
+                                else if (await Microsoft.Maui.Controls.Application.Current.MainPage.DisplayAlert(AppResources.ExternalLink, AppResources.ExternalLinkAppWantOpen + ":\n" + extUrl + "\n" + AppResources.ExternaLinkAppProceed, AppResources.Yes, AppResources.No))
+                                {
+                                    await Launcher.Default.OpenAsync(url);
+                                }
                             }
-                            else if (await Application.Current.MainPage.DisplayAlert(AppResources.ExternalLink, AppResources.ExternalLinkAppWantOpen + ":\n" + extUrl + "\n" + AppResources.ExternaLinkAppProceed, AppResources.Yes, AppResources.No))
+                            else
                             {
-                                await Launcher.Default.OpenAsync(url);
+                                await Launcher.Default.TryOpenAsync(url);
                             }
                         }
-                        else
+                        catch(UriFormatException)
                         {
-                            await Launcher.Default.OpenAsync(url);
+                            // Uri bug (limit of 2000 chars)
+#if ANDROID
+                            Maui.MainActivity.OpenExternalLink(url);
+#endif
+                        }
+                        catch (Exception ex) 
+                        {
+                            Console.WriteLine(ex.ToString());
                         }
                     }
                 });

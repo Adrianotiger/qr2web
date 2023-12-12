@@ -6,13 +6,13 @@
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   IgnorableNamespaces="uap rescap">
 
-  <Identity Name="maui-package-name-placeholder" Publisher="CN=User Name" Version="0.0.0.0" />
+  <Identity Name="6469Adriano.6169489DB4D36" Publisher="CN=39092E3A-7130-410B-B315-09A9DDDBDEA9" Version="3.0.3.0" />
 
-  <mp:PhoneIdentity PhoneProductId="4FBBF8EE-4F51-40C9-B7C5-85075D331CFB" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="3cb704a8-4f7a-46a6-bca3-ca7150fdbd08" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>$placeholder$</DisplayName>
-    <PublisherDisplayName>User Name</PublisherDisplayName>
+    <DisplayName>QR2Web</DisplayName>
+    <PublisherDisplayName>Adriano</PublisherDisplayName>
     <Logo>$placeholder$.png</Logo>
   </Properties>
 
@@ -28,7 +28,7 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="$placeholder$"
+        DisplayName="QR2Web"
         Description="$placeholder$"
         Square150x150Logo="$placeholder$.png"
         Square44x44Logo="$placeholder$.png"
@@ -49,6 +49,9 @@
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
+    <Capability Name="internetClient"/>
+    <DeviceCapability Name="location"/>
+    <DeviceCapability Name="webcam"/>
   </Capabilities>
 
 </Package>

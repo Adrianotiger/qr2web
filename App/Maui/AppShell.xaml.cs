@@ -66,6 +66,14 @@
             }
         }
 
+        private void Exit_Clicked(object sender, EventArgs e)
+        {
+            if (Current.CurrentPage is MainPage && Application.Current != null)
+            {
+                Application.Current.Quit();
+            }
+        }
+
         private void Shell_Navigated(object sender, ShellNavigatedEventArgs e)
         {
             string currentUrl = e.Current.Location.OriginalString;

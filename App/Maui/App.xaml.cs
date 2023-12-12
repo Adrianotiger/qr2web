@@ -7,6 +7,8 @@ namespace qr2web
         {
             InitializeComponent();
 
+            Options.InitOptions();
+
             MainPage = new AppShell();
         }
 
