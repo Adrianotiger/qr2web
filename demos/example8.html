@@ -1,0 +1,17 @@
+---
+layout: default
+title: QR2Web for dummies
+---
+<script>
+function onQR2WebCodeScan(barcode)
+{
+    document.getElementById("scanResult").innerHTML = barcode;
+}
+</script>
+<div class="blurb">
+    <h1>Example 8</h1>
+    <h2>{{ page.title }}</h2>
+    Open this link: <a href="qr2web:/ocr">qr2web:/ocr</a>
+    <br>
+    <div id="scanResult"><i>SCAN RESULT</i></div>
+</div>
