@@ -1,5 +1,5 @@
 
-Scan codes with the smartphones and forward the parsed code to a webpage.
+Barcodescanner for smartphones to forward the parsed code to a webpage.
 
 <a href="https://github.com/Adrianotiger/qr2web/wiki/download">Download App directly from store:
 
@@ -12,17 +12,17 @@ The webpage can interact with the browser to start a barcode scanner or to light
 
 The app is useful if you are a webpage developer and want to <b>integrate a barcode scanner in your webpage</b>.
 
-<img src="https://github.com/Adrianotiger/qr2web/blob/b745516fedebe9faf29e6c8229ec0c7e50e87c4a/screenshots/Screenshot_2021-12-20-15-54-23-635_ch.petrucci.qr2web_2.jpg" width="200px"> <img src="https://github.com/Adrianotiger/qr2web/raw/b745516fedebe9faf29e6c8229ec0c7e50e87c4a/screenshots/Screenshot_2021-12-20-15-55-37-865_ch.petrucci.qr2web_2.jpg" width="200px">
+<img src="https://github.com/Adrianotiger/qr2web/assets/7373079/3524f89a-5387-45aa-a61b-26f8a7f57f1b" width="200px"> <img src="https://github.com/Adrianotiger/qr2web/assets/7373079/a0bf4100-e6d8-4d2c-a728-e0592184a45d" width="200px">
 
 ### Why this project?
-You find always more QR codes on the web and it is also easy to generate QR codes for own projects. Good smartphones (with Android or Windows Mobile) are able to scan a QR code directly from a webpage. Older smartphones and cheaper smartphones need an app because they are not able to access the camera from the webpage. So you need an app for each OS (=> store accounts, developer accounts, and $$$).
+You find always more QR codes on the web and it is also easy to generate QR codes for own projects. Good smartphones are able to scan a QR codes directly from a webpage. This app just integrates the camera and flashlight ability for a more professional app. It is fully customizable: you can remove any app menu o navigation bar, so that the page seems to be an application.
 
 This app is a simple QR scanner that will start over a simple link on the web. Once the scan is over, the app will forward the code to your webpage. 
 
 So you need to write a webpage and give this free app to your users. **You don't need to write any app for this functionality anymore**, only the webpage.
 
 ### On which smartphone does it works?
-The project was made with Xamarin and ZXing library. So it works with Android (>4.1), Windows (10) and iOS (>7).
+The project was made with Maui and ZXing library. So it works with Android (>8.1), Windows (10) and iOS (>10).
 Because I don't have any developer account on iOS, I can give only the Windows Store link and Android Play link. Maybe in future someone will compile and upload this app on the store for iOS.
 
 ### GitHub Structure
@@ -35,15 +35,13 @@ Dedicated webpage is in the [Home Page](https://adrianotiger.github.io/qr2web/) 
 There is also a  [Blog](https://adrianotiger.github.io/qr2web/blog) for future updates
 
 ### Credits
-It was possible to create this app thanks to Microsoft, Xamarin and ZXing libraries.
+It was possible to create this app thanks to Microsoft, Maui and ZXing libraries.
 
-App was developed with [Visual Studio 2019](https://www.visualstudio.com/)
+App was developed with [Visual Studio 2022](https://www.visualstudio.com/)
 
-using the [Xamarin NuGet extension](https://www.xamarin.com/),
+using the [MAUI.net](https://dotnet.microsoft.com/en-us/apps/maui),
 
-the [ZXing BarcodeScanner library](https://github.com/Redth/ZXing.Net.Mobile)
-
-and the [Geolocator Plugin](https://github.com/jamesmontemagno/xamarin.plugins)
+the [ZXing BarcodeScanner library](https://github.com/Redth/ZXing.Net.Maui)
 
 ### License
 You can use this code and change it, you can also create your own app.
