@@ -1,4 +1,6 @@
-﻿namespace qr2web
+﻿
+
+namespace qr2web
 {
     public partial class AppShell : Shell
     {
@@ -114,6 +116,11 @@
                     catch { }
                 }
             }
+        }
+
+        public static void OpenOcrPage()
+        {
+            
         }
     }
 }

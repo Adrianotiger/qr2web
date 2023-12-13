@@ -17,6 +17,7 @@ namespace qr2web
             InterceptSchemes.Add("qr2web:/torch/");
             InterceptSchemes.Add("qr2web:/parameters/");
             InterceptSchemes.Add("qr2web:/scan");
+            InterceptSchemes.Add("qr2web:/ocr");
 
             webView.Source = Options.HomePage;
 
@@ -190,6 +191,9 @@ namespace qr2web
                         break;
                     case 2:
                         AppShell.OpenScanPage();
+                        break;
+                    case 3:
+                        AppShell.OpenOcrPage();
                         break;
                 }
             }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ZXing.Net.Maui.Controls;
 
+
 namespace qr2web
 {
     public static class MauiProgram
@@ -20,7 +21,7 @@ namespace qr2web
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

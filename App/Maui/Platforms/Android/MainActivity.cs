@@ -2,11 +2,9 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using Android.Views;
 using Android.Webkit;
-using Java.Interop;
-using Microsoft.Maui.Controls.Compatibility.Platform.Android;
-using Microsoft.Maui.Handlers;
+using Android.Widget;
+
 using qr2web;
 using qr2web.Platforms.Android;
 
@@ -22,16 +20,33 @@ namespace Maui
         NoHistory = false,
         ClearTaskOnLaunch = false,
         LaunchMode = LaunchMode.SingleTop,
-        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation /*| ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density*/)]
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation /*| ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density*/
+    )]
+    [IntentFilter(
+        [Intent.ActionView],
+        Categories = [Intent.CategoryBrowsable, Intent.CategoryDefault],
+        DataSchemes = ["qr2web"]
+    )]
     public class MainActivity : MauiAppCompatActivity
     {
         Intent? serviceIntent = null;
-        static MainActivity Instance;
+        static MainActivity? Instance = null;
 
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Instance = this;
+
+            if(Intent != null)
+            {
+                if (Intent.Action == Intent.ActionView)
+                {
+                    if (Intent.Scheme != null && Intent.DataString != null)
+                    {
+                        LaunchScheme(Intent.DataString);
+                    }
+                }
+            }
         }
 
         protected override void OnResume()
@@ -56,39 +71,74 @@ namespace Maui
 
             Task.Run(async () =>
             {
-                for (int j = 0; j < 30; j++)
+                var webView = await WaitForBrowser();
+                if (webView != null)
                 {
-                    if (MainPage.MyWebView?.Handler?.PlatformView is not Android.Webkit.WebView webView)
+                    MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        await Task.Delay(200);
-                    }
-                    else
-                    {
-                        MainThread.BeginInvokeOnMainThread(() =>
-                        {
-                            Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
+                        Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
 
-                            webView.Settings.SetSupportMultipleWindows(true);
-                            webView.Settings.JavaScriptCanOpenWindowsAutomatically = true;
-                            webView.SetWebChromeClient(new MyWebChromeClient());
-                        });
-                        break;
-                    }
+                        webView.Settings.SetSupportMultipleWindows(true);
+                        webView.Settings.JavaScriptCanOpenWindowsAutomatically = true;
+                        webView.SetWebChromeClient(new MyWebChromeClient());
+                    });
                 }
             });
         }
 
         protected override void OnNewIntent(Intent? intent)
         {
-            if (intent != null && intent.Action != null && intent.Action.Equals("qr2web.CLOSE_APP"))
+            if (intent != null && intent.Action != null)
             {
-                if (serviceIntent != null)
-                    StopService(serviceIntent);
+                if (intent.Action.Equals("qr2web.CLOSE_APP"))
+                {
+                    if (serviceIntent != null)
+                        StopService(serviceIntent);
 
-                Process.KillProcess(Process.MyPid());
-                return;
+                    Process.KillProcess(Process.MyPid());
+                    return;
+                }
+                else if(intent.Action == Intent.ActionView)
+                {
+                    if(intent.Scheme != null && intent.DataString != null)
+                    {
+                        LaunchScheme(intent.DataString);
+                    }
+                }
+
+                //var toast = Toast.MakeText(this, "NEW INTENT: " + intent.Action.ToString(), Android.Widget.ToastLength.Long); // in Activity
+                //toast?.Show();
             }
             base.OnNewIntent(intent);
+        }
+
+        private static async void LaunchScheme(string dataString)
+        {
+            await Task.Run(async () =>
+            {
+                await WaitForBrowser();
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    App.InsertCode(dataString);
+                });
+            });
+        }
+
+        private static async Task<Android.Webkit.WebView?> WaitForBrowser()
+        {
+            await Task.Run(async () =>
+            {
+                for (int j = 0; j < 50; j++)
+                {
+                    if (MainPage.MyWebView?.Handler?.PlatformView is not Android.Webkit.WebView)
+                    {
+                        await Task.Delay(200);
+                    }
+                }
+            });
+
+            return MainPage.MyWebView?.Handler?.PlatformView as Android.Webkit.WebView;
         }
 
         protected override void OnDestroy()
@@ -102,11 +152,13 @@ namespace Maui
 
         public static void OpenExternalLink(string url)
         {
-            Android.Net.Uri uri = Android.Net.Uri.Parse(url);
-            Intent intent = new Intent(Intent.ActionView)
-                    .SetData(uri)
-                    .SetFlags(ActivityFlags.NewTask);
-            Instance.StartActivity(intent);
+            if (Instance != null)
+            {
+                Intent intent = new Intent(Intent.ActionView)
+                        .SetData(Android.Net.Uri.Parse(url))
+                        .SetFlags(ActivityFlags.NewTask);
+                Instance.StartActivity(intent);
+            }
         }
     }
 
