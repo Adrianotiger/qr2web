@@ -8,7 +8,7 @@ using Android.Widget;
 using qr2web;
 using qr2web.Platforms.Android;
 
-namespace Maui
+namespace qr2web.Platforms.Android
 {
     [Activity(
         Theme = "@style/Maui.SplashTheme",
@@ -76,7 +76,7 @@ namespace Maui
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
+						global::Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true);
 
                         webView.Settings.SetSupportMultipleWindows(true);
                         webView.Settings.JavaScriptCanOpenWindowsAutomatically = true;
@@ -125,27 +125,27 @@ namespace Maui
             });
         }
 
-        private static async Task<Android.Webkit.WebView?> WaitForBrowser()
+        private static async Task<global::Android.Webkit.WebView?> WaitForBrowser()
         {
             await Task.Run(async () =>
             {
                 for (int j = 0; j < 50; j++)
                 {
-                    if (MainPage.MyWebView?.Handler?.PlatformView is not Android.Webkit.WebView)
+                    if (MainPage.MyWebView?.Handler?.PlatformView is not global::Android.Webkit.WebView)
                     {
                         await Task.Delay(200);
                     }
                 }
             });
 
-            return MainPage.MyWebView?.Handler?.PlatformView as Android.Webkit.WebView;
+            return MainPage.MyWebView?.Handler?.PlatformView as global::Android.Webkit.WebView;
         }
 
         protected override void OnDestroy()
         {
             if (serviceIntent != null)
             {
-                Android.App.Application.Context.StopService(serviceIntent);
+				global::Android.App.Application.Context.StopService(serviceIntent);
             }
             base.OnDestroy();
         }
@@ -155,7 +155,7 @@ namespace Maui
             if (Instance != null)
             {
                 Intent intent = new Intent(Intent.ActionView)
-                        .SetData(Android.Net.Uri.Parse(url))
+                        .SetData(global::Android.Net.Uri.Parse(url))
                         .SetFlags(ActivityFlags.NewTask);
                 Instance.StartActivity(intent);
             }
@@ -164,12 +164,12 @@ namespace Maui
 
     public class MyWebChromeClient : WebChromeClient
     {
-        public override bool OnCreateWindow(Android.Webkit.WebView? view, bool isDialog, bool isUserGesture, Message? resultMsg)
+        public override bool OnCreateWindow(global::Android.Webkit.WebView? view, bool isDialog, bool isUserGesture, Message? resultMsg)
         {
             var webViewClient = new MyWebViewClient();
 
-            Android.Webkit.WebView newWebView = new(Android.App.Application.Context);
-            Android.Webkit.WebView.WebViewTransport? transport = (Android.Webkit.WebView.WebViewTransport?)resultMsg?.Obj;
+			global::Android.Webkit.WebView newWebView = new(global::Android.App.Application.Context);
+			global::Android.Webkit.WebView.WebViewTransport? transport = (global::Android.Webkit.WebView.WebViewTransport?)resultMsg?.Obj;
             if (transport != null)
             {
                 newWebView.SetWebViewClient(webViewClient);
@@ -183,12 +183,12 @@ namespace Maui
 
     public class MyWebViewClient : WebViewClient
     {
-        public override WebResourceResponse? ShouldInterceptRequest(Android.Webkit.WebView? view, IWebResourceRequest? request)
+        public override WebResourceResponse? ShouldInterceptRequest(global::Android.Webkit.WebView? view, IWebResourceRequest? request)
         {
             return base.ShouldInterceptRequest(view, request);
         }
 
-        public override bool ShouldOverrideUrlLoading(Android.Webkit.WebView? view, IWebResourceRequest? request)
+        public override bool ShouldOverrideUrlLoading(global::Android.Webkit.WebView? view, IWebResourceRequest? request)
         {
             var url = request?.Url?.ToString();
             if (url != null)

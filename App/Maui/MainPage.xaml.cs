@@ -278,7 +278,7 @@ namespace qr2web
 
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
-                    if (Microsoft.Maui.Controls.Application.Current != null && Microsoft.Maui.Controls.Application.Current.MainPage != null)
+                    if (Microsoft.Maui.Controls.Application.Current != null && Microsoft.Maui.Controls.Application.Current.Windows[0].Page != null)
                     {
                         try
                         {
@@ -289,9 +289,16 @@ namespace qr2web
                                     var toast = Toast.Make(AppResources.ExternalLinkNotAllowed, CommunityToolkit.Maui.Core.ToastDuration.Short);
                                     await toast.Show();
                                 }
-                                else if (await Microsoft.Maui.Controls.Application.Current.MainPage.DisplayAlert(AppResources.ExternalLink, AppResources.ExternalLinkAppWantOpen + ":\n" + extUrl + "\n" + AppResources.ExternaLinkAppProceed, AppResources.Yes, AppResources.No))
+                                else
                                 {
-                                    await Launcher.Default.OpenAsync(url);
+                                    var page = Microsoft.Maui.Controls.Application.Current.Windows[0].Page;
+                                    if (page != null)
+                                    {
+                                        if(await page.DisplayAlert(AppResources.ExternalLink, AppResources.ExternalLinkAppWantOpen + ":\n" + extUrl + "\n" + AppResources.ExternaLinkAppProceed, AppResources.Yes, AppResources.No))
+                                        {
+                                            await Launcher.Default.OpenAsync(url);
+                                        }
+									}
                                 }
                             }
                             else
@@ -301,12 +308,12 @@ namespace qr2web
                         }
                         catch(UriFormatException)
                         {
-                            // Uri bug (limit of 2000 chars)
+							// Uri bug (limit of 2000 chars)
 #if ANDROID
-                            Maui.MainActivity.OpenExternalLink(url);
+                            qr2web.Platforms.Android.MainActivity.OpenExternalLink(url);
 #endif
-                        }
-                        catch (Exception ex) 
+						}
+						catch (Exception ex) 
                         {
                             Console.WriteLine(ex.ToString());
                         }

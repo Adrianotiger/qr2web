@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Maui;
+using qr2web.Platforms.Android;
 using System.Diagnostics.Metrics;
 
 
@@ -26,17 +26,17 @@ namespace qr2web.Platforms.Android
             closeIntent.SetAction("qr2web.CLOSE_APP");
             var closeIntent2 = PendingIntent.GetActivity(this, 0, closeIntent, PendingIntentFlags.OneShot | PendingIntentFlags.Immutable);
 
-            Notification notification = notificationBuilder
-                .SetContentTitle("Qr2Web is running")
-                .SetContentText("Click here to close app")
-                .SetCategory(Notification.CategoryService)
-                .SetContentIntent(closeIntent2)
-                .SetSilent(true)
-                .SetAutoCancel(true)
-                .SetOngoing(true)
-                .Build();
+			notificationBuilder.SetContentTitle("Qr2Web is running");
+			notificationBuilder.SetContentText("Click here to close app");
+			notificationBuilder.SetCategory(Notification.CategoryService);
+            notificationBuilder.SetContentIntent(closeIntent2);
+            notificationBuilder.SetSilent(true);
+            notificationBuilder.SetAutoCancel(true);
+            notificationBuilder.SetOngoing(true);
 
-            StartForeground(100, notification);
+            Notification? notification = notificationBuilder.Build();
+
+			StartForeground(100, notification);
         }
 
         public override IBinder? OnBind(Intent? intent)

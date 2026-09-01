@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:strings="clr-namespace:qr2web.Resources.Strings"
-             
+             xmlns:local="clr-namespace:qr2web"
              x:Class="qr2web.ScanPage"
+             x:DataType="local:Options"
              Shell.FlyoutBehavior="Disabled"
              Title="ScanPage">
     <Grid x:Name="mainGrid">
@@ -25,15 +26,15 @@
                 <Button Text="0" Grid.Row="4" Grid.Column="1" Margin="5" Clicked="KeyPressed" />
                 <Button Text="✅" Grid.Row="4" Grid.Column="2" Margin="5" FontSize="Large" BackgroundColor="Transparent" Clicked="KeyPressed_Enter" />
             </Grid>
-            <ListView Grid.Column="1" Grid.Row="0" MinimumHeightRequest="80" BindingContext="{Binding qr2web}" IsVisible="False" ItemsSource="{Binding HistoryData}" x:Name="historyOverlay" BackgroundColor="White" Margin="0,30,0,0" VerticalOptions="End" ItemSelected="HistoryOverlay_ItemSelected">
+            <ListView Grid.Column="1" Grid.Row="0" WidthRequest="300" MinimumHeightRequest="80" IsVisible="False" ItemsSource="{Binding HistoryO}" x:Name="historyOverlay" BackgroundColor="DarkGray" Margin="0,30,0,0" VerticalOptions="End" ItemSelected="HistoryOverlay_ItemSelected">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="local:HistoryData">
                         <ViewCell>
-                            <Grid ColumnDefinitions="*,3*,2*">
-                                <Frame HorizontalOptions="Fill" Grid.ColumnSpan="3" Background="Black" MinimumHeightRequest="40" />
-                                <Label Text="{Binding Type}" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White" />
-                                <Label Text="{Binding Scan}" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Start" TextColor="White" />
-                                <Label Text="{Binding Date}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" TextColor="White" />
+                            <Grid ColumnDefinitions="*,4*,2*">
+                                <Border HorizontalOptions="Fill" Grid.ColumnSpan="3" Background="Black" MinimumHeightRequest="40" />
+                                <Label Text="{Binding Type}" Grid.Column="0" VerticalOptions="Center" HorizontalTextAlignment="Center" HorizontalOptions="Center" TextColor="White" Scale="0.6" />
+                                <Label Text="{Binding Scan}" Grid.Column="1" VerticalOptions="Center" HorizontalTextAlignment="Center" HorizontalOptions="Center" TextColor="White" FontSize="Micro" />
+                                <Label Text="{Binding Date}" Grid.Column="2" VerticalOptions="Center" HorizontalTextAlignment="End" HorizontalOptions="End" TextColor="White" Scale="0.6" />
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

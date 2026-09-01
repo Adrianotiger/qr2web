@@ -9,7 +9,7 @@ namespace qr2web
 
             Options.InitOptions();
 
-            MainPage = new AppShell();
+			//MainPage = new AppShell();
         }
 
         public static async void InsertCode(string code)
@@ -20,13 +20,13 @@ namespace qr2web
             
             if(Shell.Current.CurrentPage is MainPage page)
             {
-                page.InsertBarcode(code);
+				page.InsertBarcode(code);
             }
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var window = base.CreateWindow(activationState);
+            var window = new Window(new AppShell());//base.CreateWindow(activationState);
 
             int newWidth = Preferences.Get("window_w", 450);
             int newHeight = (int)Preferences.Get("window_h", 800);

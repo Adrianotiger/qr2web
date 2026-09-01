@@ -10,10 +10,11 @@ namespace qr2web
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .UseBarcodeReader()
-                .UseMauiCommunityToolkit()
+
+            builder.UseMauiApp<App>();
+            builder.UseBarcodeReader();
+			builder.UseMauiCommunityToolkit();
+			builder
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

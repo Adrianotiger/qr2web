@@ -21,7 +21,7 @@
     </Shell.TitleView>
 
     <Shell.FlyoutHeader>
-        <Grid HeightRequest="128" HorizontalOptions="FillAndExpand" Background="Black">
+        <Grid HeightRequest="128" HorizontalOptions="Fill" Background="Black">
             <Image Source="logo128.png" HorizontalOptions="End" />
             <Label Text="QR2Web" TextColor="LightSteelBlue" VerticalOptions="Center" FontSize="Large" />
         </Grid>
@@ -61,7 +61,7 @@
     <Shell.FlyoutFooter>
         <VerticalStackLayout Padding="10">
             <Label Text="GitHub Project" />
-            <Label Text="© Adriano Petrucci - 2023" />
+            <Label Text="© Adriano Petrucci - 2025" />
         </VerticalStackLayout>
     </Shell.FlyoutFooter>
     

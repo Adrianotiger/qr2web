@@ -1,17 +1,18 @@
 ﻿using banditoth.MAUI.PreferencesExtension;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reflection;
 
 namespace qr2web
 {
-    internal class HistoryData
-    {
+    public class HistoryData
+	{
         public Options.BarcodeType Type { get; set; } = Options.BarcodeType.Invalid;
         public DateTime Date { get; set; } = DateTime.Now;
         public string Scan { get; set; } = "";
     }
 
-    internal class Options
+    public class Options
     {
         public enum BarcodeType
         {
@@ -56,9 +57,13 @@ namespace qr2web
         internal static bool ShowFullscreen { get; set; } = false;
 
         // Not addeded to Options (internal, without setter / not a property)
-        internal static List<HistoryData> History = [];
+        //internal static List<HistoryData> History = [];
+		// Add the History property as an ObservableCollection or appropriate collection type
+		public static ObservableCollection<HistoryData> History { get; set; } = [];
 
-        private readonly static Dictionary<string, string> AllOptions = [];
+		public ObservableCollection<HistoryData> HistoryO => new([.. Options.History]); // NOT STATIC, as it is used in XAML
+
+		private readonly static Dictionary<string, string> AllOptions = [];
         private readonly static Dictionary<string, string> ProtectedOptions = [];
 
         public static void InitOptions()
@@ -83,7 +88,7 @@ namespace qr2web
             {
                 string acceptedBarcodes = Preferences.Get(AllOptions[nameof(Barcodes)], "qr");
 
-                Enum.GetValues(typeof(BarcodeType)).Cast<BarcodeType>().ToList().ForEach(bct =>
+                Enum.GetValues<BarcodeType>().Cast<BarcodeType>().ToList().ForEach(bct =>
                 {
                     if((int)bct > 0 && (int)bct < 20)
                     {
@@ -158,7 +163,7 @@ namespace qr2web
 
         public static void SetKeyboardType(string ktype)
         {
-            Enum.GetValues(typeof(KeyboardType)).Cast<KeyboardType>().ToList().ForEach(kt =>
+            Enum.GetValues<KeyboardType>().Cast<KeyboardType>().ToList().ForEach(kt =>
             {
                 if (ktype == kt.ToString()) SetKeyboardType(kt);
             });
@@ -166,7 +171,7 @@ namespace qr2web
         public static void SetLanguage(string lang)
         {
             lang = lang.ToLower();
-            Enum.GetValues(typeof(Languages)).Cast<Languages>().ToList().ForEach(lng =>
+            Enum.GetValues<Languages>().Cast<Languages>().ToList().ForEach(lng =>
             {
                 if (lang.Equals(lng.ToString(), StringComparison.CurrentCultureIgnoreCase) ||
                     lang.Equals(lng.ToString()[..2], StringComparison.CurrentCultureIgnoreCase))
@@ -186,13 +191,21 @@ namespace qr2web
                 return;
 
             HistoryData? removeItem = null;
-            History.ForEach(history =>
+			foreach (var item in History)
+			{
+				if (item.Scan == data.Scan)
+				{
+					removeItem = item;
+				}
+			}
+            /*
+			History.ForEach(history =>
             {
                 if(history.Scan == data.Scan)
                 {
                     removeItem = history;
                 }
-            });
+            });*/
             if(removeItem != null) { History.Remove(removeItem); }
             History.Insert(0, data);
 
