@@ -61,7 +61,7 @@
     <Shell.FlyoutFooter>
         <VerticalStackLayout Padding="10">
             <Label Text="GitHub Project" />
-            <Label Text="© Adriano Petrucci - 2025" />
+            <Label Text="© Adriano Petrucci - 2026" />
         </VerticalStackLayout>
     </Shell.FlyoutFooter>
     

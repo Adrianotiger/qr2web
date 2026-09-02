@@ -250,3 +250,4 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/.github/upgrades/scenarios/dotnet-version-upgrade/scenario.json
