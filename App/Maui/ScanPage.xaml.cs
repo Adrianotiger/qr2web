@@ -244,11 +244,16 @@ public partial class ScanPage : ContentPage
 
     private void HistoryOverlay_ItemSelected(object sender, SelectedItemChangedEventArgs e)
     {
-        var code = (e.SelectedItem as HistoryData)?.Scan;
-        if (code != null)
-        {
-            //Options.AddHistoryScan(new HistoryData { Type = Options.BarcodeType.History, Date = DateTime.Now, Scan = code });
-            App.InsertCode(code);
-        }
+        
     }
+
+	private void historyOverlay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+	{
+		var code = (e.CurrentSelection?[0] as HistoryData)?.Scan;
+		if (code != null)
+		{
+			//Options.AddHistoryScan(new HistoryData { Type = Options.BarcodeType.History, Date = DateTime.Now, Scan = code });
+			App.InsertCode(code);
+		}
+	}
 }

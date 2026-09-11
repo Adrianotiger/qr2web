@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui.Alerts;
 using qr2web.Resources.Strings;
 using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
+using qr2web.Platforms.Android;
 
 namespace qr2web
 {
@@ -150,7 +151,7 @@ namespace qr2web
             }
             else if(!e.Url.StartsWith("http"))
             {
-                OpenExternalLink(e.Url);
+                MainActivity.OpenExternalLink(e.Url);
                 e.Cancel = true;
             }
             else
@@ -250,7 +251,7 @@ namespace qr2web
             if (keyValuePairs.Count == 1) message = AppResources.ScanParamNewFound1 + " (" + keyValuePairs.First().Key + ")";
             message += ".\n" + AppResources.ScanParamNewSave;
 
-            if(!update && !await DisplayAlert(AppResources.ScanParamAppSettings, message, AppResources.Yes, AppResources.No))
+            if(!update && !await DisplayAlertAsync(AppResources.ScanParamAppSettings, message, AppResources.Yes, AppResources.No))
             {
                 return;
             }
@@ -294,7 +295,7 @@ namespace qr2web
                                     var page = Microsoft.Maui.Controls.Application.Current.Windows[0].Page;
                                     if (page != null)
                                     {
-                                        if(await page.DisplayAlert(AppResources.ExternalLink, AppResources.ExternalLinkAppWantOpen + ":\n" + extUrl + "\n" + AppResources.ExternaLinkAppProceed, AppResources.Yes, AppResources.No))
+                                        if(await page.DisplayAlertAsync(AppResources.ExternalLink, AppResources.ExternalLinkAppWantOpen + ":\n" + extUrl + "\n" + AppResources.ExternaLinkAppProceed, AppResources.Yes, AppResources.No))
                                         {
                                             await Launcher.Default.OpenAsync(url);
                                         }

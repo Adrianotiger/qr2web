@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net10.0-android;net10.0-windows10.0.26100.1</TargetFrameworks>
+    <!--<TargetFrameworks>net10.0-android;net10.0-windows10.0.26100.1</TargetFrameworks>-->
+    <TargetFramework>net10.0-android</TargetFramework>
     <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
     <!-- <TargetFrameworks>$(TargetFrameworks);net9.0-tizen</TargetFrameworks> -->
     <!-- Note for MacCatalyst:
@@ -20,8 +21,8 @@
     <!-- App Identifier -->
     <ApplicationId>ch.petrucci.qr2web3</ApplicationId>
     <!-- Versions -->
-    <ApplicationDisplayVersion>4.0</ApplicationDisplayVersion>
-    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>4.1</ApplicationDisplayVersion>
+    <ApplicationVersion>45</ApplicationVersion>
     
     <SupportedOSPlatformVersion Condition="'$(TargetFramework)'=='net10.0-android'">32.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="'$(TargetFramework)'=='net10.0-windows10.0.26100.1'">10.0.17763.0</SupportedOSPlatformVersion>
@@ -47,68 +48,55 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
     <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
-    <ApplicationVersion>42</ApplicationVersion>
     <AndroidKeyStore>False</AndroidKeyStore>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|x64'">
     <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
-    <ApplicationVersion>42</ApplicationVersion>
     <AndroidKeyStore>False</AndroidKeyStore>
   </PropertyGroup>
+  <!--
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|AnyCPU'">
     <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
     <ApplicationVersion>42</ApplicationVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-maccatalyst|x64'">
     <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
     <ApplicationVersion>42</ApplicationVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.26100.1|AnyCPU'">
     <ApplicationId>6469Adriano.QR2WebInventory</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
     <ApplicationVersion>42</ApplicationVersion>
   </PropertyGroup>
+  -->
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows10.0.26100.1|x64'">
     <ApplicationId>6469Adriano.QR2WebInventory</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
-    <ApplicationVersion>42</ApplicationVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
     <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
-    <ApplicationVersion>42</ApplicationVersion>
     <AndroidLinkTool>r8</AndroidLinkTool>
     <AndroidKeyStore>False</AndroidKeyStore>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|x64'">
     <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
-    <ApplicationVersion>42</ApplicationVersion>
     <AndroidLinkTool>r8</AndroidLinkTool>
     <AndroidKeyStore>False</AndroidKeyStore>
   </PropertyGroup>
+  <!--
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-maccatalyst|AnyCPU'">
     <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
     <ApplicationVersion>42</ApplicationVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-maccatalyst|x64'">
     <ApplicationId>ch.petrucci.qr2web_2</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
     <ApplicationVersion>42</ApplicationVersion>
   </PropertyGroup>
+  -->
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.26100.1|AnyCPU'">
     <ApplicationId>6469Adriano.QR2WebInventory</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
     <ApplicationVersion>42</ApplicationVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-windows10.0.26100.1|x64'">
     <ApplicationId>6469Adriano.QR2WebInventory</ApplicationId>
-    <ApplicationDisplayVersion>3.2</ApplicationDisplayVersion>
     <ApplicationVersion>42</ApplicationVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -142,12 +130,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="banditoth.MAUI.PreferencesExtension" Version="1.0.2" />
-    <PackageReference Include="CommunityToolkit.Maui" Version="12.1.0" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.90" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.90" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.7" />
-    <PackageReference Include="ZXing.Net.Maui" Version="0.4.0" />
-    <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.4.0" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="15.0.1" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.90" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.101" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Maui.Core" Version="10.0.101" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="10.0.101" />
+    <PackageReference Include="ZXing.Net.Maui" Version="0.10.4" />
+    <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.10.4" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\Strings\AppResources.Designer.cs">
@@ -182,5 +172,8 @@
     <None Update="ScanPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Maui.Controls" Version="10.0.101" />
   </ItemGroup>
 </Project>
