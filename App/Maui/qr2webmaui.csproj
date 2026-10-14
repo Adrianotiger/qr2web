@@ -21,8 +21,8 @@
     <!-- App Identifier -->
     <ApplicationId>ch.petrucci.qr2web3</ApplicationId>
     <!-- Versions -->
-    <ApplicationDisplayVersion>4.1</ApplicationDisplayVersion>
-    <ApplicationVersion>45</ApplicationVersion>
+    <ApplicationDisplayVersion>4.2</ApplicationDisplayVersion>
+    <ApplicationVersion>46</ApplicationVersion>
     
     <SupportedOSPlatformVersion Condition="'$(TargetFramework)'=='net10.0-android'">32.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="'$(TargetFramework)'=='net10.0-windows10.0.26100.1'">10.0.17763.0</SupportedOSPlatformVersion>

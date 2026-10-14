@@ -3,6 +3,7 @@ namespace qr2web
 {
     public partial class App : Application
     {
+
         public App()
         {
             InitializeComponent();
@@ -10,7 +11,7 @@ namespace qr2web
             Options.InitOptions();
 
 			//MainPage = new AppShell();
-        }
+		}
 
         public static async void InsertCode(string code)
         {
@@ -26,8 +27,15 @@ namespace qr2web
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var window = new Window(new AppShell());//base.CreateWindow(activationState);
+			//var window = new Window(new AppShell());//base.CreateWindow(activationState);
+			System.Diagnostics.Debug.WriteLine("CREATE WINDOW");
 
+			var window = new Window(new AppShell());
+
+
+#if ANDROID
+
+#else // WINDOWS
             int newWidth = Preferences.Get("window_w", 450);
             int newHeight = (int)Preferences.Get("window_h", 800);
             int newX = Preferences.Get("window_x", (int)Microsoft.Maui.Devices.DeviceDisplay.MainDisplayInfo.Width / 2 - 225);
@@ -48,24 +56,30 @@ namespace qr2web
                     if (w.Y != newY) Preferences.Set("window_y", (int)w.Y);
                 }
             };
+#endif
 
-            window.Deactivated += (s, e) =>
+			/*
+			window?.Deactivated += (s, e) =>
             {
-                if (Shell.Current.CurrentPage is MainPage page)
-                {
-                    //page.SaveState();
-                }
+				System.Diagnostics.Debug.WriteLine("Deactivated");
+
+				if (window.Page is AppShell shell && shell.CurrentPage is MainPage page)
+				{
+					//page.SaveState();
+				}
             };
 
-            window.Resumed += (s, e) =>
+            window?.Resumed += (s, e) =>
             {
-                if (Shell.Current.CurrentPage is MainPage page)
-                {
+				System.Diagnostics.Debug.WriteLine("Resumed");
+
+				if (window.Page is AppShell shell && shell.CurrentPage is MainPage page)
+				{
                     //page.RestoreState();
                 }
-            };
+            };*/
 
-            return window;
+			return window;
         }
 
         

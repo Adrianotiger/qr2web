@@ -15,12 +15,11 @@ namespace qr2web.Platforms.Android
         MainLauncher = true,
         ScreenOrientation = ScreenOrientation.Portrait,
         AlwaysRetainTaskState = true,
-        ResumeWhilePausing = true,
         HardwareAccelerated = true,
         NoHistory = false,
         ClearTaskOnLaunch = false,
-        LaunchMode = LaunchMode.SingleTop,
-        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation /*| ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density*/
+        LaunchMode = LaunchMode.SingleTask,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density
     )]
     [IntentFilter(
         [Intent.ActionView],
